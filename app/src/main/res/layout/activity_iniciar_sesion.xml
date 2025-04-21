@@ -5,50 +5,47 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".IniciarSesionActivity">
+
 
     <TextView
-        android:id="@+id/tvTituloApp"
+        android:id="@+id/tvTituloIniciarSesion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:text="RED SOCIAL DE COCINA"
+        android:layout_marginTop="52dp"
+        android:text="Iniciar Sesion"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.474"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btIniciarSesion"
+    <EditText
+        android:id="@+id/etUsuarioSesion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="396dp"
-        android:text="IniciarSesion"
+        android:layout_marginTop="100dp"
+        android:hint="usuario"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.479"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTituloApp" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTituloIniciarSesion" />
+
+    <EditText
+        android:id="@+id/etContrasenaSesion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="contrasena"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etUsuarioSesion" />
 
     <Button
-        android:id="@+id/btIniciarSesionGoogle"
+        android:id="@+id/btEnviarSesion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Iniciar Sesion con Google"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.488"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btIniciarSesion" />
-
-    <Button
-        android:id="@+id/btRegistro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Registro"
+        android:text="Iniciar Sesion"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btIniciarSesionGoogle"
-        app:layout_constraintVertical_bias="0.263" />
+        app:layout_constraintTop_toBottomOf="@+id/etContrasenaSesion" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
