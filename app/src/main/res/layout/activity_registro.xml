@@ -7,42 +7,67 @@
     android:layout_height="match_parent"
     tools:context=".RegistroActivity">
 
+    <ImageButton
+        android:id="@+id/ivFlechaParaSalir"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/boton_para_salir_de_la_aplicacion"
+        android:src="@drawable/flechaparaatras"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/tvTituloRegistro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:text="Registro"
+        android:layout_marginTop="76dp"
+        android:text="@string/crea_aqui_tu_nueva_cuenta"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.29"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/etUsuarioRegistro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:hint="usuario"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="80dp"
+        android:autofillHints="emailAddress"
+        android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTituloRegistro" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTituloRegistro"
+        android:labelFor="@id/etUsuarioSesion"
+        android:hint="@string/usuario" />
 
     <EditText
         android:id="@+id/etContrasenaRegistro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="contrasena"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="32dp"
+        android:autofillHints="password"
+        android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etUsuarioRegistro" />
+        app:layout_constraintTop_toBottomOf="@+id/etUsuarioRegistro"
+        android:labelFor="@id/etContrasenaSesion"
+        android:hint="@string/contrasena" />
 
     <Button
-        android:id="@+id/btEnviarRegistro"
-        android:layout_width="wrap_content"
+        android:id="@+id/btRegistro"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="Registrarse"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="52dp"
+        android:text="@string/registrarse"
         app:layout_constraintEnd_toEndOf="parent"
+        app:cornerRadius = "16dp"
+        app:layout_constraintHorizontal_bias="0.54"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etContrasenaRegistro" />
 

@@ -2,15 +2,21 @@ package com.fjlr.firebase
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.fjlr.firebase.databinding.ActivityMainBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,12 +31,44 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        binding.btRegistrarse.setOnClickListener {
-            startActivity(Intent(this, RegistroActivity::class.java))
-        }
-        binding.btIniciarSesion.setOnClickListener {
-            startActivity(Intent(this, IniciarSesionActivity::class.java))
-        }
+        auth = Firebase.auth
 
+
+        binding.btRegistrarse.setOnClickListener { irARegistro() }
+        binding.btIniciarSesion.setOnClickListener { iniciarSesion() }
+        binding.ivFlechaParaSalir.setOnClickListener { salirDeLaAplicacion() }
+
+    }
+
+    fun salirDeLaAplicacion() {
+        exitProcess(0)
+    }
+
+    fun irARegistro() {
+        startActivity(Intent(this, RegistroActivity::class.java))
+    }
+
+    fun iniciarSesion() {
+        iniciarSesion(
+            binding.etUsuarioSesion.text.toString(),
+            binding.etContrasenaSesion.text.toString()
+        )
+        binding.etUsuarioSesion.text.clear()
+        binding.etContrasenaSesion.text.clear()
+    }
+
+    fun iniciarSesion(email: String, contrasena: String) {
+        auth.signInWithEmailAndPassword(email, contrasena)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    startActivity(Intent(this, AppActivity::class.java))
+                } else {
+                    Toast.makeText(
+                        baseContext,
+                        "El inicio de sesion fallo",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
     }
 }

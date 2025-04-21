@@ -8,79 +8,112 @@
     tools:context=".MainActivity">
 
     <ImageButton
-        android:id="@+id/flechaParaSalir"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:id="@+id/ivFlechaParaSalir"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:background="@android:color/transparent"
+        android:contentDescription="@string/boton_para_salir_de_la_aplicacion"
         android:src="@drawable/flechaparaatras"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="16dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvTituloApp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="76dp"
         android:text="@string/bienvenido_de_nuevo"
         android:textSize="30sp"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="70dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.125"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/etUsuarioSesion"
         android:layout_width="300dp"
-        android:layout_height="40dp"
-        tools:layout_editor_absoluteX="46dp"
-        tools:layout_editor_absoluteY="176dp"
-        tools:text="@string/usuario" />
+        android:layout_height="48dp"
+        android:layout_marginTop="80dp"
+        android:autofillHints="emailAddress"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTituloApp"
+        android:labelFor="@id/etUsuarioSesion"
+        android:hint="@string/usuario" />
 
     <EditText
         android:id="@+id/etContrasenaSesion"
         android:layout_width="300dp"
-        android:layout_height="40dp"
-        tools:layout_editor_absoluteX="46dp"
-        tools:layout_editor_absoluteY="246dp"
-        tools:text="@string/contrasena"/>
+        android:layout_height="48dp"
+        android:layout_marginTop="32dp"
+        android:autofillHints="password"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etUsuarioSesion"
+        android:labelFor="@id/etContrasenaSesion"
+        android:hint="@string/contrasena" />
 
     <Button
         android:id="@+id/btIniciarSesion"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
         android:text="@string/iniciar_sesion"
-        tools:layout_editor_absoluteX="55dp"
-        tools:layout_editor_absoluteY="341dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:cornerRadius = "16dp"
+        app:layout_constraintHorizontal_bias="0.54"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etContrasenaSesion" />
 
     <TextView
         android:id="@+id/tvOpcionesInicioSesion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:text="@string/o_inicia_sesion_con"
-        tools:layout_editor_absoluteX="147dp"
-        tools:layout_editor_absoluteY="421dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btIniciarSesion" />
 
     <ImageButton
         android:id="@+id/ibSesionConGoogle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:background="@android:color/transparent"
         android:src="@drawable/googlelogo"
-        tools:layout_editor_absoluteX="181dp"
-        tools:layout_editor_absoluteY="467dp" />
+        android:contentDescription="@string/iniciar_sesion_con_google"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvOpcionesInicioSesion" />
 
     <TextView
         android:id="@+id/tvFraseRegistrarse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="35dp"
         android:text="@string/no_tienes_una_cuenta"
-        tools:layout_editor_absoluteX="74dp"
-        tools:layout_editor_absoluteY="672dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btRegistrarse"
+        app:layout_constraintHorizontal_bias="0.654"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btRegistrarse"
         android:layout_width="161dp"
-        android:layout_height="38dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="20dp"
         android:background="@android:color/transparent"
         android:text="@string/resgistrate_ahora"
         android:textColor="@android:color/black"
-        tools:layout_editor_absoluteX="212dp"
-        tools:layout_editor_absoluteY="661dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -31,30 +31,33 @@ class RegistroActivity : AppCompatActivity() {
 
         auth = Firebase.auth
 
-        binding.btEnviarRegistro.setOnClickListener {
-            creacionUsuario(
-                binding.etUsuarioRegistro.text.toString(),
-                binding.etContrasenaRegistro.text.toString()
-            )
-            binding.etUsuarioRegistro.text.clear()
-            binding.etContrasenaRegistro.text.clear()
-        }
+        binding.ivFlechaParaSalir.setOnClickListener { irAMenu() }
+        binding.btRegistro.setOnClickListener { creacionUsuario() }
 
+    }
+
+    fun irAMenu(){
+        finish()
+    }
+
+    fun creacionUsuario() {
+        creacionUsuario(
+            binding.etUsuarioRegistro.text.toString(),
+            binding.etContrasenaRegistro.text.toString()
+        )
+        binding.etUsuarioRegistro.text.clear()
+        binding.etContrasenaRegistro.text.clear()
     }
 
     fun creacionUsuario(email: String, contrasena: String) {
         auth.createUserWithEmailAndPassword(email, contrasena)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(
-                        baseContext,
-                        "Todo salio como esperaba",
-                        Toast.LENGTH_SHORT,
-                    ).show()
+                    finish()
                 } else {
                     Toast.makeText(
                         baseContext,
-                        "La autenticacion fallo",
+                        "El registro fallo",
                         Toast.LENGTH_SHORT,
                     ).show()
                 }

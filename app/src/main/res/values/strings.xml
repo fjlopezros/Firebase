@@ -7,4 +7,9 @@
     <string name="o_inicia_sesion_con">O inicia sesion con</string>
     <string name="no_tienes_una_cuenta">No tienes una cuenta?</string>
     <string name="resgistrate_ahora">Resgistrate ahora</string>
+    <string name="iniciar_sesion_con_google">Iniciar sesion con google</string>
+    <string name="boton_para_salir_de_la_aplicacion">Boton para salir de la aplicacion</string>
+    <string name="campo_para_ingresar_la_contrase_a">Campo para ingresar la contraseña</string>
+    <string name="registrarse">Registrarse</string>
+    <string name="crea_aqui_tu_nueva_cuenta">Crea aqui tu nueva cuenta!</string>
 </resources>
