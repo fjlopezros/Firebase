@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Firebase</string>
+    <string name="bienvenido_de_nuevo">Bienvenido de nuevo!</string>
+    <string name="iniciar_sesion">Iniciar Sesion</string>
+    <string name="usuario">introduce tu usuario</string>
+    <string name="contrasena">introduce tu contraseña</string>
+    <string name="o_inicia_sesion_con">O inicia sesion con</string>
+    <string name="no_tienes_una_cuenta">No tienes una cuenta?</string>
+    <string name="resgistrate_ahora">Resgistrate ahora</string>
 </resources>

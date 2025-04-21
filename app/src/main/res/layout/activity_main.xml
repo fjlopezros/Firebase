@@ -7,48 +7,80 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ImageButton
+        android:id="@+id/flechaParaSalir"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/flechaparaatras"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="16dp" />
+
     <TextView
         android:id="@+id/tvTituloApp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:text="RED SOCIAL DE COCINA"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.474"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="@string/bienvenido_de_nuevo"
+        android:textSize="30sp"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="70dp" />
+
+    <EditText
+        android:id="@+id/etUsuarioSesion"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        tools:layout_editor_absoluteX="46dp"
+        tools:layout_editor_absoluteY="176dp"
+        tools:text="@string/usuario" />
+
+    <EditText
+        android:id="@+id/etContrasenaSesion"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        tools:layout_editor_absoluteX="46dp"
+        tools:layout_editor_absoluteY="246dp"
+        tools:text="@string/contrasena"/>
 
     <Button
         android:id="@+id/btIniciarSesion"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="@string/iniciar_sesion"
+        tools:layout_editor_absoluteX="55dp"
+        tools:layout_editor_absoluteY="341dp" />
+
+    <TextView
+        android:id="@+id/tvOpcionesInicioSesion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="396dp"
-        android:text="IniciarSesion"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.479"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTituloApp" />
+        android:text="@string/o_inicia_sesion_con"
+        tools:layout_editor_absoluteX="147dp"
+        tools:layout_editor_absoluteY="421dp" />
+
+    <ImageButton
+        android:id="@+id/ibSesionConGoogle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:src="@drawable/googlelogo"
+        tools:layout_editor_absoluteX="181dp"
+        tools:layout_editor_absoluteY="467dp" />
+
+    <TextView
+        android:id="@+id/tvFraseRegistrarse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_tienes_una_cuenta"
+        tools:layout_editor_absoluteX="74dp"
+        tools:layout_editor_absoluteY="672dp" />
 
     <Button
-        android:id="@+id/btIniciarSesionGoogle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Iniciar Sesion con Google"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.488"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btIniciarSesion" />
-
-    <Button
-        android:id="@+id/btRegistro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Registro"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btIniciarSesionGoogle"
-        app:layout_constraintVertical_bias="0.263" />
-
+        android:id="@+id/btRegistrarse"
+        android:layout_width="161dp"
+        android:layout_height="38dp"
+        android:background="@android:color/transparent"
+        android:text="@string/resgistrate_ahora"
+        android:textColor="@android:color/black"
+        tools:layout_editor_absoluteX="212dp"
+        tools:layout_editor_absoluteY="661dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
