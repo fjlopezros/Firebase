@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvFunciona"
+        android:id="@+id/tvTituloApp"
         android:layout_width="146dp"
         android:layout_height="35dp"
         android:text="@string/remy"
@@ -31,10 +31,21 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.048" />
 
+    <Button
+        android:id="@+id/btGuardarPublicacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/guardar"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+        app:layout_constraintEnd_toStartOf="@+id/ivLogoApp"
+        app:layout_constraintStart_toEndOf="@+id/tvTituloApp"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="376dp"
         android:layout_height="553dp"
+        android:contentDescription="@string/publicaciones"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.606"
