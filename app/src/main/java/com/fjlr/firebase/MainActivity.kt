@@ -17,10 +17,6 @@ import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
 
-    object Global {
-        var preferenciasCompartidas = "sharedpreferences"
-    }
-
     private lateinit var binding: ActivityMainBinding
     private lateinit var auth: FirebaseAuth
 
@@ -28,15 +24,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        //verificarSesionAbierta()
-        val usuario = FirebaseAuth.getInstance().currentUser
-        if (usuario != null) {
-            // El usuario ya inició sesión, puedes ir a la pantalla principal
-            val intent = Intent(this, AppActivity::class.java)
-            intent.putExtra("Correo", usuario.email) // si necesitas el correo
-            startActivity(intent)
-            finish()
-        }
+        verificarSesionAbierta()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -78,9 +66,6 @@ class MainActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     startActivity(Intent(this, AppActivity::class.java))
-
-                    //guardarSesion(email)
-
                 } else {
                     Toast.makeText(
                         baseContext,
@@ -92,21 +77,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun verificarSesionAbierta() {
-        var sesionAbierta: SharedPreferences =
-            this.getSharedPreferences(Global.preferenciasCompartidas, MODE_PRIVATE)
-
-        var correo = sesionAbierta.getString("Correo", null)
-        if (correo != null) {
-            var intent = Intent(this, AppActivity::class.java)
-            intent.putExtra("Correo", correo)
-            startActivity(intent)
+        val usuario = FirebaseAuth.getInstance().currentUser
+        if (usuario != null) {
+            startActivity(Intent(this, AppActivity::class.java))
+            finish()
         }
-    }
-
-    fun guardarSesion(correo: String) {
-        var guardarSesion: SharedPreferences.Editor =
-            this.getSharedPreferences(Global.preferenciasCompartidas, MODE_PRIVATE).edit()
-        guardarSesion.putString("Correo", correo)
-        guardarSesion.apply()
     }
 }
