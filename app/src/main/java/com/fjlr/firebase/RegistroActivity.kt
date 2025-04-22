@@ -31,7 +31,7 @@ class RegistroActivity : AppCompatActivity() {
 
         auth = Firebase.auth
 
-        binding.ivFlechaParaSalir.setOnClickListener { irAMenu() }
+        binding.ibFlechaParaSalir.setOnClickListener { irAMenu() }
         binding.btRegistro.setOnClickListener { creacionUsuario() }
 
     }

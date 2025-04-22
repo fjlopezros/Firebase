@@ -5,18 +5,18 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.fjlr.firebase.databinding.ActivityAppBinding
+import com.fjlr.firebase.databinding.ActivityFavoritosBinding
 import com.fjlr.firebase.utils.configurarBarraNavegacion
 
-class AppActivity : AppCompatActivity() {
+class FavoritosActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityAppBinding
+    private lateinit var binding: ActivityFavoritosBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        binding = ActivityAppBinding.inflate(layoutInflater)
+        binding = ActivityFavoritosBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->

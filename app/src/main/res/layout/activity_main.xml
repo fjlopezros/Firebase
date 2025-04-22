@@ -7,8 +7,20 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/ivLogo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="45dp"
+        android:src="@drawable/remylogo"
+        android:contentDescription="@string/logo_app"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/tvTituloApp"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageButton
-        android:id="@+id/ivFlechaParaSalir"
+        android:id="@+id/ibFlechaParaSalir"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="16dp"

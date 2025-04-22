@@ -7,8 +7,19 @@
     android:layout_height="match_parent"
     tools:context=".RegistroActivity">
 
+    <ImageView
+        android:id="@+id/ivLogoRegistro"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="45dp"
+        android:src="@drawable/remylogo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/tvTituloRegistro"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageButton
-        android:id="@+id/ivFlechaParaSalir"
+        android:id="@+id/ibFlechaParaSalir"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="16dp"
@@ -27,7 +38,7 @@
         android:text="@string/crea_aqui_tu_nueva_cuenta"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.29"
+        app:layout_constraintHorizontal_bias="0.125"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

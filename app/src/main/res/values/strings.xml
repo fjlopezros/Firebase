@@ -11,5 +11,11 @@
     <string name="boton_para_salir_de_la_aplicacion">Boton para salir de la aplicacion</string>
     <string name="campo_para_ingresar_la_contrase_a">Campo para ingresar la contraseña</string>
     <string name="registrarse">Registrarse</string>
-    <string name="crea_aqui_tu_nueva_cuenta">Crea aqui tu nueva cuenta!</string>
+    <string name="crea_aqui_tu_nueva_cuenta">Crea aqui tu cuenta!</string>
+    <string name="icono_ajustes">Icono ajustes</string>
+    <string name="icono_buscar">Icono buscar</string>
+    <string name="icono_pantalla_principal">Icono pantalla principal</string>
+    <string name="icono_favoritos">Icono favoritos</string>
+    <string name="remy">Remy</string>
+    <string name="logo_app">logo app</string>
 </resources>

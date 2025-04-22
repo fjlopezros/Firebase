@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.btRegistrarse.setOnClickListener { irARegistro() }
         binding.btIniciarSesion.setOnClickListener { iniciarSesion() }
-        binding.ivFlechaParaSalir.setOnClickListener { salirDeLaAplicacion() }
+        binding.ibFlechaParaSalir.setOnClickListener { salirDeLaAplicacion() }
 
     }
 
