@@ -40,12 +40,8 @@ class MainActivity : AppCompatActivity() {
 
         binding.btRegistrarse.setOnClickListener { irARegistro() }
         binding.btIniciarSesion.setOnClickListener { iniciarSesion() }
-        binding.ibFlechaParaSalir.setOnClickListener { salirDeLaAplicacion() }
+        binding.ibFlechaParaSalir.setOnClickListener { finishAffinity() }
 
-    }
-
-    fun salirDeLaAplicacion() {
-        finishAffinity()
     }
 
     fun irARegistro() {

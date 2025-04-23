@@ -21,4 +21,8 @@
     <string name="cerrar_sesion">Cerrar Sesion</string>
     <string name="publicaciones">publicaciones</string>
     <string name="guardar">Guardar</string>
+    <string name="a_ade_una_publicacion">Añade una publicacion</string>
+    <string name="ingredientes">ingredientes</string>
+    <string name="descripcion">descripcion</string>
+    <string name="titulo">titulo</string>
 </resources>

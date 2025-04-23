@@ -30,6 +30,7 @@ firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
 firebase-auth = { module = "com.google.firebase:firebase-auth-ktx"}
 firebase-auth-google = { module = "com.google.android.gms:play-services-auth", version.ref = "servicesAuth"}
 firebase-firestore = { module = "com.google.firebase:firebase-firestore-ktx", version.ref = "firestore" }
+google-services = { module = "com.google.gms:google-services", version.ref = "services" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -1,5 +1,6 @@
 package com.fjlr.firebase
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -12,7 +13,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 class AppActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAppBinding
-    private val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,5 +29,7 @@ class AppActivity : AppCompatActivity() {
 
         configurarBarraNavegacion(this, binding.barraNavegacion)
 
+        binding.btGuardarPublicacion.setOnClickListener { startActivity(Intent(this,
+            AnadirPublicacionActivity::class.java)) }
     }
 }

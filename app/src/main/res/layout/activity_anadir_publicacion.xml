@@ -7,4 +7,82 @@
     android:layout_height="match_parent"
     tools:context=".AnadirPublicacionActivity">
 
+    <ImageButton
+        android:id="@+id/ibFlechaParaSalir"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/boton_para_salir_de_la_aplicacion"
+        android:src="@drawable/flechaparaatras"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTituloAnadir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="96dp"
+        android:text="@string/a_ade_una_publicacion"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.13"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivLogoApp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="@string/logo_app"
+        android:src="@drawable/remylogo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etTituloAnadir"
+        android:layout_width="273dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="104dp"
+        android:hint="@string/titulo"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTituloAnadir" />
+
+    <EditText
+        android:id="@+id/etDescripcionAnadir"
+        android:layout_width="273dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="20dp"
+        android:hint="@string/descripcion"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etTituloAnadir" />
+
+    <EditText
+        android:id="@+id/etIngredientes"
+        android:layout_width="273dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="40dp"
+        android:hint="@string/ingredientes"
+        android:inputType="textMultiLine|textCapSentences"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etDescripcionAnadir" />
+
+    <Button
+        android:id="@+id/btGuardarPublicacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/guardar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etIngredientes" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
