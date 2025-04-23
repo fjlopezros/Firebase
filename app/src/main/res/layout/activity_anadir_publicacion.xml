@@ -46,21 +46,36 @@
         android:id="@+id/etTituloAnadir"
         android:layout_width="273dp"
         android:layout_height="48dp"
-        android:layout_marginTop="104dp"
+        android:layout_marginTop="40dp"
         android:hint="@string/titulo"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.463"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTituloAnadir" />
+
+    <EditText
+        android:id="@+id/etPreparacion"
+        android:layout_width="150dp"
+        android:layout_height="48dp"
+        android:inputType="number"
+        android:text="@string/min"
+        android:textAlignment="textEnd"
+        app:layout_constraintBottom_toTopOf="@+id/btGuardarPublicacion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etIngredientes"
+        app:layout_constraintVertical_bias="0.217" />
 
     <EditText
         android:id="@+id/etDescripcionAnadir"
         android:layout_width="273dp"
         android:layout_height="75dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="8dp"
         android:hint="@string/descripcion"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.463"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etTituloAnadir" />
 
@@ -68,10 +83,11 @@
         android:id="@+id/etIngredientes"
         android:layout_width="273dp"
         android:layout_height="150dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="16dp"
         android:hint="@string/ingredientes"
         android:inputType="textMultiLine|textCapSentences"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.463"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etDescripcionAnadir" />
 
@@ -82,7 +98,6 @@
         android:text="@string/guardar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etIngredientes" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

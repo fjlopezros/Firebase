@@ -4,13 +4,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.fjlr.firebase.PublicacionesEntity
+import com.fjlr.firebase.entity.PublicacionesEntity
 import com.fjlr.firebase.R
 import com.fjlr.firebase.databinding.PublicacionesItemBinding
 
 class Publicaciones(
-    private val publicaciones: List<PublicacionesEntity>,
-    private val fn: (PublicacionesEntity) -> Unit
+    private var publicaciones: MutableList<PublicacionesEntity>
 ) :
     RecyclerView.Adapter<Publicaciones.PublicacionesViewHolder>() {
 
@@ -36,7 +35,6 @@ class Publicaciones(
             binding.tvTituloPublicacion.text = publicaciones.titulo
             binding.tvDescripcionPublicacion.text = publicaciones.descripcion
             binding.tvIngredientesPublicacion.text = publicaciones.ingredientes
-            binding.root.setOnClickListener { fn(publicaciones) }
         }
     }
 }

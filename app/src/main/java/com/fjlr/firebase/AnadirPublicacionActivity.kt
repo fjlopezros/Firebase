@@ -1,13 +1,13 @@
 package com.fjlr.firebase
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.fjlr.firebase.databinding.ActivityAnadirPublicacionBinding
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 
 class AnadirPublicacionActivity : AppCompatActivity() {
@@ -33,32 +33,40 @@ class AnadirPublicacionActivity : AppCompatActivity() {
         binding.ibFlechaParaSalir.setOnClickListener { finish() }
 
         binding.btGuardarPublicacion.setOnClickListener {
-            try {
-                val titulo = binding.etTituloAnadir.text.toString()
-                val descripcion = binding.etDescripcionAnadir.text.toString()
-                val ingredientes = binding.etIngredientes.text.toString()
+            subirPublicacion()
+        }
+    }
 
-                if (titulo.isNotEmpty() && descripcion.isNotEmpty() && ingredientes.isNotEmpty()) {
-                    val publicaciones = hashMapOf(
-                        "titulo" to titulo,
-                        "descripcion" to descripcion,
-                        "ingredientes" to ingredientes
-                    )
+    fun subirPublicacion() {
+        val titulo = binding.etTituloAnadir.text.toString()
+        val descripcion = binding.etDescripcionAnadir.text.toString()
+        val ingredientes = binding.etIngredientes.text.toString()
+        val preparacion = binding.etPreparacion.text.toString()
 
-                    db.collection("publicaciones").add(publicaciones)
-                        .addOnSuccessListener {
-                            Toast.makeText(this, "Receta guardada", Toast.LENGTH_SHORT).show()
-                        }
-                        .addOnFailureListener {
-                            Toast.makeText(this, "Error al guardar", Toast.LENGTH_SHORT).show()
-                        }
-                    finish()
-                } else {
-                    Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
+        if (titulo.isNotEmpty() && descripcion.isNotEmpty() &&
+            preparacion.isNotEmpty() && ingredientes.isNotEmpty()) {
+            val publicaciones = hashMapOf(
+                "titulo" to titulo,
+                "descripcion" to descripcion,
+                "ingredientes" to ingredientes,
+                "preparacion" to preparacion,
+                "timestamp" to FieldValue.serverTimestamp()
+            )
+
+            val timestamp = System.currentTimeMillis()
+            val docId = "${titulo}_${timestamp}"
+
+            db.collection("publicaciones").document(docId)
+                .set(publicaciones)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Receta guardada", Toast.LENGTH_SHORT).show()
                 }
-            } catch (_: SecurityException) {
-                Log.d("ERROR CAPTURADO", "error seguridad")
-            }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Error al guardar", Toast.LENGTH_SHORT).show()
+                }
+            finish()
+        } else {
+            Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
         }
     }
 }

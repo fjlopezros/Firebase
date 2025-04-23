@@ -25,4 +25,8 @@
     <string name="ingredientes">ingredientes</string>
     <string name="descripcion">descripcion</string>
     <string name="titulo">titulo</string>
+    <string name="descripcionTitulo">Descripcion:</string>
+    <string name="ingredientesTItulo">Ingredientes:</string>
+    <string name="min">min</string>
+    <string name="dificultad">dificultad</string>
 </resources>
