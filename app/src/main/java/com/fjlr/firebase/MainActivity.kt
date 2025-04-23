@@ -12,6 +12,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.fjlr.firebase.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import kotlin.system.exitProcess
 
@@ -37,7 +38,6 @@ class MainActivity : AppCompatActivity() {
 
         auth = Firebase.auth
 
-
         binding.btRegistrarse.setOnClickListener { irARegistro() }
         binding.btIniciarSesion.setOnClickListener { iniciarSesion() }
         binding.ibFlechaParaSalir.setOnClickListener { finishAffinity() }
@@ -53,8 +53,6 @@ class MainActivity : AppCompatActivity() {
             binding.etUsuarioSesion.text.toString(),
             binding.etContrasenaSesion.text.toString()
         )
-        binding.etUsuarioSesion.text.clear()
-        binding.etContrasenaSesion.text.clear()
     }
 
     fun iniciarSesion(email: String, contrasena: String) {

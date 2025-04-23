@@ -6,6 +6,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.fjlr.firebase.databinding.ActivityAppBinding
 import com.fjlr.firebase.utils.configurarBarraNavegacion
 import com.google.firebase.firestore.FirebaseFirestore
@@ -29,7 +30,10 @@ class AppActivity : AppCompatActivity() {
 
         configurarBarraNavegacion(this, binding.barraNavegacion)
 
-        binding.btGuardarPublicacion.setOnClickListener { startActivity(Intent(this,
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+
+        binding.btAnadirPublicacion.setOnClickListener { startActivity(Intent(this,
             AnadirPublicacionActivity::class.java)) }
     }
+
 }

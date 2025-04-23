@@ -41,8 +41,6 @@ class RegistroActivity : AppCompatActivity() {
             binding.etUsuarioRegistro.text.toString(),
             binding.etContrasenaRegistro.text.toString()
         )
-        binding.etUsuarioRegistro.text.clear()
-        binding.etContrasenaRegistro.text.clear()
     }
 
     fun creacionUsuario(email: String, contrasena: String) {
