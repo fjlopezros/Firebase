@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.fjlr.firebase.adaptador.Publicaciones
 import com.fjlr.firebase.databinding.ActivityAppBinding
 import com.fjlr.firebase.entity.PublicacionesEntity
+import com.fjlr.firebase.utils.Constantes
 import com.fjlr.firebase.utils.configurarBarraNavegacion
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 
@@ -19,6 +21,9 @@ class AppActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAppBinding
     private lateinit var db: FirebaseFirestore
+
+    private var listaPublicaciones = mutableListOf<PublicacionesEntity>()
+    private lateinit var adapter: Publicaciones
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,17 +42,25 @@ class AppActivity : AppCompatActivity() {
         }
 
         configurarBarraNavegacion(this, binding.barraNavegacion)
-
-        var listaPublicaciones = mutableListOf<PublicacionesEntity>()
-        val adapter = Publicaciones(listaPublicaciones)
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        binding.recyclerView.adapter = adapter
+        inicializarRecyclerView()
 
         binding.btAnadirPublicacion.setOnClickListener {
             startActivity(Intent(this, AnadirPublicacionActivity::class.java))
         }
-        db.collection("publicaciones")
-            .orderBy("timestamp", Query.Direction.DESCENDING)
+
+        cargarPublicaciones()
+
+    }
+
+    private fun inicializarRecyclerView() {
+        adapter = Publicaciones(listaPublicaciones)
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.adapter = adapter
+    }
+
+    private fun cargarPublicaciones() {
+        db.collection(Constantes.COLECCION_FIREBASE + "-" + FirebaseAuth.getInstance().currentUser?.email)
+            .orderBy(Constantes.TIEMPO_ORDENAR_PUBLI, Query.Direction.DESCENDING)
             .addSnapshotListener { snapshots, e ->
                 if (e != null) {
                     Log.w("Firestore", "Escucha fallida", e)

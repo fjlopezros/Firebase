@@ -14,6 +14,19 @@
         android:layout_height="375dp">
 
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/ibBotonFavorito"
+            android:layout_width="40dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="20dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/favorito"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/tvTituloPublicacion"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/tvTituloPublicacion"
             android:layout_width="wrap_content"
@@ -50,6 +63,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvDescripcionPublicacion" />
 
+
+        <TextView
+            android:id="@+id/tvPreparacionPublicacionTitulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="@string/preparacion"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.084"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvIngredientesPublicacion" />
+
         <TextView
             android:id="@+id/tvDescripcionPublicacion"
             android:layout_width="wrap_content"
@@ -74,6 +100,20 @@
             app:layout_constraintTop_toBottomOf="@+id/tvIngredientesPublicacionTitulo"
             app:layout_constraintVertical_bias="0.089"
             tools:hint="ingredientes publicacion" />
+
+        <TextView
+            android:id="@+id/tvPreparacionPublicacion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.076"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPreparacionPublicacionTitulo"
+            app:layout_constraintVertical_bias="0.0"
+            tools:hint="minutos" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.fjlr.firebase.databinding.ActivityAnadirPublicacionBinding
+import com.fjlr.firebase.utils.Constantes
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -46,17 +47,17 @@ class AnadirPublicacionActivity : AppCompatActivity() {
         if (titulo.isNotEmpty() && descripcion.isNotEmpty() &&
             preparacion.isNotEmpty() && ingredientes.isNotEmpty()) {
             val publicaciones = hashMapOf(
-                "titulo" to titulo,
-                "descripcion" to descripcion,
-                "ingredientes" to ingredientes,
-                "preparacion" to preparacion,
-                "timestamp" to FieldValue.serverTimestamp()
+                Constantes.TITULO to titulo,
+                Constantes.DESCRIPCION to descripcion,
+                Constantes.INGREDIENTES to ingredientes,
+                Constantes.PREPARACION to preparacion,
+                Constantes.TIEMPO_ORDENAR_PUBLI to FieldValue.serverTimestamp()
             )
 
             val timestamp = System.currentTimeMillis()
             val docId = "${titulo}_${timestamp}"
 
-            db.collection("publicaciones").document(docId)
+            db.collection(Constantes.COLECCION_FIREBASE).document(docId)
                 .set(publicaciones)
                 .addOnSuccessListener {
                     Toast.makeText(this, "Receta guardada", Toast.LENGTH_SHORT).show()
