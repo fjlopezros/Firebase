@@ -1,6 +1,7 @@
 package com.fjlr.firebase
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +9,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.fjlr.firebase.databinding.ActivityAnadirPublicacionBinding
 import com.fjlr.firebase.utils.Constantes
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -51,11 +53,16 @@ class AnadirPublicacionActivity : AppCompatActivity() {
                 Constantes.DESCRIPCION to descripcion,
                 Constantes.INGREDIENTES to ingredientes,
                 Constantes.PREPARACION to preparacion,
+                Constantes.FAVORITO to false,
                 Constantes.TIEMPO_ORDENAR_PUBLI to FieldValue.serverTimestamp()
             )
 
             val timestamp = System.currentTimeMillis()
-            val docId = "${titulo}_${timestamp}"
+            val docId = "${titulo}_" +
+                    "${FirebaseAuth.getInstance().currentUser?.email}"
+
+            Log.d("EEEEEEEEEE", docId)
+
 
             db.collection(Constantes.COLECCION_FIREBASE).document(docId)
                 .set(publicaciones)

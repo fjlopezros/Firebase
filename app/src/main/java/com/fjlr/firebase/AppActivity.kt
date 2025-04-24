@@ -13,7 +13,6 @@ import com.fjlr.firebase.databinding.ActivityAppBinding
 import com.fjlr.firebase.entity.PublicacionesEntity
 import com.fjlr.firebase.utils.Constantes
 import com.fjlr.firebase.utils.configurarBarraNavegacion
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 
@@ -59,7 +58,7 @@ class AppActivity : AppCompatActivity() {
     }
 
     private fun cargarPublicaciones() {
-        db.collection(Constantes.COLECCION_FIREBASE + "-" + FirebaseAuth.getInstance().currentUser?.email)
+        db.collection(Constantes.COLECCION_FIREBASE)
             .orderBy(Constantes.TIEMPO_ORDENAR_PUBLI, Query.Direction.DESCENDING)
             .addSnapshotListener { snapshots, e ->
                 if (e != null) {

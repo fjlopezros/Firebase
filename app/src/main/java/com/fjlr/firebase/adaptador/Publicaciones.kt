@@ -9,6 +9,9 @@ import com.airbnb.lottie.LottieAnimationView
 import com.fjlr.firebase.entity.PublicacionesEntity
 import com.fjlr.firebase.R
 import com.fjlr.firebase.databinding.PublicacionesItemBinding
+import com.fjlr.firebase.utils.Constantes
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class Publicaciones(
     private var publicaciones: MutableList<PublicacionesEntity>
@@ -34,14 +37,10 @@ class Publicaciones(
         holder.icono.setOnClickListener {
             val nuevoEstado = animacionIcono(holder.icono, R.raw.favorito, publicacion.esFavorito)
             publicacion.esFavorito = nuevoEstado
+            FirebaseFirestore.getInstance().collection(Constantes.COLECCION_FIREBASE)
+                .document(publicacion.titulo+"_"+ FirebaseAuth.getInstance().currentUser?.email)
+                .update("favorito", nuevoEstado)
         }
-
-        // Filtrar publicaciones favoritas por nombre
-        val publicacionesFavoritas = publicaciones.filter { it.esFavorito }
-        publicacionesFavoritas.forEach {
-            Log.d("Favorito", "Publicación favorita: ${it.titulo}")
-        }
-
     }
 
     override fun getItemCount(): Int = publicaciones.size
@@ -72,4 +71,5 @@ class Publicaciones(
             false
         }
     }
+
 }

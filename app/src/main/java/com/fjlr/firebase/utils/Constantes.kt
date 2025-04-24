@@ -8,5 +8,6 @@ class Constantes {
         const val DESCRIPCION:String = "descripcion"
         const val INGREDIENTES:String = "ingredientes"
         const val PREPARACION:String = "preparacion"
+        const val FAVORITO: String = "favorito"
     }
 }
