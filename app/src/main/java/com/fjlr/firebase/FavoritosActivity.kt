@@ -7,11 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.fjlr.firebase.adaptador.Publicaciones
-import com.fjlr.firebase.adaptador.PublicacionesFav
+import com.fjlr.firebase.adapter.PublicacionesFavAdaptador
 import com.fjlr.firebase.databinding.ActivityFavoritosBinding
-import com.fjlr.firebase.entity.PublicacionesEntity
-import com.fjlr.firebase.utils.Constantes
+import com.fjlr.firebase.model.PublicacionesModelo
+import com.fjlr.firebase.utils.ConstantesUtilidades
 import com.fjlr.firebase.utils.configurarBarraNavegacion
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -22,8 +21,8 @@ class FavoritosActivity : AppCompatActivity() {
 
     private lateinit var db: FirebaseFirestore
 
-    private var listaPublicaciones = mutableListOf<PublicacionesEntity>()
-    private lateinit var adapter: PublicacionesFav
+    private var listaPublicaciones = mutableListOf<PublicacionesModelo>()
+    private lateinit var adapter: PublicacionesFavAdaptador
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,15 +45,15 @@ class FavoritosActivity : AppCompatActivity() {
     }
 
     private fun inicializarRecyclerView() {
-        adapter = PublicacionesFav(listaPublicaciones)
+        adapter = PublicacionesFavAdaptador(listaPublicaciones)
         binding.recyclerViewFav.layoutManager = LinearLayoutManager(this)
         binding.recyclerViewFav.adapter = adapter
     }
 
     private fun cargarPublicaciones() {
-        db.collection(Constantes.COLECCION_FIREBASE)
+        db.collection(ConstantesUtilidades.COLECCION_FIREBASE)
             .whereEqualTo("esFavorito", true)
-            .orderBy(Constantes.TIEMPO_ORDENAR_PUBLI, Query.Direction.DESCENDING)
+            .orderBy(ConstantesUtilidades.TIEMPO_ORDENAR_PUBLI, Query.Direction.DESCENDING)
             .addSnapshotListener { snapshots, e ->
                 if (e != null) {
                     Log.w("Firestore", "Escucha fallida", e)
@@ -64,7 +63,7 @@ class FavoritosActivity : AppCompatActivity() {
                 if (snapshots != null) {
                     listaPublicaciones.clear()
                     for (doc in snapshots.documents) {
-                        val publicacion = doc.toObject(PublicacionesEntity::class.java)
+                        val publicacion = doc.toObject(PublicacionesModelo::class.java)
                         if (publicacion != null) {
                             listaPublicaciones.add(publicacion)
                         }

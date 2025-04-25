@@ -1,6 +1,6 @@
-package com.fjlr.firebase.entity
+package com.fjlr.firebase.model
 
-data class PublicacionesEntity(
+data class PublicacionesModelo(
     val titulo: String = "",
     val descripcion: String = "",
     val ingredientes: String = "",

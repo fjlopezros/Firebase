@@ -6,13 +6,15 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 import com.fjlr.firebase.databinding.ActivityAjustesBinding
 import com.fjlr.firebase.utils.configurarBarraNavegacion
-import com.google.firebase.auth.FirebaseAuth
+import com.fjlr.firebase.viewModel.AjustesVistaModelo
 
 class AjustesActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAjustesBinding
+    private lateinit var viewModel: AjustesVistaModelo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,20 +29,15 @@ class AjustesActivity : AppCompatActivity() {
             insets
         }
 
+        viewModel = ViewModelProvider(this)[AjustesVistaModelo::class.java]
+
         configurarBarraNavegacion(this, binding.barraNavegacion)
 
-        mostrarCorreo()
-        binding.btCerrarSesion.setOnClickListener { cerrarSesion() }
-    }
-    fun mostrarCorreo(){
-        val usuario = FirebaseAuth.getInstance().currentUser
-        binding.tvCorreoUsuario.text = usuario?.email ?: "Correo no disponible"
-    }
+        binding.btCerrarSesion.setOnClickListener {
+            viewModel.cerrarSesion()
+            startActivity(Intent(this, MainActivity::class.java))
+        }
 
-    fun cerrarSesion() {
-        FirebaseAuth.getInstance().signOut()
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish()
+        binding.tvCorreoUsuario.text = viewModel.obtenerUsuarioActual()
     }
 }

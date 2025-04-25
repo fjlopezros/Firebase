@@ -2,27 +2,28 @@ package com.fjlr.firebase
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.fjlr.firebase.adaptador.Publicaciones
+import com.fjlr.firebase.adapter.PublicacionesAdaptador
 import com.fjlr.firebase.databinding.ActivityAppBinding
-import com.fjlr.firebase.entity.PublicacionesEntity
-import com.fjlr.firebase.utils.Constantes
+import com.fjlr.firebase.model.PublicacionesModelo
 import com.fjlr.firebase.utils.configurarBarraNavegacion
+import com.fjlr.firebase.viewModel.PublicacionesVistaModelo
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 
 class AppActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAppBinding
     private lateinit var db: FirebaseFirestore
 
-    private var listaPublicaciones = mutableListOf<PublicacionesEntity>()
-    private lateinit var adapter: Publicaciones
+    private val listaPublicaciones = mutableListOf<PublicacionesModelo>()
+    private lateinit var adapter: PublicacionesAdaptador
+
+    private lateinit var viewModel: PublicacionesVistaModelo
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +41,8 @@ class AppActivity : AppCompatActivity() {
             insets
         }
 
+        viewModel = ViewModelProvider(this)[PublicacionesVistaModelo::class.java]
+
         configurarBarraNavegacion(this, binding.barraNavegacion)
         inicializarRecyclerView()
 
@@ -47,35 +50,17 @@ class AppActivity : AppCompatActivity() {
             startActivity(Intent(this, AnadirPublicacionActivity::class.java))
         }
 
-        cargarPublicaciones()
-
+        viewModel.cargarPublicaciones()
+        viewModel.publicaciones.observe(this) { lista ->
+            listaPublicaciones.clear()
+            listaPublicaciones.addAll(lista)
+            adapter.notifyDataSetChanged()
+        }
     }
 
     private fun inicializarRecyclerView() {
-        adapter = Publicaciones(listaPublicaciones)
+        adapter = PublicacionesAdaptador(listaPublicaciones)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
-    }
-
-    private fun cargarPublicaciones() {
-        db.collection(Constantes.COLECCION_FIREBASE)
-            .orderBy(Constantes.TIEMPO_ORDENAR_PUBLI, Query.Direction.DESCENDING)
-            .addSnapshotListener { snapshots, e ->
-                if (e != null) {
-                    Log.w("Firestore", "Escucha fallida", e)
-                    return@addSnapshotListener
-                }
-
-                if (snapshots != null) {
-                    listaPublicaciones.clear()
-                    for (doc in snapshots.documents) {
-                        val publicacion = doc.toObject(PublicacionesEntity::class.java)
-                        if (publicacion != null) {
-                            listaPublicaciones.add(publicacion)
-                        }
-                    }
-                    adapter.notifyDataSetChanged()
-                }
-            }
     }
 }

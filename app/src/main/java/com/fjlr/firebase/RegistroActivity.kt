@@ -1,20 +1,20 @@
 package com.fjlr.firebase
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 import com.fjlr.firebase.databinding.ActivityRegistroBinding
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+import com.fjlr.firebase.viewModel.RegistroVistaModelo
 
 class RegistroActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegistroBinding
-    private lateinit var auth: FirebaseAuth
+    private lateinit var viewModel: RegistroVistaModelo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,33 +29,20 @@ class RegistroActivity : AppCompatActivity() {
             insets
         }
 
-        auth = Firebase.auth
+        viewModel = ViewModelProvider(this)[RegistroVistaModelo::class.java]
 
         binding.ibFlechaParaSalir.setOnClickListener { finish() }
-        binding.btRegistro.setOnClickListener { creacionUsuario() }
 
-    }
-
-    fun creacionUsuario() {
-        creacionUsuario(
-            binding.etUsuarioRegistro.text.toString(),
-            binding.etContrasenaRegistro.text.toString()
-        )
-    }
-
-    fun creacionUsuario(email: String, contrasena: String) {
-        auth.createUserWithEmailAndPassword(email, contrasena)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
+        binding.btRegistro.setOnClickListener {
+            viewModel.registrarse(
+                binding.etUsuarioRegistro.text.toString(),
+                binding.etContrasenaRegistro.text.toString()
+            ) { success, error ->
+                if (success) {
+                    Toast.makeText(this, "Registro exitoso", Toast.LENGTH_SHORT).show()
                     finish()
-                } else {
-                    Toast.makeText(
-                        baseContext,
-                        "El registro fallo",
-                        Toast.LENGTH_SHORT,
-                    ).show()
                 }
             }
+        }
     }
-
 }

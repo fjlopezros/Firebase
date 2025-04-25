@@ -1,22 +1,24 @@
 package com.fjlr.firebase
 
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.fjlr.firebase.databinding.ActivityAnadirPublicacionBinding
-import com.fjlr.firebase.utils.Constantes
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FieldValue
+import com.fjlr.firebase.model.PublicacionesModelo
+import com.fjlr.firebase.viewModel.PublicacionesVistaModelo
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.launch
 
 class AnadirPublicacionActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAnadirPublicacionBinding
     private lateinit var db: FirebaseFirestore
+
+    private lateinit var viewModel: PublicacionesVistaModelo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,48 +35,22 @@ class AnadirPublicacionActivity : AppCompatActivity() {
             insets
         }
 
+        viewModel = ViewModelProvider(this)[PublicacionesVistaModelo::class.java]
+
         binding.ibFlechaParaSalir.setOnClickListener { finish() }
 
         binding.btGuardarPublicacion.setOnClickListener {
-            subirPublicacion()
-        }
-    }
-
-    fun subirPublicacion() {
-        val titulo = binding.etTituloAnadir.text.toString()
-        val descripcion = binding.etDescripcionAnadir.text.toString()
-        val ingredientes = binding.etIngredientes.text.toString()
-        val preparacion = binding.etPreparacion.text.toString()
-
-        if (titulo.isNotEmpty() && descripcion.isNotEmpty() &&
-            preparacion.isNotEmpty() && ingredientes.isNotEmpty()) {
-            val publicaciones = hashMapOf(
-                Constantes.TITULO to titulo,
-                Constantes.DESCRIPCION to descripcion,
-                Constantes.INGREDIENTES to ingredientes,
-                Constantes.PREPARACION to preparacion,
-                Constantes.FAVORITO to false,
-                Constantes.TIEMPO_ORDENAR_PUBLI to FieldValue.serverTimestamp()
-            )
-
-            val timestamp = System.currentTimeMillis()
-            val docId = "${titulo}_" +
-                    "${FirebaseAuth.getInstance().currentUser?.email}"
-
-            Log.d("EEEEEEEEEE", docId)
-
-
-            db.collection(Constantes.COLECCION_FIREBASE).document(docId)
-                .set(publicaciones)
-                .addOnSuccessListener {
-                    Toast.makeText(this, "Receta guardada", Toast.LENGTH_SHORT).show()
-                }
-                .addOnFailureListener {
-                    Toast.makeText(this, "Error al guardar", Toast.LENGTH_SHORT).show()
-                }
-            finish()
-        } else {
-            Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
+            lifecycleScope.launch {
+                viewModel.subirPublicacion(
+                    PublicacionesModelo(
+                        binding.etTituloAnadir.text.toString(),
+                        binding.etDescripcionAnadir.text.toString(),
+                        binding.etIngredientes.text.toString(),
+                        binding.etPreparacion.text.toString()
+                    )
+                )
+                finish()
+            }
         }
     }
 }

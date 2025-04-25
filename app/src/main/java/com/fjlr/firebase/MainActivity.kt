@@ -7,21 +7,18 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 import com.fjlr.firebase.databinding.ActivityMainBinding
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+import com.fjlr.firebase.viewModel.SesionVistaModelo
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var auth: FirebaseAuth
+    private lateinit var viewModel: SesionVistaModelo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
-        verificarSesionAbierta()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -32,45 +29,35 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        auth = Firebase.auth
+        viewModel = ViewModelProvider(this)[SesionVistaModelo::class.java]
 
-        binding.btRegistrarse.setOnClickListener { irARegistro() }
-        binding.btIniciarSesion.setOnClickListener { iniciarSesion() }
-        binding.ibFlechaParaSalir.setOnClickListener { finishAffinity() }
-
-    }
-
-    fun irARegistro() {
-        startActivity(Intent(this, RegistroActivity::class.java))
-    }
-
-    fun iniciarSesion() {
-        iniciarSesion(
-            binding.etUsuarioSesion.text.toString(),
-            binding.etContrasenaSesion.text.toString()
-        )
-    }
-
-    fun iniciarSesion(email: String, contrasena: String) {
-        auth.signInWithEmailAndPassword(email, contrasena)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    startActivity(Intent(this, AppActivity::class.java))
-                } else {
-                    Toast.makeText(
-                        baseContext,
-                        "El inicio de sesion fallo",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-    }
-
-    fun verificarSesionAbierta() {
-        val usuario = FirebaseAuth.getInstance().currentUser
-        if (usuario != null) {
+        if (viewModel.sesionActiva()) {
             startActivity(Intent(this, AppActivity::class.java))
             finish()
+        }
+
+        binding.btRegistrarse.setOnClickListener {
+            startActivity(
+                Intent(
+                    this,
+                    RegistroActivity::class.java
+                )
+            )
+        }
+        binding.ibFlechaParaSalir.setOnClickListener { finishAffinity() }
+
+        binding.btIniciarSesion.setOnClickListener {
+            viewModel.iniciarSesion(
+                binding.etUsuarioSesion.text.toString(),
+                binding.etContrasenaSesion.text.toString()
+            ) { success, error ->
+                if (success) {
+                    startActivity(Intent(this, AppActivity::class.java))
+                    finish()
+                } else {
+                    Toast.makeText(this, "Error al Iniciar Sesion", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 }

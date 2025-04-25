@@ -48,7 +48,14 @@ dependencies {
     implementation(libs.firebase.auth.google)
     implementation(libs.firebase.firestore)
     implementation(libs.google.services)
+
     implementation(libs.lottie)
+
+    implementation(libs.corroutines.android)
+    implementation(libs.corroutines.core)
+    implementation(libs.viewmodel.ktx)
+    implementation(libs.livedata.ktx)
+    implementation(libs.runtime.ktx)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

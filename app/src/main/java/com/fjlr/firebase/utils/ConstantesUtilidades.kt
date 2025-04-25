@@ -1,6 +1,6 @@
 package com.fjlr.firebase.utils
 
-class Constantes {
+class ConstantesUtilidades {
     companion object{
         const val COLECCION_FIREBASE:String = "publicaciones"
         const val TIEMPO_ORDENAR_PUBLI:String = "timestamp"
