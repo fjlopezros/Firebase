@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AjustesActivity">
+    tools:context=".view.AjustesActivity">
 
     <ImageView
         android:id="@+id/ivPerfilUsuario"
@@ -28,15 +28,28 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:hint="correo usuario" />
 
+
     <Button
         android:id="@+id/btCerrarSesion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="88dp"
+        android:layout_marginEnd="24dp"
         android:text="@string/cerrar_sesion"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewMy"
+        android:layout_width="364dp"
+        android:layout_height="483dp"
+        android:contentDescription="@string/publicaciones"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.721" />
 
     <include
         android:id="@+id/barra_navegacion"

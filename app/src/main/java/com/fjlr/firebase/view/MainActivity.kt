@@ -1,4 +1,4 @@
-package com.fjlr.firebase
+package com.fjlr.firebase.view
 
 import android.content.Intent
 import android.os.Bundle

@@ -1,4 +1,4 @@
-package com.fjlr.firebase
+package com.fjlr.firebase.view
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge

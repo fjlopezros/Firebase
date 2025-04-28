@@ -2,10 +2,10 @@ package com.fjlr.firebase.utils
 
 import android.app.Activity
 import android.content.Intent
-import com.fjlr.firebase.AjustesActivity
-import com.fjlr.firebase.AppActivity
-import com.fjlr.firebase.BuscarActivity
-import com.fjlr.firebase.FavoritosActivity
+import com.fjlr.firebase.view.AjustesActivity
+import com.fjlr.firebase.view.AppActivity
+import com.fjlr.firebase.view.BuscarActivity
+import com.fjlr.firebase.view.FavoritosActivity
 import com.fjlr.firebase.databinding.LayoutBarraBinding
 
 fun configurarBarraNavegacion(activity: Activity, bindingBarra: LayoutBarraBinding) {

@@ -1,4 +1,4 @@
-package com.fjlr.firebase
+package com.fjlr.firebase.view
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -16,15 +16,12 @@ import kotlinx.coroutines.launch
 class AnadirPublicacionActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAnadirPublicacionBinding
-    private lateinit var db: FirebaseFirestore
 
     private lateinit var viewModel: PublicacionesVistaModelo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
-        db = FirebaseFirestore.getInstance()
 
         binding = ActivityAnadirPublicacionBinding.inflate(layoutInflater)
         setContentView(binding.root)

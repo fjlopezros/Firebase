@@ -9,5 +9,6 @@ class ConstantesUtilidades {
         const val INGREDIENTES:String = "ingredientes"
         const val PREPARACION:String = "preparacion"
         const val FAVORITO: String = "favorito"
+        const val AUTOR: String = "autor"
     }
 }

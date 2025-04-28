@@ -5,5 +5,6 @@ data class PublicacionesModelo(
     val descripcion: String = "",
     val ingredientes: String = "",
     val preparacion: String = "",
+    val autor: String = "",
     var esFavorito: Boolean = false
 )

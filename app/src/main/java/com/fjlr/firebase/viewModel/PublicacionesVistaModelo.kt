@@ -17,7 +17,20 @@ class PublicacionesVistaModelo : ViewModel() {
             _publicaciones.postValue(lista)
         }
     }
+
     suspend fun subirPublicacion(publicacion: PublicacionesModelo) {
         return repositorio.subirPublicacion(publicacion)
+    }
+
+    fun cargarFavoritos() {
+        repositorio.cargarPublicacionesFavoritas { lista ->
+           _publicaciones.postValue(lista)
+        }
+    }
+
+    fun cargarTusPublicaciones() {
+        repositorio.cargarTusPublicaciones { lista ->
+            _publicaciones.postValue(lista)
+        }
     }
 }

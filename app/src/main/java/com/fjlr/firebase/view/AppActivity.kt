@@ -1,4 +1,4 @@
-package com.fjlr.firebase
+package com.fjlr.firebase.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -18,7 +18,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 class AppActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAppBinding
-    private lateinit var db: FirebaseFirestore
 
     private val listaPublicaciones = mutableListOf<PublicacionesModelo>()
     private lateinit var adapter: PublicacionesAdaptador
@@ -29,8 +28,6 @@ class AppActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
-        db = FirebaseFirestore.getInstance()
 
         binding = ActivityAppBinding.inflate(layoutInflater)
         setContentView(binding.root)

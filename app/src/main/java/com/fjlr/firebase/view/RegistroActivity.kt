@@ -1,7 +1,6 @@
-package com.fjlr.firebase
+package com.fjlr.firebase.view
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity

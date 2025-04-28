@@ -1,5 +1,6 @@
 package com.fjlr.firebase.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,8 +16,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 //LISTADAPTER
 class PublicacionesAdaptador(
     private var publicaciones: MutableList<PublicacionesModelo>
-) :
-    RecyclerView.Adapter<PublicacionesAdaptador.PublicacionesViewHolder>() {
+) : RecyclerView.Adapter<PublicacionesAdaptador.PublicacionesViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -37,6 +37,7 @@ class PublicacionesAdaptador(
         holder.icono.setOnClickListener {
             val nuevoEstado = animacionIcono(holder.icono, R.raw.favorito, publicacion.esFavorito)
             publicacion.esFavorito = nuevoEstado
+            Log.d("PublicacionesAdaptador", "onBindViewHolder: $nuevoEstado")
             FirebaseFirestore.getInstance().collection(ConstantesUtilidades.COLECCION_FIREBASE)
                 .document(publicacion.titulo+"_"+ FirebaseAuth.getInstance().currentUser?.email)
                 .update("favorito", nuevoEstado)
