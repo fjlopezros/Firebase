@@ -1,0 +1,10 @@
+1. Quitar el boton "Guardar" para subir una publicacion en AppActivity.
+Poner un mas(icono)
+
+2. Arreglar el icono de fav de la publicacion (ANIMACION)
+
+3. Sign In Google
+
+4. Documentacion
+
+5. En AjustesActivity poner el recycler view y el item "mejor" visualmente

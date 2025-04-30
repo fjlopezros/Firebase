@@ -1,4 +1,5 @@
 <resources>
+    <string name="default_web_client_id">384861564418-u5k9t3h4iemvlnajcpl652jo75g1b6u2.apps.googleusercontent.com</string>
     <string name="app_name">Firebase</string>
     <string name="bienvenido_de_nuevo">Bienvenido de nuevo!</string>
     <string name="iniciar_sesion">Iniciar Sesion</string>
