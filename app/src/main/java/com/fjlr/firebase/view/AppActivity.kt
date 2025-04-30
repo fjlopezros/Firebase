@@ -13,7 +13,6 @@ import com.fjlr.firebase.databinding.ActivityAppBinding
 import com.fjlr.firebase.model.PublicacionesModelo
 import com.fjlr.firebase.utils.configurarBarraNavegacion
 import com.fjlr.firebase.viewModel.PublicacionesVistaModelo
-import com.google.firebase.firestore.FirebaseFirestore
 
 class AppActivity : AppCompatActivity() {
 
@@ -56,7 +55,7 @@ class AppActivity : AppCompatActivity() {
     }
 
     private fun inicializarRecyclerView() {
-        adapter = PublicacionesAdaptador(listaPublicaciones)
+        adapter = PublicacionesAdaptador(listaPublicaciones, viewModel)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
     }

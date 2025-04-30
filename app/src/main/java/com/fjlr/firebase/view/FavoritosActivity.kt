@@ -46,7 +46,7 @@ class FavoritosActivity : AppCompatActivity() {
     }
 
     private fun inicializarRecyclerView() {
-        adapter = PublicacionesAdaptador(listaFavoritos)
+        adapter = PublicacionesAdaptador(listaFavoritos, viewModel)
         binding.recyclerViewFav.layoutManager = LinearLayoutManager(this)
         binding.recyclerViewFav.adapter = adapter
     }

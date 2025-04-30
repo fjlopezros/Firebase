@@ -22,9 +22,17 @@ class PublicacionesVistaModelo : ViewModel() {
         return repositorio.subirPublicacion(publicacion)
     }
 
+    fun alternarFavorito(publicacion: PublicacionesModelo) {
+        if (publicacion.esFavorito) {
+            repositorio.eliminarFavorito(publicacion)
+        } else {
+            repositorio.guardarFavorito(publicacion)
+        }
+    }
+
     fun cargarFavoritos() {
         repositorio.cargarPublicacionesFavoritas { lista ->
-           _publicaciones.postValue(lista)
+            _publicaciones.postValue(lista)
         }
     }
 

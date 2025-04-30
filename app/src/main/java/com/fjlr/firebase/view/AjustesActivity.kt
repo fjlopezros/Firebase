@@ -58,7 +58,7 @@ class AjustesActivity : AppCompatActivity() {
     }
 
     private fun inicializarRecyclerView() {
-        adapter = PublicacionesAdaptador(listaTusPublicaciones)
+        adapter = PublicacionesAdaptador(listaTusPublicaciones, viewModelMy)
         binding.recyclerViewMy.layoutManager = LinearLayoutManager(this)
         binding.recyclerViewMy.adapter = adapter
     }

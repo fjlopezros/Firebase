@@ -1,6 +1,5 @@
 package com.fjlr.firebase.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,13 +8,12 @@ import com.airbnb.lottie.LottieAnimationView
 import com.fjlr.firebase.model.PublicacionesModelo
 import com.fjlr.firebase.R
 import com.fjlr.firebase.databinding.PublicacionesItemBinding
-import com.fjlr.firebase.utils.ConstantesUtilidades
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
+import com.fjlr.firebase.viewModel.PublicacionesVistaModelo
 
 //LISTADAPTER
 class PublicacionesAdaptador(
-    private var publicaciones: MutableList<PublicacionesModelo>
+    private var publicaciones: MutableList<PublicacionesModelo>,
+    private val viewModel: PublicacionesVistaModelo
 ) : RecyclerView.Adapter<PublicacionesAdaptador.PublicacionesViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -35,12 +33,9 @@ class PublicacionesAdaptador(
         holder.bind(publicacion)
 
         holder.icono.setOnClickListener {
-            val nuevoEstado = animacionIcono(holder.icono, R.raw.favorito, publicacion.esFavorito)
-            publicacion.esFavorito = nuevoEstado
-            Log.d("PublicacionesAdaptador", "onBindViewHolder: $nuevoEstado")
-            FirebaseFirestore.getInstance().collection(ConstantesUtilidades.COLECCION_FIREBASE)
-                .document(publicacion.titulo+"_"+ FirebaseAuth.getInstance().currentUser?.email)
-                .update("favorito", nuevoEstado)
+            publicacion.esFavorito = !publicacion.esFavorito
+            actualizarIcono(holder.icono, publicacion.esFavorito)
+            viewModel.alternarFavorito(publicacion)
         }
     }
 
@@ -58,18 +53,12 @@ class PublicacionesAdaptador(
         }
     }
 
-    private fun animacionIcono(
-        imageView: LottieAnimationView,
-        animation: Int,
-        like: Boolean
-    ): Boolean {
-        return if (!like) {
-            imageView.setAnimation(animation)
-            imageView.playAnimation()
-            true
+    private fun actualizarIcono(icono: LottieAnimationView, esFavorito: Boolean) {
+        if (esFavorito) {
+            icono.setAnimation(R.raw.favorito)
+            icono.playAnimation()
         } else {
-            imageView.setImageResource(R.drawable.favorito)
-            false
+            icono.setImageResource(R.drawable.favorito)
         }
     }
 

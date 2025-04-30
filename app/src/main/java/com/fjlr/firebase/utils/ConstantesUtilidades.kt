@@ -3,6 +3,8 @@ package com.fjlr.firebase.utils
 class ConstantesUtilidades {
     companion object{
         const val COLECCION_FIREBASE:String = "publicaciones"
+        const val COLECCION_USUARIOS:String = "usuarios"
+        const val COLECCION_FAVORITOS:String = "favoritos"
         const val TIEMPO_ORDENAR_PUBLI:String = "timestamp"
         const val TITULO:String = "titulo"
         const val DESCRIPCION:String = "descripcion"

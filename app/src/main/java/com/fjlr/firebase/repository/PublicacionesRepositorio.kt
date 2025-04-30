@@ -31,9 +31,11 @@ class PublicacionesRepositorio {
     }
 
     fun cargarPublicacionesFavoritas(callback: (List<PublicacionesModelo>) -> Unit) {
-        db.collection(ConstantesUtilidades.COLECCION_FIREBASE)
-            .whereEqualTo("autor", emailUsuario)
-            .whereEqualTo(ConstantesUtilidades.FAVORITO, true)
+        emailUsuario ?: return
+
+        db.collection(ConstantesUtilidades.COLECCION_USUARIOS)
+            .document(emailUsuario)
+            .collection(ConstantesUtilidades.COLECCION_FAVORITOS)
             .addSnapshotListener { snapshots, error ->
                 if (error != null) {
                     callback(emptyList())
@@ -52,6 +54,7 @@ class PublicacionesRepositorio {
                 callback(listaFavoritos)
             }
     }
+
 
     fun cargarTusPublicaciones(callback: (List<PublicacionesModelo>) -> Unit) {
 
@@ -94,6 +97,54 @@ class PublicacionesRepositorio {
         db.collection(ConstantesUtilidades.COLECCION_FIREBASE).document(docId)
             .set(publicaciones)
             .await()
+    }
+
+    fun guardarFavorito(publicacion: PublicacionesModelo) {
+        emailUsuario ?: return
+        val docId = "${publicacion.titulo}_${publicacion.autor}"
+
+        val favoritosRef = FirebaseFirestore.getInstance()
+            .collection(ConstantesUtilidades.COLECCION_USUARIOS)
+            .document(emailUsuario)
+            .collection(ConstantesUtilidades.COLECCION_FAVORITOS)
+            .document(docId)
+
+        val publicaciones = hashMapOf(
+            ConstantesUtilidades.TITULO to publicacion.titulo,
+            ConstantesUtilidades.DESCRIPCION to publicacion.descripcion,
+            ConstantesUtilidades.INGREDIENTES to publicacion.ingredientes,
+            ConstantesUtilidades.PREPARACION to publicacion.preparacion,
+            ConstantesUtilidades.FAVORITO to true,
+            ConstantesUtilidades.AUTOR to publicacion.autor,
+            ConstantesUtilidades.TIEMPO_ORDENAR_PUBLI to FieldValue.serverTimestamp()
+        )
+
+        favoritosRef.set(publicaciones)
+            .addOnSuccessListener {
+                Log.d("Repositorio", "Favorito guardado correctamente")
+            }
+            .addOnFailureListener {
+                Log.e("Repositorio", "Error al guardar favorito", it)
+            }
+    }
+
+    fun eliminarFavorito(publicacion: PublicacionesModelo) {
+        emailUsuario ?: return
+        val docId = "${publicacion.titulo}_${publicacion.autor}"
+
+        val favoritosRef = FirebaseFirestore.getInstance()
+            .collection(ConstantesUtilidades.COLECCION_USUARIOS)
+            .document(emailUsuario)
+            .collection(ConstantesUtilidades.COLECCION_FAVORITOS)
+            .document(docId)
+
+        favoritosRef.delete()
+            .addOnSuccessListener {
+                Log.d("Repositorio", "Favorito eliminado correctamente")
+            }
+            .addOnFailureListener {
+                Log.e("Repositorio", "Error al eliminar favorito", it)
+            }
     }
 
     private fun validarCampos(publicacion: PublicacionesModelo) {
