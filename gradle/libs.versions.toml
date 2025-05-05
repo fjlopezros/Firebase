@@ -1,5 +1,5 @@
 [versions]
-agp = "8.9.1"
+agp = "8.9.2"
 kotlin = "2.0.21"
 coreKtx = "1.16.0"
 junit = "4.13.2"
@@ -9,14 +9,16 @@ appcompat = "1.7.0"
 material = "1.12.0"
 activity = "1.10.1"
 constraintlayout = "2.2.1"
-firebaseBom = "33.12.0"
+firebaseBom = "33.13.0"
 services = "4.4.2"
 crashlytics="3.0.3"
 servicesAuth = "21.3.0"
-firestore = "25.1.3"
+firestore = "25.1.4"
 icon = "6.6.6"
 corroutines = "1.7.3"
-lyfecycle = "2.7.0"
+lyfecycle = "2.8.7"
+storage = "21.0.1"
+picasso = "2.71828"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -34,6 +36,7 @@ firebase-auth = { module = "com.google.firebase:firebase-auth-ktx"}
 firebase-auth-google = { module = "com.google.android.gms:play-services-auth", version.ref = "servicesAuth"}
 firebase-firestore = { module = "com.google.firebase:firebase-firestore-ktx", version.ref = "firestore" }
 google-services = { module = "com.google.gms:google-services", version.ref = "services" }
+firebase-storage = { module = "com.google.firebase:firebase-storage-ktx", version.ref = "storage" }
 
 lottie = { module = "com.airbnb.android:lottie", version.ref = "icon" }
 
@@ -43,6 +46,8 @@ corroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", v
 viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lyfecycle" }
 livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lyfecycle" }
 runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lyfecycle" }
+
+picasso = { module = "com.squareup.picasso:picasso", version.ref = "picasso" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

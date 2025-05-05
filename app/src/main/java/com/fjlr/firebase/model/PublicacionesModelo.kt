@@ -6,5 +6,6 @@ data class PublicacionesModelo(
     val ingredientes: String = "",
     val preparacion: String = "",
     val autor: String = "",
-    var esFavorito: Boolean = false
+    var esFavorito: Boolean = false,
+    var imagen: String ="https://robohash.org/anselmo"
 )

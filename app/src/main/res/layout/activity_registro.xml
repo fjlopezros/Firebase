@@ -43,7 +43,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/etUsuarioRegistro"
+        android:id="@+id/etEmailRegistro"
         android:layout_width="300dp"
         android:layout_height="48dp"
         android:layout_marginTop="80dp"
@@ -54,7 +54,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTituloRegistro"
         android:labelFor="@id/etUsuarioSesion"
-        android:hint="@string/usuario" />
+        android:hint="@string/introduce_tu_email" />
+
+    <EditText
+        android:id="@+id/etUsuarioRegistro"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="244dp"
+        android:autofillHints="emailAddress"
+        android:hint="@string/usuario"
+        android:inputType="textEmailAddress"
+        android:labelFor="@id/etUsuarioSesion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTituloRegistro" />
 
     <EditText
         android:id="@+id/etContrasenaRegistro"
@@ -66,7 +80,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etUsuarioRegistro"
+        app:layout_constraintTop_toBottomOf="@+id/etEmailRegistro"
         android:labelFor="@id/etContrasenaSesion"
         android:hint="@string/contrasena" />
 
@@ -74,12 +88,12 @@
         android:id="@+id/btRegistro"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="256dp"
         android:text="@string/registrarse"
+        app:cornerRadius="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:cornerRadius = "16dp"
-        app:layout_constraintHorizontal_bias="0.54"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etContrasenaRegistro" />
+        app:layout_constraintTop_toBottomOf="@+id/etUsuarioRegistro" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

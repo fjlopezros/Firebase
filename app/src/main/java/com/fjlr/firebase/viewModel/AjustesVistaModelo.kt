@@ -2,15 +2,24 @@ package com.fjlr.firebase.viewModel
 
 import androidx.lifecycle.ViewModel
 import com.fjlr.firebase.repository.AutenticacionRepositorio
+import com.fjlr.firebase.repository.PublicacionesRepositorio
 
 class AjustesVistaModelo : ViewModel() {
-    private val repositorio = AutenticacionRepositorio()
+    private val repositorioAutenticacion = AutenticacionRepositorio()
+    private val repositorioPublicaciones = PublicacionesRepositorio()
 
     fun cerrarSesion() {
-        repositorio.cerrarSesion()
+        repositorioAutenticacion.cerrarSesion()
     }
 
-    fun obtenerUsuarioActual(): String =
-        repositorio.obtenerUsuarioActual()?.email ?: "Correo no encontrado"
+    fun obtenerEmailActual(): String =
+        repositorioAutenticacion.obtenerUsuarioActual()?.email ?: "Correo no encontrado"
 
+    fun obtenerNombreUsuario(callback: (String?) -> Unit) {
+        repositorioAutenticacion.obtenerNombreUsuario(callback)
+    }
+
+    fun contarPublicaciones(callback: (Int) -> Unit) {
+        repositorioPublicaciones.contarPublicaciones(callback)
+    }
 }

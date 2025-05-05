@@ -34,8 +34,9 @@ class RegistroActivity : AppCompatActivity() {
 
         binding.btRegistro.setOnClickListener {
             viewModel.registrarse(
-                binding.etUsuarioRegistro.text.toString(),
-                binding.etContrasenaRegistro.text.toString()
+                binding.etEmailRegistro.text.toString(),
+                binding.etContrasenaRegistro.text.toString(),
+                binding.etUsuarioRegistro.text.toString()
             ) { success, error ->
                 if (success) {
                     Toast.makeText(this, "Registro exitoso", Toast.LENGTH_SHORT).show()

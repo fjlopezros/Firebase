@@ -1,14 +1,17 @@
 package com.fjlr.firebase.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.recyclerview.widget.RecyclerView
-import com.airbnb.lottie.LottieAnimationView
 import com.fjlr.firebase.model.PublicacionesModelo
 import com.fjlr.firebase.R
 import com.fjlr.firebase.databinding.PublicacionesItemBinding
+import com.fjlr.firebase.viewModel.AjustesVistaModelo
 import com.fjlr.firebase.viewModel.PublicacionesVistaModelo
+import com.squareup.picasso.Picasso
 
 //LISTADAPTER
 class PublicacionesAdaptador(
@@ -32,10 +35,15 @@ class PublicacionesAdaptador(
         val publicacion = publicaciones[position]
         holder.bind(publicacion)
 
+        actualizarIcono(holder.icono, publicacion.esFavorito)
+        Log.d("PublicacionesAdaptador", "Publicacion: ${publicacion.esFavorito}")
+
         holder.icono.setOnClickListener {
             publicacion.esFavorito = !publicacion.esFavorito
+
             actualizarIcono(holder.icono, publicacion.esFavorito)
             viewModel.alternarFavorito(publicacion)
+            Log.d("PublicacionesAdaptador", "Publicacion: ${publicacion.esFavorito}")
         }
     }
 
@@ -43,23 +51,26 @@ class PublicacionesAdaptador(
 
     inner class PublicacionesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = PublicacionesItemBinding.bind(view)
-        val icono: LottieAnimationView = binding.ibBotonFavorito
+        val icono: ImageButton = binding.ibBotonFavorito
+        val ajustesVistaModelo = AjustesVistaModelo()
 
         fun bind(publicaciones: PublicacionesModelo) {
+            ajustesVistaModelo.obtenerNombreUsuario{ nombre ->
+                binding.tvUsuario.text = nombre ?: "Nombre no disponible"
+            }
             binding.tvTituloPublicacion.text = publicaciones.titulo
             binding.tvDescripcionPublicacion.text = publicaciones.descripcion
             binding.tvIngredientesPublicacion.text = publicaciones.ingredientes
             binding.tvPreparacionPublicacion.text = publicaciones.preparacion
+            //CAMBIAR IMAGENES
+            Picasso.get().load(publicaciones.imagen).into(binding.ivFoto)
         }
     }
-
-    private fun actualizarIcono(icono: LottieAnimationView, esFavorito: Boolean) {
+    private fun actualizarIcono(icono: ImageButton, esFavorito: Boolean) {
         if (esFavorito) {
-            icono.setAnimation(R.raw.favorito)
-            icono.playAnimation()
-        } else {
             icono.setImageResource(R.drawable.favorito)
+        } else {
+            icono.setImageResource(R.drawable.menos)
         }
     }
-
 }

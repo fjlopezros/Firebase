@@ -48,6 +48,9 @@ dependencies {
     implementation(libs.firebase.auth.google)
     implementation(libs.firebase.firestore)
     implementation(libs.google.services)
+    implementation(libs.firebase.storage)
+
+    implementation(libs.picasso)
 
     implementation(libs.lottie)
 

@@ -37,13 +37,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btRegistrarse.setOnClickListener {
-            startActivity(
-                Intent(
-                    this,
-                    RegistroActivity::class.java
-                )
-            )
+            startActivity(Intent(this,RegistroActivity::class.java))
         }
+
         binding.ibFlechaParaSalir.setOnClickListener { finishAffinity() }
 
         binding.btIniciarSesion.setOnClickListener {

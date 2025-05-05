@@ -21,8 +21,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewFav"
-        android:layout_width="376dp"
-        android:layout_height="553dp"
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
         android:contentDescription="@string/publicaciones"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

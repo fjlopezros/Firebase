@@ -32,4 +32,14 @@
     <string name="dificultad">dificultad</string>
     <string name="preparacion">Preparacion:</string>
     <string name="tus_recetas_favoritas_te_esperan">Tus recetas favoritas te esperan</string>
+    <string name="fotopublicacion">foto publicacion</string>
+    <string name="anadir_publicacion">Anadir publicacion</string>
+    <string name="ingredientesEj">Ej: huevo, leche, azúcar</string>
+    <string name="introduce_tu_email">introduce tu email</string>
+    <string name="salir_de_la_cuenta">salir de la cuenta</string>
+    <string name="seguir_cuenta">seguir cuenta</string>
+    <string name="seguir">Seguir</string>
+    <string name="publicacionesTitulo">publicaciones</string>
+    <string name="seguidos">seguidos</string>
+    <string name="seguidoresTitulo">seguidores</string>
 </resources>

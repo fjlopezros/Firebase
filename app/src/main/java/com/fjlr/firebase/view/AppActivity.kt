@@ -11,8 +11,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.fjlr.firebase.adapter.PublicacionesAdaptador
 import com.fjlr.firebase.databinding.ActivityAppBinding
 import com.fjlr.firebase.model.PublicacionesModelo
+import com.fjlr.firebase.utils.EnumFotosReceta
 import com.fjlr.firebase.utils.configurarBarraNavegacion
 import com.fjlr.firebase.viewModel.PublicacionesVistaModelo
+import com.squareup.picasso.Picasso
 
 class AppActivity : AppCompatActivity() {
 
@@ -45,6 +47,7 @@ class AppActivity : AppCompatActivity() {
         binding.btAnadirPublicacion.setOnClickListener {
             startActivity(Intent(this, AnadirPublicacionActivity::class.java))
         }
+
 
         viewModel.cargarPublicaciones()
         viewModel.publicaciones.observe(this) { lista ->

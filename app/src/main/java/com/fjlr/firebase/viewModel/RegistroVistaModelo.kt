@@ -6,8 +6,8 @@ import com.fjlr.firebase.repository.AutenticacionRepositorio
 class RegistroVistaModelo : ViewModel() {
     private val repositorio = AutenticacionRepositorio()
 
-    fun registrarse(email: String, contrasena: String, callabck: (Boolean, String?) -> Unit) {
-        repositorio.crearCuenta(email, contrasena) { success, error ->
+    fun registrarse(email: String, contrasena: String, nombreUsuario: String, callabck: (Boolean, String?) -> Unit) {
+        repositorio.crearCuenta(email, contrasena, nombreUsuario) { success, error ->
             callabck(success, error)
         }
     }

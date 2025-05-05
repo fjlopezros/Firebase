@@ -47,7 +47,13 @@ class AjustesActivity : AppCompatActivity() {
             startActivity(Intent(this, MainActivity::class.java))
         }
 
-        binding.tvCorreoUsuario.text = viewModel.obtenerUsuarioActual()
+        viewModel.obtenerNombreUsuario { nombre ->
+            binding.tvCorreoUsuario.text = nombre ?: "Nombre no disponible"
+        }
+
+        viewModel.contarPublicaciones { publicaciones ->
+            binding.tvNumPublicaciones.text = publicaciones.toString()
+        }
 
         viewModelMy.cargarTusPublicaciones()
         viewModelMy.publicaciones.observe(this) { lista ->
