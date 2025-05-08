@@ -1,5 +1,6 @@
 package com.fjlr.firebase.repository
 
+import android.util.Log
 import com.fjlr.firebase.utils.ConstantesUtilidades
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -66,7 +67,6 @@ class AutenticacionRepositorio {
     }
     fun obtenerNombreUsuario(callback: (String?) -> Unit) {
         val email = FirebaseAuth.getInstance().currentUser?.email ?: return callback(null)
-
         FirebaseFirestore.getInstance()
             .collection(ConstantesUtilidades.COLECCION_USUARIOS)
             .document(email)

@@ -16,7 +16,8 @@ import com.squareup.picasso.Picasso
 //LISTADAPTER
 class PublicacionesAdaptador(
     private var publicaciones: MutableList<PublicacionesModelo>,
-    private val viewModel: PublicacionesVistaModelo
+    private val viewModel: PublicacionesVistaModelo,
+    private val fn: (PublicacionesModelo) -> Unit
 ) : RecyclerView.Adapter<PublicacionesAdaptador.PublicacionesViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -64,6 +65,10 @@ class PublicacionesAdaptador(
             binding.tvPreparacionPublicacion.text = publicaciones.preparacion
             //CAMBIAR IMAGENES
             Picasso.get().load(publicaciones.imagen).into(binding.ivFoto)
+
+            itemView.setOnClickListener {
+                fn(publicaciones)
+            }
         }
     }
     private fun actualizarIcono(icono: ImageButton, esFavorito: Boolean) {

@@ -42,4 +42,5 @@
     <string name="publicacionesTitulo">publicaciones</string>
     <string name="seguidos">seguidos</string>
     <string name="seguidoresTitulo">seguidores</string>
+    <string name="dejar_de_seguir">Dejar de seguir</string>
 </resources>

@@ -5,6 +5,8 @@ class ConstantesUtilidades {
         const val COLECCION_FIREBASE:String = "publicaciones"
         const val COLECCION_USUARIOS:String = "usuarios"
         const val COLECCION_FAVORITOS:String = "favoritos"
+        const val COLECCION_SEGUIDOS:String = "seguidos"
+        const val COLECCION_SEGUIDORES:String = "seguidores"
         const val TIEMPO_ORDENAR_PUBLI:String = "timestamp"
         const val TITULO:String = "titulo"
         const val DESCRIPCION:String = "descripcion"

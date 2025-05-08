@@ -21,12 +21,12 @@
         android:id="@+id/tvNumSeguidores"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="92dp"
         android:layout_marginTop="24dp"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/tvNumPublicaciones"
         app:layout_constraintTop_toBottomOf="@+id/tvCorreoUsuario"
-        tools:hint="NºSegui" />
+        tools:hint="0" />
 
     <TextView
         android:id="@+id/tvNumPublicacionesTitulo"
@@ -46,14 +46,13 @@
         android:layout_marginStart="16dp"
         android:text="@string/seguidoresTitulo"
         app:layout_constraintStart_toEndOf="@+id/tvNumPublicacionesTitulo"
-        app:layout_constraintTop_toBottomOf="@+id/tvNumSeguidores"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/tvNumSeguidores" />
 
     <TextView
         android:id="@+id/tvNumSeguidosTitulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="20dp"
         android:text="@string/seguidos"
         app:layout_constraintBottom_toTopOf="@+id/btSeguir"
         app:layout_constraintStart_toEndOf="@+id/tvNumSeguidoresTitulo"
@@ -69,7 +68,7 @@
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/ivPerfilUsuario"
         app:layout_constraintTop_toBottomOf="@+id/tvCorreoUsuario"
-        tools:hint="NºPubli" />
+        tools:hint="0" />
 
     <TextView
         android:id="@+id/tvCorreoUsuario"
@@ -89,10 +88,10 @@
         android:layout_marginTop="24dp"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.435"
         app:layout_constraintStart_toEndOf="@+id/tvNumSeguidores"
         app:layout_constraintTop_toBottomOf="@+id/tvCorreoUsuario"
-        tools:hint="NºSeguidos" />
+        tools:hint="0" />
 
     <ImageButton
         android:id="@+id/btCerrarSesion"

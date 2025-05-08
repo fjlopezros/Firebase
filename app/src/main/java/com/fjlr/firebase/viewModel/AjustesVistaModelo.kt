@@ -12,9 +12,6 @@ class AjustesVistaModelo : ViewModel() {
         repositorioAutenticacion.cerrarSesion()
     }
 
-    fun obtenerEmailActual(): String =
-        repositorioAutenticacion.obtenerUsuarioActual()?.email ?: "Correo no encontrado"
-
     fun obtenerNombreUsuario(callback: (String?) -> Unit) {
         repositorioAutenticacion.obtenerNombreUsuario(callback)
     }
