@@ -10,28 +10,20 @@ class SeguidoresVistaModelo : ViewModel() {
 
     private val repositorio = SeguidoresRepositorio()
 
-    fun seguirUsuario(usuarioASeguir: String) {
-        val emailActual = FirebaseAuth.getInstance().currentUser?.email ?: return
-
-        repositorio.seguirUsuario(emailActual, usuarioASeguir) { exito, error ->
-            if (exito) {
-                Log.d("Seguimiento", "Ahora sigues a $usuarioASeguir")
-            } else {
-                Log.e("Seguimiento", "Error: $error")
-            }
-        }
+    fun seguirUsuario(emailSeguidor: String, emailSeguido: String) {
+        repositorio.seguirUsuario(emailSeguidor, emailSeguido)
     }
 
-    fun dejarDeSeguir(usuarioADeselegir: String) {
-        val emailActual = FirebaseAuth.getInstance().currentUser?.email ?: return
+    fun dejarDeSeguir(emailSeguidor:String, usuarioADeselegir: String) {
+        repositorio.dejarDeSeguir(emailSeguidor, usuarioADeselegir)
+    }
 
-        repositorio.dejarDeSeguir(emailActual, usuarioADeselegir) { exito, error ->
-            if (exito) {
-                Log.d("Seguimiento", "Dejaste de seguir a $usuarioADeselegir")
-            } else {
-                Log.e("Seguimiento", "Error: $error")
-            }
-        }
+    fun verificarSiSigue(
+        emailUsuarioActual: String,
+        emailDelPerfil: String,
+        callback: (Boolean) -> Unit
+    ) {
+        repositorio.verificarSiSigue(emailUsuarioActual, emailDelPerfil, callback)
     }
 
     fun contarSeguidores(email: String, callback: (Int) -> Unit) {

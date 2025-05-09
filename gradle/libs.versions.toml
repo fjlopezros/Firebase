@@ -16,7 +16,7 @@ servicesAuth = "21.3.0"
 firestore = "25.1.4"
 icon = "6.6.6"
 corroutines = "1.7.3"
-lyfecycle = "2.8.7"
+lyfecycle = "2.9.0"
 storage = "21.0.1"
 picasso = "2.71828"
 

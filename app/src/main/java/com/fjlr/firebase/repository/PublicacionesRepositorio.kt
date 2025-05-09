@@ -53,43 +53,48 @@ class PublicacionesRepositorio {
     }
 
 
-    fun cargarTusPublicaciones(callback: (List<PublicacionesModelo>) -> Unit) {
-        if (emailUsuario != null) {
-            db
-                .collection(ConstantesUtilidades.COLECCION_FIREBASE)
-                .whereEqualTo(ConstantesUtilidades.AUTOR, emailUsuario)
-                .addSnapshotListener { snapshots, error ->
-                    if (error != null) {
-                        callback(emptyList())
-                        return@addSnapshotListener
-                    }
-
-                    val listaPerfil = mutableListOf<PublicacionesModelo>()
-                    snapshots?.documents?.forEach { doc ->
-                        doc.toObject(PublicacionesModelo::class.java)?.let { listaPerfil.add(it) }
-                    }
-                    callback(listaPerfil)
+    fun cargarTusPublicaciones(
+        emailDelPerfil: String,
+        callback: (List<PublicacionesModelo>) -> Unit
+    ) {
+        db
+            .collection(ConstantesUtilidades.COLECCION_FIREBASE)
+            .whereEqualTo(ConstantesUtilidades.AUTOR, emailDelPerfil)
+            .addSnapshotListener { snapshots, error ->
+                if (error != null) {
+                    callback(emptyList())
+                    return@addSnapshotListener
                 }
-        }
+
+                val listaPerfil = mutableListOf<PublicacionesModelo>()
+                snapshots?.documents?.forEach { doc ->
+                    doc.toObject(PublicacionesModelo::class.java)?.let { listaPerfil.add(it) }
+                }
+                callback(listaPerfil)
+            }
     }
 
     suspend fun subirPublicacion(publicacion: PublicacionesModelo) {
-        validarCampos(publicacion)
-        val publicaciones = hashMapOf(
-            ConstantesUtilidades.TITULO to publicacion.titulo,
-            ConstantesUtilidades.DESCRIPCION to publicacion.descripcion,
-            ConstantesUtilidades.INGREDIENTES to publicacion.ingredientes,
-            ConstantesUtilidades.PREPARACION to publicacion.preparacion,
-            ConstantesUtilidades.FAVORITO to false,
-            ConstantesUtilidades.AUTOR to emailUsuario,
-            ConstantesUtilidades.TIEMPO_ORDENAR_PUBLI to FieldValue.serverTimestamp()
-        )
+        try {
+            validarCampos(publicacion)
+            val publicaciones = hashMapOf(
+                ConstantesUtilidades.TITULO to publicacion.titulo,
+                ConstantesUtilidades.DESCRIPCION to publicacion.descripcion,
+                ConstantesUtilidades.INGREDIENTES to publicacion.ingredientes,
+                ConstantesUtilidades.PREPARACION to publicacion.preparacion,
+                ConstantesUtilidades.FAVORITO to false,
+                ConstantesUtilidades.AUTOR to emailUsuario,
+                ConstantesUtilidades.TIEMPO_ORDENAR_PUBLI to FieldValue.serverTimestamp()
+            )
 
-        val docId = "${publicacion.titulo}_" + "$emailUsuario"
+            val docId = "${publicacion.titulo}_" + "$emailUsuario"
 
-        db.collection(ConstantesUtilidades.COLECCION_FIREBASE).document(docId)
-            .set(publicaciones)
-            .await()
+            db.collection(ConstantesUtilidades.COLECCION_FIREBASE).document(docId)
+                .set(publicaciones)
+                .await()
+        } catch (_: IllegalArgumentException) {
+            return
+        }
     }
 
     fun guardarFavorito(publicacion: PublicacionesModelo) {
@@ -112,6 +117,24 @@ class PublicacionesRepositorio {
             .set(publicaciones)
     }
 
+    fun esFavorito(publicacion: PublicacionesModelo, callback: (Boolean) -> Unit) {
+        val docId = "${publicacion.titulo}_${publicacion.autor}"
+        val emailUsuario = FirebaseAuth.getInstance().currentUser?.email ?: return
+
+        FirebaseFirestore.getInstance()
+            .collection("usuarios")
+            .document(emailUsuario)
+            .collection("favoritos")
+            .document(docId)
+            .get()
+            .addOnSuccessListener { document ->
+                callback(document.exists())
+            }
+            .addOnFailureListener {
+                callback(false)
+            }
+    }
+
     fun eliminarFavorito(publicacion: PublicacionesModelo) {
         val docId = "${publicacion.titulo}_${publicacion.autor}"
 
@@ -122,9 +145,9 @@ class PublicacionesRepositorio {
             .delete()
     }
 
-    fun contarPublicaciones(callback: (Int) -> Unit) {
+    fun contarPublicaciones(emailDelPerfil: String, callback: (Int) -> Unit) {
         db.collection(ConstantesUtilidades.COLECCION_FIREBASE)
-            .whereEqualTo(ConstantesUtilidades.AUTOR, emailUsuario)
+            .whereEqualTo(ConstantesUtilidades.AUTOR, emailDelPerfil)
             .addSnapshotListener { snapshots, error ->
                 if (error != null) {
                     callback(0)
@@ -136,9 +159,38 @@ class PublicacionesRepositorio {
     }
 
     private fun validarCampos(publicacion: PublicacionesModelo) {
-        require(publicacion.titulo.isNotEmpty()) { "El título no puede estar vacío" }
-        require(publicacion.descripcion.isNotEmpty()) { "La descripción no puede estar vacía" }
-        require(publicacion.preparacion.isNotEmpty()) { "La preparación no puede estar vacía" }
-        require(publicacion.ingredientes.isNotEmpty()) { "Los ingredientes no pueden estar vacíos" }
+        if (publicacion.titulo.isEmpty() ||
+            publicacion.descripcion.isEmpty() ||
+            publicacion.ingredientes.isEmpty() ||
+            publicacion.preparacion.isEmpty()
+        ) {
+            throw IllegalArgumentException("Todos los campos de la publicación deben estar llenos.")
+        }
     }
+
+    fun obtenerNombreDeEmail(email: String, callback: (String?) -> Unit) {
+        db.collection(ConstantesUtilidades.COLECCION_USUARIOS)
+            .document(email)
+            .get()
+            .addOnSuccessListener { doc ->
+                callback(doc.getString("usuario"))
+            }
+            .addOnFailureListener {
+                callback(null)
+            }
+    }
+
+    fun obtenerNombreDePerfil(email: String, callback: (String?) -> Unit) {
+        db.collection("usuarios")
+            .document(email)
+            .get()
+            .addOnSuccessListener { doc ->
+                val nombre = doc.getString("usuario")
+                callback(nombre)
+            }
+            .addOnFailureListener {
+                callback(null)
+            }
+    }
+
 }

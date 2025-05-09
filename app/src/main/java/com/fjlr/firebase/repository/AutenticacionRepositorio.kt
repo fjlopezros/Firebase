@@ -3,7 +3,6 @@ package com.fjlr.firebase.repository
 import android.util.Log
 import com.fjlr.firebase.utils.ConstantesUtilidades
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 
 class AutenticacionRepositorio {
@@ -12,11 +11,15 @@ class AutenticacionRepositorio {
 
     fun crearCuenta(
         email: String,
-        password: String,
+        contrasena: String,
         nombreUsuario: String,
         callback: (Boolean, String?) -> Unit
     ) {
-        autenticacion.createUserWithEmailAndPassword(email, password)
+        if (email.isEmpty() ||
+            contrasena.isEmpty()) {
+            return
+        }
+        autenticacion.createUserWithEmailAndPassword(email, contrasena)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val user = autenticacion.currentUser
@@ -44,6 +47,10 @@ class AutenticacionRepositorio {
     }
 
     fun iniciarSesion(email: String, contrasena: String, callback: (Boolean, String?) -> Unit) {
+        if (email.isEmpty() ||
+            contrasena.isEmpty()) {
+            return
+        }
         autenticacion.signInWithEmailAndPassword(email, contrasena)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -62,9 +69,6 @@ class AutenticacionRepositorio {
         return autenticacion.currentUser != null
     }
 
-    fun obtenerUsuarioActual(): FirebaseUser? {
-        return autenticacion.currentUser
-    }
     fun obtenerNombreUsuario(callback: (String?) -> Unit) {
         val email = FirebaseAuth.getInstance().currentUser?.email ?: return callback(null)
         FirebaseFirestore.getInstance()
@@ -73,6 +77,7 @@ class AutenticacionRepositorio {
             .get()
             .addOnSuccessListener { document ->
                 val nombreUsuario = document.getString("usuario")
+                Log.d("nombreUsuario", "Nombre de usuario: $nombreUsuario")
                 callback(nombreUsuario)
             }
             .addOnFailureListener {

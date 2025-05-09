@@ -22,12 +22,12 @@ class PublicacionesVistaModelo : ViewModel() {
         return repositorio.subirPublicacion(publicacion)
     }
 
-    fun alternarFavorito(publicacion: PublicacionesModelo) {
-        if (publicacion.esFavorito) {
-            repositorio.eliminarFavorito(publicacion)
-        } else {
-            repositorio.guardarFavorito(publicacion)
-        }
+    fun guardarFavorito(publicacion: PublicacionesModelo) {
+        repositorio.guardarFavorito(publicacion)
+    }
+
+    fun eliminarFavorito(publicacion: PublicacionesModelo) {
+        repositorio.eliminarFavorito(publicacion)
     }
 
     fun cargarFavoritos() {
@@ -36,9 +36,17 @@ class PublicacionesVistaModelo : ViewModel() {
         }
     }
 
-    fun cargarTusPublicaciones() {
-        repositorio.cargarTusPublicaciones { lista ->
+    fun esFavorito(publicacion: PublicacionesModelo, callback: (Boolean) -> Unit) {
+        repositorio.esFavorito(publicacion, callback)
+    }
+
+    fun cargarTusPublicaciones(emailDelPerfil: String) {
+        repositorio.cargarTusPublicaciones(emailDelPerfil) { lista ->
             _publicaciones.postValue(lista)
         }
+    }
+
+    fun obtenerNombreDePerfil(email: String, callback: (String?) -> Unit) {
+        repositorio.obtenerNombreDePerfil(email, callback)
     }
 }

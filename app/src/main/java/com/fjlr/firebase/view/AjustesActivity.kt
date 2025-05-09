@@ -2,7 +2,6 @@ package com.fjlr.firebase.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -28,6 +27,8 @@ class AjustesActivity : AppCompatActivity() {
     private var listaTusPublicaciones = mutableListOf<PublicacionesModelo>()
     private lateinit var viewModelMy: PublicacionesVistaModelo
     private val email = FirebaseAuth.getInstance().currentUser?.email
+    private lateinit var emailDelPerfil: String
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +50,9 @@ class AjustesActivity : AppCompatActivity() {
         configurarBarraNavegacion(this, binding.barraNavegacion)
         inicializarRecyclerView()
 
+        emailDelPerfil = intent.getStringExtra("emailDelPerfil") ?: email ?: ""
+
+
         binding.btCerrarSesion.setOnClickListener {
             viewModel.cerrarSesion()
             startActivity(Intent(this, MainActivity::class.java))
@@ -58,45 +62,59 @@ class AjustesActivity : AppCompatActivity() {
             binding.tvCorreoUsuario.text = nombre ?: "Nombre no disponible"
         }
 
-        viewModel.contarPublicaciones { publicaciones ->
-            binding.tvNumPublicaciones.text = publicaciones.toString()
-        }
-
-        viewModelSeguidores.contarSeguidores(email.toString()) { seguidores ->
-            binding.tvNumSeguidores.text = seguidores.toString()
-        }
-
-        viewModelSeguidores.contarSeguidos(email.toString()) { seguidos ->
-            binding.tvNumSeguidos.text = seguidos.toString()
-        }
-        viewModelMy.cargarTusPublicaciones()
+        viewModelMy.cargarTusPublicaciones(emailDelPerfil.toString())
         viewModelMy.publicaciones.observe(this) { lista ->
             listaTusPublicaciones.clear()
             listaTusPublicaciones.addAll(lista)
             adapter.notifyDataSetChanged()
         }
 
-        viewModelSeguidores.ocultarSeguir(binding.btSeguir, email.toString())
+        viewModelMy.obtenerNombreDePerfil(emailDelPerfil) { nombre ->
+            binding.tvCorreoUsuario.text = nombre ?: "Error al cargar perfil"
+        }
+
+        viewModel.contarPublicaciones(emailDelPerfil) { publicaciones ->
+            binding.tvNumPublicaciones.text = publicaciones.toString()
+        }
+
+        viewModelSeguidores.contarSeguidores(emailDelPerfil) { seguidores ->
+            binding.tvNumSeguidores.text = seguidores.toString()
+        }
+
+        viewModelSeguidores.contarSeguidos(emailDelPerfil) { seguidos ->
+            binding.tvNumSeguidos.text = seguidos.toString()
+        }
+
+        viewModelSeguidores.ocultarSeguir(binding.btSeguir, emailDelPerfil.toString())
 
         binding.btSeguir.setOnClickListener {
-            viewModelSeguidores.seguirUsuario(email.toString())
+            viewModelSeguidores.seguirUsuario(email.toString(), emailDelPerfil)
             binding.btSeguir.text = getString(R.string.dejar_de_seguir)
         }
 
-        if(binding.btSeguir.text.equals(getString(R.string.dejar_de_seguir))){
+        actualizarEstadoBotonSeguir()
+
+    }
+
+    fun actualizarEstadoBotonSeguir() {
+        viewModelSeguidores.verificarSiSigue(email.toString(), emailDelPerfil) { loSigue ->
+            binding.btSeguir.text =
+                if (loSigue) getString(R.string.dejar_de_seguir) else getString(R.string.seguir)
+
             binding.btSeguir.setOnClickListener {
-                viewModelSeguidores.dejarDeSeguir(email.toString())
-                binding.btSeguir.text = getString(R.string.seguir)
+                if (loSigue) {
+                    viewModelSeguidores.dejarDeSeguir(email.toString(), emailDelPerfil)
+                } else {
+                    viewModelSeguidores.seguirUsuario(email.toString(), emailDelPerfil)
+                }
+
+                actualizarEstadoBotonSeguir()
             }
         }
     }
 
     private fun inicializarRecyclerView() {
-        adapter = PublicacionesAdaptador(listaTusPublicaciones, viewModelMy) { publicacion ->
-            val intent = Intent(this, AjustesActivity::class.java)
-            intent.putExtra("emailDelPerfil", publicacion.autor)
-            startActivity(intent)
-        }
+        adapter = PublicacionesAdaptador(listaTusPublicaciones, viewModelMy)
         binding.recyclerViewMy.layoutManager = LinearLayoutManager(this)
         binding.recyclerViewMy.adapter = adapter
     }

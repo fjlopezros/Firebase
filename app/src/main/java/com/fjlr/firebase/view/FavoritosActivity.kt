@@ -1,6 +1,5 @@
 package com.fjlr.firebase.view
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -47,11 +46,7 @@ class FavoritosActivity : AppCompatActivity() {
     }
 
     private fun inicializarRecyclerView() {
-        adapter = PublicacionesAdaptador(listaFavoritos, viewModel) { publicacion ->
-            val intent = Intent(this, AjustesActivity::class.java)
-            intent.putExtra("emailDelPerfil", publicacion.autor)
-            startActivity(intent)
-        }
+        adapter = PublicacionesAdaptador(listaFavoritos, viewModel)
         binding.recyclerViewFav.layoutManager = LinearLayoutManager(this)
         binding.recyclerViewFav.adapter = adapter
     }

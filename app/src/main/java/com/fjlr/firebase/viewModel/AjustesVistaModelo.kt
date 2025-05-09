@@ -16,7 +16,11 @@ class AjustesVistaModelo : ViewModel() {
         repositorioAutenticacion.obtenerNombreUsuario(callback)
     }
 
-    fun contarPublicaciones(callback: (Int) -> Unit) {
-        repositorioPublicaciones.contarPublicaciones(callback)
+    fun obtenerNombreDeEmail(email:String, callback: (String?) -> Unit){
+        repositorioPublicaciones.obtenerNombreDeEmail(email, callback)
+    }
+
+    fun contarPublicaciones(emailDelPerfil:String, callback: (Int) -> Unit) {
+        repositorioPublicaciones.contarPublicaciones(emailDelPerfil, callback)
     }
 }

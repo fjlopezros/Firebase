@@ -2,7 +2,6 @@ package com.fjlr.firebase.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -12,10 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.fjlr.firebase.adapter.PublicacionesAdaptador
 import com.fjlr.firebase.databinding.ActivityAppBinding
 import com.fjlr.firebase.model.PublicacionesModelo
-import com.fjlr.firebase.utils.EnumFotosReceta
 import com.fjlr.firebase.utils.configurarBarraNavegacion
 import com.fjlr.firebase.viewModel.PublicacionesVistaModelo
-import com.squareup.picasso.Picasso
 
 class AppActivity : AppCompatActivity() {
 
@@ -59,11 +56,7 @@ class AppActivity : AppCompatActivity() {
     }
 
     private fun inicializarRecyclerView() {
-        adapter = PublicacionesAdaptador(listaPublicaciones, viewModel) { publicacion ->
-            val intent = Intent(this, AjustesActivity::class.java)
-            intent.putExtra("emailDelPerfil", publicacion.autor)
-            startActivity(intent)
-        }
+        adapter = PublicacionesAdaptador(listaPublicaciones, viewModel)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
     }
