@@ -1,10 +1,8 @@
 package com.fjlr.firebase.viewModel
 
-import android.util.Log
 import android.widget.Button
 import androidx.lifecycle.ViewModel
 import com.fjlr.firebase.repository.SeguidoresRepositorio
-import com.google.firebase.auth.FirebaseAuth
 
 class SeguidoresVistaModelo : ViewModel() {
 

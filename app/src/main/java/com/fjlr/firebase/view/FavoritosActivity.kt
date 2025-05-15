@@ -6,48 +6,53 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.fjlr.firebase.adapter.PublicacionesAdaptador
+import androidx.recyclerview.widget.GridLayoutManager
+import com.fjlr.firebase.adapter.favoritos.PublicacionAdaptadorFav
 import com.fjlr.firebase.databinding.ActivityFavoritosBinding
-import com.fjlr.firebase.model.PublicacionesModelo
 import com.fjlr.firebase.utils.configurarBarraNavegacion
 import com.fjlr.firebase.viewModel.PublicacionesVistaModelo
 
 class FavoritosActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFavoritosBinding
-    private lateinit var adapter: PublicacionesAdaptador
-    private var listaFavoritos = mutableListOf<PublicacionesModelo>()
     private lateinit var viewModel: PublicacionesVistaModelo
+    private lateinit var publicacionAdaptadorFav: PublicacionAdaptadorFav
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        //Configuración del binding
         binding = ActivityFavoritosBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //Configuración de la barra de navegación
+        configurarBarraNavegacion(this, binding.barraNavegacion)
+
+        //Instancia del ViewModel
+        viewModel = ViewModelProvider(this)[PublicacionesVistaModelo::class.java]
+
+        //Configuración del RecyclerView
+        inicializarRecyclerView()
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        viewModel = ViewModelProvider(this)[PublicacionesVistaModelo::class.java]
 
-        configurarBarraNavegacion(this, binding.barraNavegacion)
-        inicializarRecyclerView()
-
+        //Cargar publicaciones
         viewModel.cargarFavoritos()
+
+        //Observar cambios en la lista de publicaciones
         viewModel.publicaciones.observe(this) { lista ->
-            listaFavoritos.clear()
-            listaFavoritos.addAll(lista)
-            adapter.notifyDataSetChanged()
+            publicacionAdaptadorFav.submitList(lista)
         }
     }
 
     private fun inicializarRecyclerView() {
-        adapter = PublicacionesAdaptador(listaFavoritos, viewModel)
-        binding.recyclerViewFav.layoutManager = LinearLayoutManager(this)
-        binding.recyclerViewFav.adapter = adapter
+        publicacionAdaptadorFav = PublicacionAdaptadorFav(viewModel)
+        binding.recyclerViewFav.layoutManager = GridLayoutManager(this,2)
+        binding.recyclerViewFav.adapter = publicacionAdaptadorFav
     }
 }

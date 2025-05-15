@@ -8,28 +8,38 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.fjlr.firebase.adapter.PublicacionesAdaptador
+import com.fjlr.firebase.adapter.app.PublicacionAdaptador
 import com.fjlr.firebase.databinding.ActivityAppBinding
-import com.fjlr.firebase.model.PublicacionesModelo
 import com.fjlr.firebase.utils.configurarBarraNavegacion
 import com.fjlr.firebase.viewModel.PublicacionesVistaModelo
 
 class AppActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAppBinding
-
-    private val listaPublicaciones = mutableListOf<PublicacionesModelo>()
-    private lateinit var adapter: PublicacionesAdaptador
-
     private lateinit var viewModel: PublicacionesVistaModelo
-
+    private lateinit var publicacionAdapter: PublicacionAdaptador
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        //Configuración del binding
         binding = ActivityAppBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //Configuración de la barra de navegación
+        configurarBarraNavegacion(this, binding.barraNavegacion)
+
+        //Configuración del botón de añadir publicación
+        binding.btAnadirPublicacion.setOnClickListener {
+            startActivity(Intent(this, AnadirPublicacionActivity::class.java))
+        }
+
+        //Instancia del ViewModel
+        viewModel = ViewModelProvider(this)[PublicacionesVistaModelo::class.java]
+
+        //Configuración del RecyclerView
+        inicializarRecyclerView()
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -37,27 +47,19 @@ class AppActivity : AppCompatActivity() {
             insets
         }
 
-        viewModel = ViewModelProvider(this)[PublicacionesVistaModelo::class.java]
-
-        configurarBarraNavegacion(this, binding.barraNavegacion)
-        inicializarRecyclerView()
-
-        binding.btAnadirPublicacion.setOnClickListener {
-            startActivity(Intent(this, AnadirPublicacionActivity::class.java))
-        }
-
-
+        //Cargar publicaciones
         viewModel.cargarPublicaciones()
+
+        //Observar cambios en la lista de publicaciones
         viewModel.publicaciones.observe(this) { lista ->
-            listaPublicaciones.clear()
-            listaPublicaciones.addAll(lista)
-            adapter.notifyDataSetChanged()
+            publicacionAdapter.submitList(lista)
         }
+
     }
 
     private fun inicializarRecyclerView() {
-        adapter = PublicacionesAdaptador(listaPublicaciones, viewModel)
+        publicacionAdapter = PublicacionAdaptador(viewModel)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        binding.recyclerView.adapter = adapter
+        binding.recyclerView.adapter = publicacionAdapter
     }
 }

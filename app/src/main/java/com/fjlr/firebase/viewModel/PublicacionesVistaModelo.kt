@@ -45,8 +45,4 @@ class PublicacionesVistaModelo : ViewModel() {
             _publicaciones.postValue(lista)
         }
     }
-
-    fun obtenerNombreDePerfil(email: String, callback: (String?) -> Unit) {
-        repositorio.obtenerNombreDePerfil(email, callback)
-    }
 }

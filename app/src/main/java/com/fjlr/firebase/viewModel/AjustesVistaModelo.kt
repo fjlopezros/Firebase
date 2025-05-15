@@ -12,8 +12,8 @@ class AjustesVistaModelo : ViewModel() {
         repositorioAutenticacion.cerrarSesion()
     }
 
-    fun obtenerNombreUsuario(callback: (String?) -> Unit) {
-        repositorioAutenticacion.obtenerNombreUsuario(callback)
+    fun obtenerNombreUsuario(email:String, callback: (String?) -> Unit) {
+        repositorioAutenticacion.obtenerNombreUsuario(email, callback)
     }
 
     fun obtenerNombreDeEmail(email:String, callback: (String?) -> Unit){

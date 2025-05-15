@@ -7,11 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.fjlr.firebase.R
-import com.fjlr.firebase.adapter.PublicacionesAdaptador
+import com.fjlr.firebase.adapter.ajustes.PublicacionAdaptadorAjustes
 import com.fjlr.firebase.databinding.ActivityAjustesBinding
-import com.fjlr.firebase.model.PublicacionesModelo
 import com.fjlr.firebase.utils.configurarBarraNavegacion
 import com.fjlr.firebase.viewModel.AjustesVistaModelo
 import com.fjlr.firebase.viewModel.PublicacionesVistaModelo
@@ -23,9 +22,8 @@ class AjustesActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAjustesBinding
     private lateinit var viewModel: AjustesVistaModelo
     private lateinit var viewModelSeguidores: SeguidoresVistaModelo
-    private lateinit var adapter: PublicacionesAdaptador
-    private var listaTusPublicaciones = mutableListOf<PublicacionesModelo>()
     private lateinit var viewModelMy: PublicacionesVistaModelo
+    private lateinit var publicacionesAdapter: PublicacionAdaptadorAjustes
     private val email = FirebaseAuth.getInstance().currentUser?.email
     private lateinit var emailDelPerfil: String
 
@@ -34,8 +32,26 @@ class AjustesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        //Configuracion del binding
         binding = ActivityAjustesBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //Configuración de la barra de navegación
+        configurarBarraNavegacion(this, binding.barraNavegacion)
+
+        //Configuración del botón de cerrar sesión
+        binding.btCerrarSesion.setOnClickListener {
+            viewModel.cerrarSesion()
+            startActivity(Intent(this, MainActivity::class.java))
+        }
+
+        //Instancia del ViewModel
+        viewModel = ViewModelProvider(this)[AjustesVistaModelo::class.java]
+        viewModelMy = ViewModelProvider(this)[PublicacionesVistaModelo::class.java]
+        viewModelSeguidores = ViewModelProvider(this)[SeguidoresVistaModelo::class.java]
+
+        //Configuración del RecyclerView
+        inicializarRecyclerView()
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -43,57 +59,31 @@ class AjustesActivity : AppCompatActivity() {
             insets
         }
 
-        viewModel = ViewModelProvider(this)[AjustesVistaModelo::class.java]
-        viewModelMy = ViewModelProvider(this)[PublicacionesVistaModelo::class.java]
-        viewModelSeguidores = ViewModelProvider(this)[SeguidoresVistaModelo::class.java]
-
-        configurarBarraNavegacion(this, binding.barraNavegacion)
-        inicializarRecyclerView()
-
+        //Recogo el email del perfil que se pasa por intent
         emailDelPerfil = intent.getStringExtra("emailDelPerfil") ?: email ?: ""
 
-
-        binding.btCerrarSesion.setOnClickListener {
-            viewModel.cerrarSesion()
-            startActivity(Intent(this, MainActivity::class.java))
-        }
-
-        viewModel.obtenerNombreUsuario { nombre ->
+        //Obetengo el nomrbre de usuario
+        viewModel.obtenerNombreUsuario(emailDelPerfil) { nombre ->
             binding.tvCorreoUsuario.text = nombre ?: "Nombre no disponible"
         }
 
+        //Cargar las publicaciones de mi perfil
         viewModelMy.cargarTusPublicaciones(emailDelPerfil.toString())
+
+        //Observar cambios en la lista de publicaciones
         viewModelMy.publicaciones.observe(this) { lista ->
-            listaTusPublicaciones.clear()
-            listaTusPublicaciones.addAll(lista)
-            adapter.notifyDataSetChanged()
+            publicacionesAdapter.submitList(lista)
         }
 
-        viewModelMy.obtenerNombreDePerfil(emailDelPerfil) { nombre ->
-            binding.tvCorreoUsuario.text = nombre ?: "Error al cargar perfil"
-        }
-
-        viewModel.contarPublicaciones(emailDelPerfil) { publicaciones ->
-            binding.tvNumPublicaciones.text = publicaciones.toString()
-        }
-
-        viewModelSeguidores.contarSeguidores(emailDelPerfil) { seguidores ->
-            binding.tvNumSeguidores.text = seguidores.toString()
-        }
-
-        viewModelSeguidores.contarSeguidos(emailDelPerfil) { seguidos ->
-            binding.tvNumSeguidos.text = seguidos.toString()
-        }
-
-        viewModelSeguidores.ocultarSeguir(binding.btSeguir, emailDelPerfil.toString())
-
+        //Seguir o dejar de seguir al usuario
         binding.btSeguir.setOnClickListener {
             viewModelSeguidores.seguirUsuario(email.toString(), emailDelPerfil)
             binding.btSeguir.text = getString(R.string.dejar_de_seguir)
         }
 
-        actualizarEstadoBotonSeguir()
+        inicializarMenu()
 
+        actualizarEstadoBotonSeguir()
     }
 
     fun actualizarEstadoBotonSeguir() {
@@ -113,9 +103,25 @@ class AjustesActivity : AppCompatActivity() {
         }
     }
 
+    private fun inicializarMenu() {
+        viewModel.contarPublicaciones(emailDelPerfil) { publicaciones ->
+            binding.tvNumPublicaciones.text = publicaciones.toString()
+        }
+
+        viewModelSeguidores.contarSeguidores(emailDelPerfil) { seguidores ->
+            binding.tvNumSeguidores.text = seguidores.toString()
+        }
+
+        viewModelSeguidores.contarSeguidos(emailDelPerfil) { seguidos ->
+            binding.tvNumSeguidos.text = seguidos.toString()
+        }
+
+        viewModelSeguidores.ocultarSeguir(binding.btSeguir, emailDelPerfil.toString())
+    }
+
     private fun inicializarRecyclerView() {
-        adapter = PublicacionesAdaptador(listaTusPublicaciones, viewModelMy)
-        binding.recyclerViewMy.layoutManager = LinearLayoutManager(this)
-        binding.recyclerViewMy.adapter = adapter
+        publicacionesAdapter = PublicacionAdaptadorAjustes(viewModelMy)
+        binding.recyclerViewMy.layoutManager = GridLayoutManager(this, 3)
+        binding.recyclerViewMy.adapter = publicacionesAdapter
     }
 }

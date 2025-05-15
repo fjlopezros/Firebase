@@ -179,18 +179,4 @@ class PublicacionesRepositorio {
                 callback(null)
             }
     }
-
-    fun obtenerNombreDePerfil(email: String, callback: (String?) -> Unit) {
-        db.collection("usuarios")
-            .document(email)
-            .get()
-            .addOnSuccessListener { doc ->
-                val nombre = doc.getString("usuario")
-                callback(nombre)
-            }
-            .addOnFailureListener {
-                callback(null)
-            }
-    }
-
 }
