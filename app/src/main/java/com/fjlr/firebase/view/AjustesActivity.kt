@@ -62,8 +62,10 @@ class AjustesActivity : AppCompatActivity() {
         //Recogo el email del perfil que se pasa por intent
         emailDelPerfil = intent.getStringExtra("emailDelPerfil") ?: email ?: ""
 
+        fotoDePerfilAleatoria()
+
         //Obetengo el nomrbre de usuario
-        viewModel.obtenerNombreUsuario(emailDelPerfil) { nombre ->
+        viewModel.obtenerNombreDeEmail(emailDelPerfil) { nombre ->
             binding.tvCorreoUsuario.text = nombre ?: "Nombre no disponible"
         }
 
@@ -123,5 +125,9 @@ class AjustesActivity : AppCompatActivity() {
         publicacionesAdapter = PublicacionAdaptadorAjustes(viewModelMy)
         binding.recyclerViewMy.layoutManager = GridLayoutManager(this, 3)
         binding.recyclerViewMy.adapter = publicacionesAdapter
+    }
+
+    private fun fotoDePerfilAleatoria() {
+        viewModel.fotoDePerfilAleatoria(binding.ivPerfilUsuario)
     }
 }

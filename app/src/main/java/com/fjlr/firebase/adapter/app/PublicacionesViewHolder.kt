@@ -20,7 +20,7 @@ class PublicacionesViewHolder(private val binding: PublicacionesItemBinding) :
         binding.tvDescripcionPublicacion.text = publicacion.descripcion
         binding.tvIngredientesPublicacion.text = publicacion.ingredientes
         binding.tvPreparacionPublicacion.text = publicacion.preparacion
-        Picasso.get().load(publicacion.imagen).into(binding.ivFoto)
+        Picasso.get().load("https://robohash.org/fran").into(binding.ivFoto)
 
         itemView.setOnClickListener {
             Adaptador.abrirAjustesDesdeItem(itemView, publicacion.autor)

@@ -7,5 +7,5 @@ data class PublicacionesModelo(
     val preparacion: String = "",
     val autor: String = "",
     var esFavorito: Boolean = false,
-    var imagen: String ="https://robohash.org/anselmo"
+    var imagen: String =""
 )

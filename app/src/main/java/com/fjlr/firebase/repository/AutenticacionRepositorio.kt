@@ -1,8 +1,10 @@
 package com.fjlr.firebase.repository
 
+import android.widget.ImageView
 import com.fjlr.firebase.utils.ConstantesUtilidades
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.squareup.picasso.Picasso
 
 class AutenticacionRepositorio {
 
@@ -15,7 +17,8 @@ class AutenticacionRepositorio {
         callback: (Boolean, String?) -> Unit
     ) {
         if (email.isEmpty() ||
-            contrasena.isEmpty()) {
+            contrasena.isEmpty()
+        ) {
             return
         }
         autenticacion.createUserWithEmailAndPassword(email, contrasena)
@@ -47,7 +50,8 @@ class AutenticacionRepositorio {
 
     fun iniciarSesion(email: String, contrasena: String, callback: (Boolean, String?) -> Unit) {
         if (email.isEmpty() ||
-            contrasena.isEmpty()) {
+            contrasena.isEmpty()
+        ) {
             return
         }
         autenticacion.signInWithEmailAndPassword(email, contrasena)
@@ -68,16 +72,11 @@ class AutenticacionRepositorio {
         return autenticacion.currentUser != null
     }
 
-    fun obtenerNombreUsuario(email: String, callback: (String?) -> Unit) {
-        FirebaseFirestore.getInstance()
-            .collection(ConstantesUtilidades.COLECCION_USUARIOS)
-            .document(email)
+    fun fotoDePerfilAleatoria(fotoDePerfil: ImageView) {
+        Picasso
             .get()
-            .addOnSuccessListener { document ->
-                callback(document.getString("usuario"))
-            }
-            .addOnFailureListener {
-                callback(null)
-            }
+            .load("https://avatar.iran.liara.run/public")
+            .into(fotoDePerfil)
     }
+
 }
