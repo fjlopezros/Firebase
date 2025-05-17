@@ -7,14 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".view.AjustesActivity">
 
+
+
     <ImageView
         android:id="@+id/ivPerfilUsuario"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="36dp"
-        android:src="@drawable/iconousuario"
+        android:layout_marginTop="16dp"
         android:scaleType="centerCrop"
+        android:src="@drawable/iconousuario"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvCorreoUsuario" />
 

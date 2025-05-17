@@ -18,6 +18,12 @@ class PublicacionesVistaModelo : ViewModel() {
         }
     }
 
+    fun cargarPublicacionesSeguidos(){
+        repositorio.cargarPublicacionesSeguidos { lista ->
+            _publicaciones.postValue(lista)
+        }
+    }
+
     suspend fun subirPublicacion(publicacion: PublicacionesModelo) {
         return repositorio.subirPublicacion(publicacion)
     }

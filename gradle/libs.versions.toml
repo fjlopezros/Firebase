@@ -61,4 +61,4 @@ googleServices = { id = "com.google.gms.google-services", version.ref = "service
 crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "crashlytics" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref ="ksp"}
-
+parcelize = { id = "kotlin-parcelize"}

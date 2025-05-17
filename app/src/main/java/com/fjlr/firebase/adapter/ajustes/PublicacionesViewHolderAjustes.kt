@@ -13,12 +13,12 @@ class PublicacionesViewHolderAjustes(private val binding: PublicacionesItemAjust
 
     fun bind(publicacion: PublicacionesModelo) {
         ajustesVistaModelo.obtenerNombreDeEmail(publicacion.autor) { nombre ->
-            binding.tvUsuarioAjustes.text = nombre ?: "Nombre no disponible"
+            binding.tvUsuarioAjustes.text = nombre ?: "Null"
         }
         binding.tvTituloPublicacionAjustes.text = publicacion.titulo
 
         itemView.setOnClickListener {
-            Adaptador.abrirAjustesDesdeItem(itemView, publicacion.autor)
+            Adaptador.abrirDetalleDesdeItemAjustes(itemView, publicacion)
         }
     }
 }

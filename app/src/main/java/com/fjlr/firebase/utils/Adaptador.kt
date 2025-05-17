@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.ImageButton
 import com.fjlr.firebase.model.PublicacionesModelo
 import com.fjlr.firebase.view.AjustesActivity
+import com.fjlr.firebase.view.DetalleActivity
 import com.fjlr.firebase.viewModel.PublicacionesVistaModelo
 
 object Adaptador {
@@ -34,5 +35,9 @@ object Adaptador {
         intent.putExtra("emailDelPerfil", email)
         view.context.startActivity(intent)
     }
-
+    fun abrirDetalleDesdeItemAjustes(view: View, publicacion: PublicacionesModelo) {
+        val intent = Intent(view.context, DetalleActivity::class.java)
+        intent.putExtra("publicacionDelPerfil", publicacion)
+        view.context.startActivity(intent)
+    }
 }

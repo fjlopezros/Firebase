@@ -48,7 +48,7 @@ class AppActivity : AppCompatActivity() {
         }
 
         //Cargar publicaciones
-        viewModel.cargarPublicaciones()
+        viewModel.cargarPublicacionesSeguidos()
 
         //Observar cambios en la lista de publicaciones
         viewModel.publicaciones.observe(this) { lista ->

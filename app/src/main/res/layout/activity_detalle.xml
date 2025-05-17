@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.DetalleActivity">
+
+    <ImageButton
+        android:id="@+id/ibFlechaParaSalir"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/boton_para_salir_de_la_aplicacion"
+        android:src="@drawable/flechaparaatras"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageButton
+        android:id="@+id/ibBotonFavoritoDetalla"
+        android:layout_width="40dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="12dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/favorito"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivFotoDetalla"
+        android:layout_width="376dp"
+        android:layout_height="263dp"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/fotopublicacion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.371"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvUsuarioDetalla" />
+
+    <TextView
+        android:id="@+id/tvPreparacionPublicacionTituloDetalla"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="48dp"
+        android:text="@string/preparacion"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvIngredientesPublicacionDetalla"
+        app:layout_constraintVertical_bias="0.811" />
+
+    <TextView
+        android:id="@+id/tvDescripcionPublicacionDetalla"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.046"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDescripcionPublicacionTituloDetalla"
+        tools:hint="descripcion publicacion" />
+
+    <TextView
+        android:id="@+id/tvIngredientesPublicacionDetalla"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.052"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvIngredientesPublicacionTituloDetalla"
+        tools:hint="ingredientes publicacion" />
+
+    <TextView
+        android:id="@+id/tvDescripcionPublicacionTituloDetalla"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/descripcionTitulo"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.039"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTituloPublicacionDetalla" />
+
+    <TextView
+        android:id="@+id/tvTituloPublicacionDetalla"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.04"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivFotoDetalla"
+        tools:hint="titulo publicacion" />
+
+    <TextView
+        android:id="@+id/tvPreparacionPublicacionDetalla"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="188dp"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.114"
+        app:layout_constraintStart_toEndOf="@+id/tvPreparacionPublicacionTituloDetalla"
+        app:layout_constraintTop_toBottomOf="@+id/tvIngredientesPublicacionDetalla"
+        app:layout_constraintVertical_bias="0.623"
+        tools:hint="minutos" />
+
+    <TextView
+        android:id="@+id/tvIngredientesPublicacionTituloDetalla"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/ingredientesTItulo"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.036"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDescripcionPublicacionDetalla" />
+
+    <TextView
+        android:id="@+id/tvUsuarioDetalla"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="76dp"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toStartOf="@+id/ibBotonFavoritoDetalla"
+        app:layout_constraintHorizontal_bias="0.059"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:hint="USUARIO" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
