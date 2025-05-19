@@ -11,12 +11,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.fjlr.firebase.adapter.app.PublicacionAdaptador
 import com.fjlr.firebase.databinding.ActivityAppBinding
 import com.fjlr.firebase.utils.configurarBarraNavegacion
+import com.fjlr.firebase.viewModel.FavoritosVistaModelo
 import com.fjlr.firebase.viewModel.PublicacionesVistaModelo
 
 class AppActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAppBinding
     private lateinit var viewModel: PublicacionesVistaModelo
+    private lateinit var viewModelFav: FavoritosVistaModelo
     private lateinit var publicacionAdapter: PublicacionAdaptador
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +39,7 @@ class AppActivity : AppCompatActivity() {
 
         //Instancia del ViewModel
         viewModel = ViewModelProvider(this)[PublicacionesVistaModelo::class.java]
+        viewModelFav = ViewModelProvider(this)[FavoritosVistaModelo::class.java]
 
         //Configuración del RecyclerView
         inicializarRecyclerView()
@@ -58,7 +61,7 @@ class AppActivity : AppCompatActivity() {
     }
 
     private fun inicializarRecyclerView() {
-        publicacionAdapter = PublicacionAdaptador(viewModel)
+        publicacionAdapter = PublicacionAdaptador(viewModelFav)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = publicacionAdapter
     }

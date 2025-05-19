@@ -3,21 +3,27 @@ package com.fjlr.firebase.adapter
 import androidx.recyclerview.widget.DiffUtil
 import com.fjlr.firebase.model.PublicacionesModelo
 
-// DiffUtil callback para comparar los items
+/**
+ * Clase de utilidad para calcular las diferencias entre listas de publicaciones.
+ */
 class PublicacionesDiffCallback : DiffUtil.ItemCallback<PublicacionesModelo>() {
+    /**
+     * Compara si dos elementos son el mismo objeto.
+     */
     override fun areItemsTheSame(
         oldItem: PublicacionesModelo,
         newItem: PublicacionesModelo
     ): Boolean {
-        // Compara los identificadores únicos de los elementos
         return oldItem.titulo == newItem.titulo && oldItem.autor == newItem.autor
     }
 
+    /**
+     * Compara si dos elementos tienen los mismos contenidos.
+     */
     override fun areContentsTheSame(
         oldItem: PublicacionesModelo,
         newItem: PublicacionesModelo
     ): Boolean {
-        // Compara los contenidos (puedes añadir más propiedades según lo necesites)
         return oldItem == newItem
     }
 }

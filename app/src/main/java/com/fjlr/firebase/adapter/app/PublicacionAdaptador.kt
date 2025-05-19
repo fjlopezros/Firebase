@@ -6,15 +6,24 @@ import androidx.recyclerview.widget.ListAdapter
 import com.fjlr.firebase.adapter.PublicacionesDiffCallback
 import com.fjlr.firebase.databinding.PublicacionesItemBinding
 import com.fjlr.firebase.model.PublicacionesModelo
-import com.fjlr.firebase.utils.Adaptador
+import com.fjlr.firebase.utils.ActualizarIcono
+import com.fjlr.firebase.viewModel.FavoritosVistaModelo
 import com.fjlr.firebase.viewModel.PublicacionesVistaModelo
 
+/**
+ * Clase de adaptador para el RecyclerView de publicaciones en la pantalla principal.
+ * @param viewModel El ViewModel asociado al adaptador.
+ */
 class PublicacionAdaptador(
-    private val viewModel: PublicacionesVistaModelo
+    private val viewModel: FavoritosVistaModelo
 ) : ListAdapter<PublicacionesModelo, PublicacionesViewHolder>(
     PublicacionesDiffCallback()
 ) {
-
+    /**
+     * Metodo sobrecargado para crear el ViewHolder.
+     * @param parent El ViewGroup al que se adjuntará la nueva vista.
+     * @return Un nuevo ViewHolder para el RecyclerView.
+     */
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -27,12 +36,17 @@ class PublicacionAdaptador(
             )
         )
 
+    /**
+     * Metodo sobrecargado para vincular los datos del modelo a la vista.
+     * @param holder El ViewHolder que contiene la vista.
+     * @param position La posición del elemento en la lista.
+     */
     override fun onBindViewHolder(
         holder: PublicacionesViewHolder,
         position: Int
     ) {
         val publicacion = getItem(position)
         holder.bind(publicacion)
-        Adaptador.configurarIconoFavorito(publicacion, holder.icono, viewModel)
+        ActualizarIcono.configurarIconoFavorito(publicacion, holder.icono, viewModel)
     }
 }

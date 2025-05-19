@@ -1,5 +1,8 @@
 package com.fjlr.firebase.utils
 
+/**
+ * Enumeración de fotos de recetas por defecto.
+ */
 enum class EnumFotosReceta(
     val nombre: String,
     val fotoUrl: String

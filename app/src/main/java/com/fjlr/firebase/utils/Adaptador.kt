@@ -2,39 +2,32 @@ package com.fjlr.firebase.utils
 
 import android.content.Intent
 import android.view.View
-import android.widget.ImageButton
 import com.fjlr.firebase.model.PublicacionesModelo
 import com.fjlr.firebase.view.AjustesActivity
 import com.fjlr.firebase.view.DetalleActivity
-import com.fjlr.firebase.viewModel.PublicacionesVistaModelo
 
+/**
+ * Objeto de utilidad para abrir actividades desde el adaptador.
+ */
 object Adaptador {
-    fun configurarIconoFavorito(
-        publicacion: PublicacionesModelo,
-        holderIcono: ImageButton,
-        viewModel: PublicacionesVistaModelo
-    ) {
-        viewModel.esFavorito(publicacion) { favorito ->
-            publicacion.esFavorito = favorito
-            ActualizarIcono.actualizarIcono(favorito, holderIcono)
-        }
-
-        holderIcono.setOnClickListener {
-            publicacion.esFavorito = !publicacion.esFavorito
-            ActualizarIcono.actualizarIcono(publicacion.esFavorito, holderIcono)
-            if (publicacion.esFavorito) {
-                viewModel.guardarFavorito(publicacion)
-            } else {
-                viewModel.eliminarFavorito(publicacion)
-            }
-        }
-    }
-
+    /**
+     * Abre la actividad de ajustes desde el adaptador.
+     * Le pasa el email del autor de la publicación para luego mostrar sus publicaciones.
+     * @param view La vista actual.
+     * @param email El email del autor de la publicación.
+     */
     fun abrirAjustesDesdeItem(view: View, email: String) {
         val intent = Intent(view.context, AjustesActivity::class.java)
         intent.putExtra("emailDelPerfil", email)
         view.context.startActivity(intent)
     }
+
+    /**
+     * Abre la actividad de detalle desde el adaptador.
+     * Le pasa la publicacion seleccionada para luego mostrar sus detalles.
+     * @param view La vista actual.
+     * @param publicacion La publicacion seleccionada.
+     */
     fun abrirDetalleDesdeItemAjustes(view: View, publicacion: PublicacionesModelo) {
         val intent = Intent(view.context, DetalleActivity::class.java)
         intent.putExtra("publicacionDelPerfil", publicacion)

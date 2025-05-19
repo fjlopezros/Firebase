@@ -1,6 +1,7 @@
 package com.fjlr.firebase.view
 
 import android.os.Bundle
+import android.widget.SearchView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -10,12 +11,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.fjlr.firebase.adapter.app.PublicacionAdaptador
 import com.fjlr.firebase.databinding.ActivityBuscarBinding
 import com.fjlr.firebase.utils.configurarBarraNavegacion
+import com.fjlr.firebase.viewModel.BuscarVistaModelo
+import com.fjlr.firebase.viewModel.FavoritosVistaModelo
 import com.fjlr.firebase.viewModel.PublicacionesVistaModelo
 
 class BuscarActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityBuscarBinding
     private lateinit var viewModel: PublicacionesVistaModelo
+    private lateinit var viewModelFav: FavoritosVistaModelo
+    private lateinit var viewModelBuscar: BuscarVistaModelo
     private lateinit var publicacionAdapter: PublicacionAdaptador
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +34,8 @@ class BuscarActivity : AppCompatActivity() {
 
         //Instancia del ViewModel
         viewModel = ViewModelProvider(this)[PublicacionesVistaModelo::class.java]
+        viewModelBuscar  = ViewModelProvider(this)[BuscarVistaModelo::class.java]
+        viewModelFav  = ViewModelProvider(this)[FavoritosVistaModelo::class.java]
 
         //Configuración del RecyclerView
         inicializarRecyclerView()
@@ -47,10 +54,21 @@ class BuscarActivity : AppCompatActivity() {
             publicacionAdapter.submitList(lista)
         }
 
+        binding.svBuscador.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+
+        })
+
     }
 
     private fun inicializarRecyclerView() {
-        publicacionAdapter = PublicacionAdaptador(viewModel)
+        publicacionAdapter = PublicacionAdaptador(viewModelFav)
         binding.recyclerViewBuscar.layoutManager = LinearLayoutManager(this)
         binding.recyclerViewBuscar.adapter = publicacionAdapter
     }

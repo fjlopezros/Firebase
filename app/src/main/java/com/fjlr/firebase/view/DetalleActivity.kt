@@ -10,8 +10,9 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import com.fjlr.firebase.databinding.ActivityDetalleBinding
 import com.fjlr.firebase.model.PublicacionesModelo
-import com.fjlr.firebase.utils.Adaptador
+import com.fjlr.firebase.utils.ActualizarIcono
 import com.fjlr.firebase.viewModel.AjustesVistaModelo
+import com.fjlr.firebase.viewModel.FavoritosVistaModelo
 import com.fjlr.firebase.viewModel.PublicacionesVistaModelo
 import com.squareup.picasso.Picasso
 
@@ -20,6 +21,7 @@ class DetalleActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetalleBinding
     private lateinit var viewModel: PublicacionesVistaModelo
     private lateinit var viewModelAjustes: AjustesVistaModelo
+    private lateinit var viewModelFav: FavoritosVistaModelo
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +33,7 @@ class DetalleActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this)[PublicacionesVistaModelo::class.java]
         viewModelAjustes = ViewModelProvider(this)[AjustesVistaModelo::class.java]
+        viewModelFav = ViewModelProvider(this)[FavoritosVistaModelo::class.java]
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -58,6 +61,6 @@ class DetalleActivity : AppCompatActivity() {
         binding.tvIngredientesPublicacionDetalla.text = publicacion?.ingredientes
         binding.tvPreparacionPublicacionDetalla.text = publicacion?.preparacion
         Picasso.get().load("https://robohash.org/fran").into(binding.ivFotoDetalla)
-        Adaptador.configurarIconoFavorito(PublicacionesModelo(), binding.ibBotonFavoritoDetalla, viewModel)
+        ActualizarIcono.configurarIconoFavorito(PublicacionesModelo(), binding.ibBotonFavoritoDetalla, viewModelFav)
     }
 }

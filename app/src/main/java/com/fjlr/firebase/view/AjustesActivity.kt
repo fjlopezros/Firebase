@@ -13,6 +13,7 @@ import com.fjlr.firebase.adapter.ajustes.PublicacionAdaptadorAjustes
 import com.fjlr.firebase.databinding.ActivityAjustesBinding
 import com.fjlr.firebase.utils.configurarBarraNavegacion
 import com.fjlr.firebase.viewModel.AjustesVistaModelo
+import com.fjlr.firebase.viewModel.FavoritosVistaModelo
 import com.fjlr.firebase.viewModel.PublicacionesVistaModelo
 import com.fjlr.firebase.viewModel.SeguidoresVistaModelo
 import com.google.firebase.auth.FirebaseAuth
@@ -21,6 +22,7 @@ class AjustesActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAjustesBinding
     private lateinit var viewModel: AjustesVistaModelo
+    private lateinit var viewModelFav: FavoritosVistaModelo
     private lateinit var viewModelSeguidores: SeguidoresVistaModelo
     private lateinit var viewModelMy: PublicacionesVistaModelo
     private lateinit var publicacionesAdapter: PublicacionAdaptadorAjustes
@@ -49,6 +51,7 @@ class AjustesActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[AjustesVistaModelo::class.java]
         viewModelMy = ViewModelProvider(this)[PublicacionesVistaModelo::class.java]
         viewModelSeguidores = ViewModelProvider(this)[SeguidoresVistaModelo::class.java]
+        viewModelFav = ViewModelProvider(this)[FavoritosVistaModelo::class.java]
 
         //Configuración del RecyclerView
         inicializarRecyclerView()
@@ -122,12 +125,12 @@ class AjustesActivity : AppCompatActivity() {
     }
 
     private fun inicializarRecyclerView() {
-        publicacionesAdapter = PublicacionAdaptadorAjustes(viewModelMy)
+        publicacionesAdapter = PublicacionAdaptadorAjustes(viewModelFav)
         binding.recyclerViewMy.layoutManager = GridLayoutManager(this, 3)
         binding.recyclerViewMy.adapter = publicacionesAdapter
     }
 
     private fun fotoDePerfilAleatoria() {
-        viewModel.fotoDePerfilAleatoria(binding.ivPerfilUsuario)
+        viewModel.cargarFotoDePerfilAleatoria(binding.ivPerfilUsuario)
     }
 }

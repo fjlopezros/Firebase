@@ -3,6 +3,9 @@ package com.fjlr.firebase.model
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
+/**
+ * Modelo de datos de una publicación (Serializada).
+ */
 @Parcelize
 data class PublicacionesModelo(
     val titulo: String = "",

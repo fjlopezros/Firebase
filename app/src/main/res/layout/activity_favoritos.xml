@@ -7,6 +7,17 @@
     android:layout_height="match_parent"
     tools:context=".view.FavoritosActivity">
 
+    <TextView
+        android:id="@+id/tvVacio"
+        android:layout_width="320dp"
+        android:layout_height="69dp"
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerViewFav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvFavoritosTitulo"
+        tools:text="No hay nada guardado"
+        android:textSize="20sp"
+        android:textAlignment="center"/>
 
     <TextView
         android:id="@+id/tvFavoritosTitulo"

@@ -1,6 +1,7 @@
 package com.fjlr.firebase.view
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -10,13 +11,14 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.fjlr.firebase.adapter.favoritos.PublicacionAdaptadorFav
 import com.fjlr.firebase.databinding.ActivityFavoritosBinding
 import com.fjlr.firebase.utils.configurarBarraNavegacion
-import com.fjlr.firebase.viewModel.PublicacionesVistaModelo
+import com.fjlr.firebase.viewModel.FavoritosVistaModelo
 
 class FavoritosActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFavoritosBinding
-    private lateinit var viewModel: PublicacionesVistaModelo
+    private lateinit var viewModel: FavoritosVistaModelo
     private lateinit var publicacionAdaptadorFav: PublicacionAdaptadorFav
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +32,7 @@ class FavoritosActivity : AppCompatActivity() {
         configurarBarraNavegacion(this, binding.barraNavegacion)
 
         //Instancia del ViewModel
-        viewModel = ViewModelProvider(this)[PublicacionesVistaModelo::class.java]
+        viewModel = ViewModelProvider(this)[FavoritosVistaModelo::class.java]
 
         //Configuración del RecyclerView
         inicializarRecyclerView()
@@ -47,6 +49,7 @@ class FavoritosActivity : AppCompatActivity() {
         //Observar cambios en la lista de publicaciones
         viewModel.publicaciones.observe(this) { lista ->
             publicacionAdaptadorFav.submitList(lista)
+            binding.tvVacio.visibility = if (lista.isEmpty()) View.VISIBLE else View.GONE
         }
     }
 
