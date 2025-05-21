@@ -28,13 +28,11 @@ class PerfilRepositorio {
         db.collection(ConstantesUtilidades.COLECCION_FIREBASE)
             .whereEqualTo(ConstantesUtilidades.AUTOR, emailDelPerfil)
             .addSnapshotListener { snapshots, error ->
-                if (error != null || snapshots == null) {
-                    callback(emptyList())
-                    return@addSnapshotListener
-                }
 
-                val listaPerfil =
-                    snapshots.mapNotNull { it.toObject(PublicacionesModelo::class.java) }
+                val listaPerfil = snapshots?.documents?.mapNotNull { doc ->
+                    doc.toObject(PublicacionesModelo::class.java)
+                } ?: emptyList()
+
                 callback(listaPerfil)
             }
     }
@@ -74,7 +72,9 @@ class PerfilRepositorio {
         db.collection(ConstantesUtilidades.COLECCION_FIREBASE)
             .whereEqualTo(ConstantesUtilidades.AUTOR, emailDelPerfil)
             .addSnapshotListener { snapshots, error ->
-                callback(if (error != null || snapshots == null) 0 else snapshots.size())
+
+                callback(snapshots?.size() ?: ConstantesUtilidades.VACIO)
+
             }
     }
 

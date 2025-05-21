@@ -26,6 +26,6 @@ class UsuarioRepositorio(
             .document(email)
             .set(usuario)
             .addOnSuccessListener { callback(true, null) }
-            .addOnFailureListener { e -> callback(false, e.message) }
+            .addOnFailureListener { callback(false, it.message) }
     }
 }

@@ -30,7 +30,6 @@ class AutenticacionRepositorio(
         autenticacion.createUserWithEmailAndPassword(email, contrasena)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    //autenticacion.currentUser?.sendEmailVerification() //Verificacion
                     callback(true, null)
                 } else {
                     callback(false, task.exception?.message)

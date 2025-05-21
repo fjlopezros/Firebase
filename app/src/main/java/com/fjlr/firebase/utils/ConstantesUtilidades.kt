@@ -18,9 +18,11 @@ class ConstantesUtilidades {
         const val PREPARACION:String = "preparacion"
         const val FAVORITO: String = "favorito"
         const val AUTOR: String = "autor"
+        const val EMAIL: String = "email"
         const val GET_STRING = "emailDelPerfil"
         const val URL_FOTO_ALEATORIA = "https://avatar.iran.liara.run/public"
         const val ERROR_INICIAR_SESION = "Email o contraseña vacíos"
         const val NULL = "Null"
+        const val VACIO = 0
     }
 }

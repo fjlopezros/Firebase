@@ -6,11 +6,19 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 
+/**
+ * Repositorio para operaciones relacionadas con favoritos.
+ */
 class FavoritosRepositorio {
 
     private val db = FirebaseFirestore.getInstance()
-    private val emailUsuario = FirebaseAuth.getInstance().currentUser?.email ?: ConstantesUtilidades.NULL
+    private val emailUsuario =
+        FirebaseAuth.getInstance().currentUser?.email ?: ConstantesUtilidades.NULL
 
+    /**
+     * Guarda una publicación como favorita en Firestore.
+     * @param publicacion Publicación a guardar.
+     */
     fun guardarFavorito(publicacion: PublicacionesModelo) {
         val docId = "${publicacion.titulo}_${publicacion.autor}"
 
@@ -31,6 +39,10 @@ class FavoritosRepositorio {
             .set(data)
     }
 
+    /**
+     * Elimina una publicación de la lista de favoritos en Firestore.
+     * @param publicacion Publicación a eliminar.
+     */
     fun eliminarFavorito(publicacion: PublicacionesModelo) {
         val docId = "${publicacion.titulo}_${publicacion.autor}"
 
@@ -41,6 +53,10 @@ class FavoritosRepositorio {
             .delete()
     }
 
+    /**
+     * Verifica si una publicación está en la lista de favoritos.
+     * @param publicacion Publicación a verificar.
+     */
     fun esFavorito(publicacion: PublicacionesModelo, callback: (Boolean) -> Unit) {
         val docId = "${publicacion.titulo}_${publicacion.autor}"
 
@@ -57,19 +73,19 @@ class FavoritosRepositorio {
             }
     }
 
+    /**
+     * Carga las publicaciones marcadas como favoritas.
+     * @param callback Lista de publicaciones o vacía si hay error.
+     */
     fun cargarFavoritos(callback: (List<PublicacionesModelo>) -> Unit) {
         db.collection(ConstantesUtilidades.COLECCION_USUARIOS)
             .document(emailUsuario)
             .collection(ConstantesUtilidades.COLECCION_FAVORITOS)
             .addSnapshotListener { snapshots, error ->
-                if (error != null || snapshots == null) {
-                    callback(emptyList())
-                    return@addSnapshotListener
-                }
 
-                val favoritos = snapshots.documents.mapNotNull { doc ->
+                val favoritos = snapshots?.documents?.mapNotNull { doc ->
                     doc.toObject(PublicacionesModelo::class.java)
-                }
+                } ?: emptyList()
 
                 callback(favoritos)
             }

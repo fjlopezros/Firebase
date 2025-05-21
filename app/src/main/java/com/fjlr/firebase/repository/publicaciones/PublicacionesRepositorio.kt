@@ -19,11 +19,12 @@ class PublicacionesRepositorio {
         db.collection(ConstantesUtilidades.COLECCION_FIREBASE)
             .orderBy(ConstantesUtilidades.TIEMPO_ORDENAR_PUBLI, Query.Direction.DESCENDING)
             .addSnapshotListener { snapshots, error ->
-                if (error != null || snapshots == null) {
-                    callback(emptyList())
-                } else {
-                    callback(snapshots.mapNotNull { it.toObject(PublicacionesModelo::class.java) })
-                }
+
+                val publicaciones = snapshots?.documents?.mapNotNull { doc ->
+                    doc.toObject(PublicacionesModelo::class.java)
+                } ?: emptyList()
+
+                callback(publicaciones)
             }
     }
 }
