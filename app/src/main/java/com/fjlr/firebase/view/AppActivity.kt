@@ -12,14 +12,15 @@ import com.fjlr.firebase.adapter.app.PublicacionAdaptador
 import com.fjlr.firebase.databinding.ActivityAppBinding
 import com.fjlr.firebase.utils.configurarBarraNavegacion
 import com.fjlr.firebase.viewModel.FavoritosVistaModelo
-import com.fjlr.firebase.viewModel.PublicacionesVistaModelo
+import com.fjlr.firebase.viewModel.SeguidosVistaModelo
 
 class AppActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAppBinding
-    private lateinit var viewModel: PublicacionesVistaModelo
     private lateinit var viewModelFav: FavoritosVistaModelo
     private lateinit var publicacionAdapter: PublicacionAdaptador
+    private lateinit var viewModelSeguidos: SeguidosVistaModelo
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,8 +39,8 @@ class AppActivity : AppCompatActivity() {
         }
 
         //Instancia del ViewModel
-        viewModel = ViewModelProvider(this)[PublicacionesVistaModelo::class.java]
         viewModelFav = ViewModelProvider(this)[FavoritosVistaModelo::class.java]
+        viewModelSeguidos = ViewModelProvider(this)[SeguidosVistaModelo::class.java]
 
         //Configuración del RecyclerView
         inicializarRecyclerView()
@@ -51,10 +52,10 @@ class AppActivity : AppCompatActivity() {
         }
 
         //Cargar publicaciones
-        viewModel.cargarPublicacionesSeguidos()
+        viewModelSeguidos.cargarPublicacionesSeguidos()
 
         //Observar cambios en la lista de publicaciones
-        viewModel.publicaciones.observe(this) { lista ->
+        viewModelSeguidos.publicaciones.observe(this) { lista ->
             publicacionAdapter.submitList(lista)
         }
 

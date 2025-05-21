@@ -14,6 +14,7 @@ import com.fjlr.firebase.databinding.ActivityAjustesBinding
 import com.fjlr.firebase.utils.configurarBarraNavegacion
 import com.fjlr.firebase.viewModel.AjustesVistaModelo
 import com.fjlr.firebase.viewModel.FavoritosVistaModelo
+import com.fjlr.firebase.viewModel.PerfilVistaModelo
 import com.fjlr.firebase.viewModel.PublicacionesVistaModelo
 import com.fjlr.firebase.viewModel.SeguidoresVistaModelo
 import com.google.firebase.auth.FirebaseAuth
@@ -29,6 +30,8 @@ class AjustesActivity : AppCompatActivity() {
     private val email = FirebaseAuth.getInstance().currentUser?.email
     private lateinit var emailDelPerfil: String
 
+
+    private lateinit var viewModelPerfil: PerfilVistaModelo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +56,9 @@ class AjustesActivity : AppCompatActivity() {
         viewModelSeguidores = ViewModelProvider(this)[SeguidoresVistaModelo::class.java]
         viewModelFav = ViewModelProvider(this)[FavoritosVistaModelo::class.java]
 
+
+        viewModelPerfil = ViewModelProvider(this)[PerfilVistaModelo::class.java]
+
         //Configuración del RecyclerView
         inicializarRecyclerView()
 
@@ -73,10 +79,10 @@ class AjustesActivity : AppCompatActivity() {
         }
 
         //Cargar las publicaciones de mi perfil
-        viewModelMy.cargarTusPublicaciones(emailDelPerfil.toString())
+        viewModelPerfil.cargarTusPublicaciones(emailDelPerfil.toString())
 
         //Observar cambios en la lista de publicaciones
-        viewModelMy.publicaciones.observe(this) { lista ->
+        viewModelPerfil.publicaciones.observe(this) { lista ->
             publicacionesAdapter.submitList(lista)
         }
 

@@ -8,7 +8,6 @@ import com.fjlr.firebase.databinding.PublicacionesItemBinding
 import com.fjlr.firebase.model.PublicacionesModelo
 import com.fjlr.firebase.utils.ActualizarIcono
 import com.fjlr.firebase.viewModel.FavoritosVistaModelo
-import com.fjlr.firebase.viewModel.PublicacionesVistaModelo
 
 /**
  * Clase de adaptador para el RecyclerView de publicaciones en la pantalla principal.

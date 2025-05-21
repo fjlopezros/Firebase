@@ -13,13 +13,11 @@ import com.fjlr.firebase.model.PublicacionesModelo
 import com.fjlr.firebase.utils.ActualizarIcono
 import com.fjlr.firebase.viewModel.AjustesVistaModelo
 import com.fjlr.firebase.viewModel.FavoritosVistaModelo
-import com.fjlr.firebase.viewModel.PublicacionesVistaModelo
 import com.squareup.picasso.Picasso
 
 class DetalleActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetalleBinding
-    private lateinit var viewModel: PublicacionesVistaModelo
     private lateinit var viewModelAjustes: AjustesVistaModelo
     private lateinit var viewModelFav: FavoritosVistaModelo
 
@@ -31,7 +29,6 @@ class DetalleActivity : AppCompatActivity() {
         binding = ActivityDetalleBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel = ViewModelProvider(this)[PublicacionesVistaModelo::class.java]
         viewModelAjustes = ViewModelProvider(this)[AjustesVistaModelo::class.java]
         viewModelFav = ViewModelProvider(this)[FavoritosVistaModelo::class.java]
 
@@ -61,6 +58,13 @@ class DetalleActivity : AppCompatActivity() {
         binding.tvIngredientesPublicacionDetalla.text = publicacion?.ingredientes
         binding.tvPreparacionPublicacionDetalla.text = publicacion?.preparacion
         Picasso.get().load("https://robohash.org/fran").into(binding.ivFotoDetalla)
-        ActualizarIcono.configurarIconoFavorito(PublicacionesModelo(), binding.ibBotonFavoritoDetalla, viewModelFav)
+
+        publicacion?.let {
+            ActualizarIcono.configurarIconoFavorito(
+                publicacion,
+                binding.ibBotonFavoritoDetalla,
+                viewModelFav
+            )
+        }
     }
 }

@@ -10,19 +10,18 @@ import androidx.lifecycle.lifecycleScope
 import com.fjlr.firebase.databinding.ActivityAnadirPublicacionBinding
 import com.fjlr.firebase.model.PublicacionesModelo
 import com.fjlr.firebase.viewModel.PublicacionesVistaModelo
-import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
 
 class AnadirPublicacionActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAnadirPublicacionBinding
-
     private lateinit var viewModel: PublicacionesVistaModelo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        //Configuracion del binding
         binding = ActivityAnadirPublicacionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
