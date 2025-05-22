@@ -2,65 +2,33 @@ package com.fjlr.firebase.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
-import com.fjlr.firebase.R
-import com.fjlr.firebase.adapter.ajustes.PublicacionAdaptadorAjustes
 import com.fjlr.firebase.databinding.ActivityAjustesBinding
-import com.fjlr.firebase.utils.configurarBarraNavegacion
-import com.fjlr.firebase.viewModel.AjustesVistaModelo
-import com.fjlr.firebase.viewModel.FavoritosVistaModelo
-import com.fjlr.firebase.viewModel.PerfilVistaModelo
-import com.fjlr.firebase.viewModel.PublicacionesVistaModelo
-import com.fjlr.firebase.viewModel.SeguidoresVistaModelo
+import com.fjlr.firebase.viewModel.RegistroVistaModelo
+import com.fjlr.firebase.viewModel.UtilidadesPerfilVistaModelo
 import com.google.firebase.auth.FirebaseAuth
 
 class AjustesActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAjustesBinding
-    private lateinit var viewModel: AjustesVistaModelo
-    private lateinit var viewModelFav: FavoritosVistaModelo
-    private lateinit var viewModelSeguidores: SeguidoresVistaModelo
-    private lateinit var viewModelMy: PublicacionesVistaModelo
-    private lateinit var publicacionesAdapter: PublicacionAdaptadorAjustes
-    private val email = FirebaseAuth.getInstance().currentUser?.email
-    private lateinit var emailDelPerfil: String
-
-
-    private lateinit var viewModelPerfil: PerfilVistaModelo
+    private lateinit var viewModel: RegistroVistaModelo
+    private lateinit var viewModelUtilidades: UtilidadesPerfilVistaModelo
+    private val email = FirebaseAuth.getInstance().currentUser?.email.toString()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        //Configuracion del binding
         binding = ActivityAjustesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //Configuración de la barra de navegación
-        configurarBarraNavegacion(this, binding.barraNavegacion)
-
-        //Configuración del botón de cerrar sesión
-        binding.btCerrarSesion.setOnClickListener {
-            viewModel.cerrarSesion()
-            startActivity(Intent(this, MainActivity::class.java))
-        }
-
-        //Instancia del ViewModel
-        viewModel = ViewModelProvider(this)[AjustesVistaModelo::class.java]
-        viewModelMy = ViewModelProvider(this)[PublicacionesVistaModelo::class.java]
-        viewModelSeguidores = ViewModelProvider(this)[SeguidoresVistaModelo::class.java]
-        viewModelFav = ViewModelProvider(this)[FavoritosVistaModelo::class.java]
-
-
-        viewModelPerfil = ViewModelProvider(this)[PerfilVistaModelo::class.java]
-
-        //Configuración del RecyclerView
-        inicializarRecyclerView()
+        viewModel = ViewModelProvider(this)[RegistroVistaModelo::class.java]
+        viewModelUtilidades = ViewModelProvider(this)[UtilidadesPerfilVistaModelo::class.java]
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -68,75 +36,46 @@ class AjustesActivity : AppCompatActivity() {
             insets
         }
 
-        //Recogo el email del perfil que se pasa por intent
-        emailDelPerfil = intent.getStringExtra("emailDelPerfil") ?: email ?: ""
-
-        fotoDePerfilAleatoria()
-
-        //Obetengo el nomrbre de usuario
-        viewModel.obtenerNombreDeEmail(emailDelPerfil) { nombre ->
-            binding.tvCorreoUsuario.text = nombre ?: "Nombre no disponible"
+        binding.ibFlechaParaSalir.setOnClickListener {
+            finish()
         }
 
-        //Cargar las publicaciones de mi perfil
-        viewModelPerfil.cargarTusPublicaciones(emailDelPerfil.toString())
-
-        //Observar cambios en la lista de publicaciones
-        viewModelPerfil.publicaciones.observe(this) { lista ->
-            publicacionesAdapter.submitList(lista)
-        }
-
-        //Seguir o dejar de seguir al usuario
-        binding.btSeguir.setOnClickListener {
-            viewModelSeguidores.seguirUsuario(email.toString(), emailDelPerfil)
-            binding.btSeguir.text = getString(R.string.dejar_de_seguir)
-        }
-
-        inicializarMenu()
-
-        actualizarEstadoBotonSeguir()
-    }
-
-    fun actualizarEstadoBotonSeguir() {
-        viewModelSeguidores.verificarSiSigue(email.toString(), emailDelPerfil) { loSigue ->
-            binding.btSeguir.text =
-                if (loSigue) getString(R.string.dejar_de_seguir) else getString(R.string.seguir)
-
-            binding.btSeguir.setOnClickListener {
-                if (loSigue) {
-                    viewModelSeguidores.dejarDeSeguir(email.toString(), emailDelPerfil)
-                } else {
-                    viewModelSeguidores.seguirUsuario(email.toString(), emailDelPerfil)
-                }
-
-                actualizarEstadoBotonSeguir()
+        binding.btCambiarUsuario.setOnClickListener {
+            val nuevoUsuario = binding.etCambiarUsuario.text.toString()
+            if (nuevoUsuario.isNotBlank()) {
+                viewModel.cambiarNombreUsuario(
+                    email, binding.etCambiarUsuario.text.toString(),
+                    callback = { guardado ->
+                        if (guardado) {
+                            Toast.makeText(this, "Usuario cambiado", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(this, "Algo fallo", Toast.LENGTH_SHORT).show()
+                        }
+                    })
             }
         }
-    }
 
-    private fun inicializarMenu() {
-        viewModel.contarPublicaciones(emailDelPerfil) { publicaciones ->
-            binding.tvNumPublicaciones.text = publicaciones.toString()
+        binding.btContrasena.setOnClickListener {
+            viewModel.cambiarContrasena(email, callback = { enviado ->
+                if (enviado) {
+                    Toast.makeText(
+                        this,
+                        "Se ha enviado un correo para cambiar la contraseña",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    viewModelUtilidades.cerrarSesion()
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(this, "No se ha podido enviar el correo", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            })
         }
 
-        viewModelSeguidores.contarSeguidores(emailDelPerfil) { seguidores ->
-            binding.tvNumSeguidores.text = seguidores.toString()
+        binding.ibSalir.setOnClickListener {
+            viewModelUtilidades.cerrarSesion()
         }
-
-        viewModelSeguidores.contarSeguidos(emailDelPerfil) { seguidos ->
-            binding.tvNumSeguidos.text = seguidos.toString()
-        }
-
-        viewModelSeguidores.ocultarSeguir(binding.btSeguir, emailDelPerfil.toString())
-    }
-
-    private fun inicializarRecyclerView() {
-        publicacionesAdapter = PublicacionAdaptadorAjustes(viewModelFav)
-        binding.recyclerViewMy.layoutManager = GridLayoutManager(this, 3)
-        binding.recyclerViewMy.adapter = publicacionesAdapter
-    }
-
-    private fun fotoDePerfilAleatoria() {
-        viewModel.cargarFotoDePerfilAleatoria(binding.ivPerfilUsuario)
     }
 }

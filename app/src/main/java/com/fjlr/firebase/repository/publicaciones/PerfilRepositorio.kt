@@ -1,6 +1,5 @@
 package com.fjlr.firebase.repository.publicaciones
 
-import android.util.Log
 import com.fjlr.firebase.model.PublicacionesModelo
 import com.fjlr.firebase.utils.ConstantesUtilidades
 import com.google.firebase.firestore.FirebaseFirestore
@@ -38,9 +37,7 @@ class PerfilRepositorio {
         db.collection(ConstantesUtilidades.COLECCION_FIREBASE)
             .whereEqualTo(ConstantesUtilidades.AUTOR, emailDelPerfil)
             .addSnapshotListener { snapshots, error ->
-
                 callback(snapshots?.size() ?: ConstantesUtilidades.VACIO)
-
             }
     }
 
@@ -54,12 +51,9 @@ class PerfilRepositorio {
         }
         db.collection(ConstantesUtilidades.COLECCION_USUARIOS)
             .document(email)
-            .get()
-            .addOnSuccessListener { doc ->
-                callback(doc.getString(ConstantesUtilidades.USUARIO))
-            }
-            .addOnFailureListener {
-                callback(null)
+            .addSnapshotListener { snapshot, error ->
+                callback(snapshot?.getString(ConstantesUtilidades.USUARIO)
+                    ?: ConstantesUtilidades.NULL)
             }
     }
 }

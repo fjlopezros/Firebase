@@ -3,7 +3,7 @@ package com.fjlr.firebase.utils
 import android.content.Intent
 import android.view.View
 import com.fjlr.firebase.model.PublicacionesModelo
-import com.fjlr.firebase.view.AjustesActivity
+import com.fjlr.firebase.view.PerfilActivity
 import com.fjlr.firebase.view.DetalleActivity
 
 /**
@@ -17,7 +17,7 @@ object Adaptador {
      * @param email El email del autor de la publicación.
      */
     fun abrirAjustesDesdeItem(view: View, email: String) {
-        val intent = Intent(view.context, AjustesActivity::class.java)
+        val intent = Intent(view.context, PerfilActivity::class.java)
         intent.putExtra("emailDelPerfil", email)
         view.context.startActivity(intent)
     }

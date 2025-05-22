@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.PerfilActivity">
+
+
+    <ImageView
+        android:id="@+id/ivPerfilUsuario"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/iconousuario"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCorreoUsuario" />
+
+    <TextView
+        android:id="@+id/tvNumSeguidores"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="92dp"
+        android:layout_marginTop="24dp"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/tvNumPublicaciones"
+        app:layout_constraintTop_toBottomOf="@+id/tvCorreoUsuario"
+        tools:hint="0" />
+
+    <TextView
+        android:id="@+id/tvNumPublicacionesTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="@string/publicacionesTitulo"
+        app:layout_constraintBottom_toTopOf="@+id/btSeguir"
+        app:layout_constraintStart_toEndOf="@+id/ivPerfilUsuario"
+        app:layout_constraintTop_toBottomOf="@+id/tvNumPublicaciones"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/tvNumSeguidoresTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/seguidoresTitulo"
+        app:layout_constraintStart_toEndOf="@+id/tvNumPublicacionesTitulo"
+        app:layout_constraintTop_toBottomOf="@+id/tvNumSeguidores" />
+
+    <TextView
+        android:id="@+id/tvNumSeguidosTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="@string/seguidos"
+        app:layout_constraintBottom_toTopOf="@+id/btSeguir"
+        app:layout_constraintStart_toEndOf="@+id/tvNumSeguidoresTitulo"
+        app:layout_constraintTop_toBottomOf="@+id/tvNumSeguidos"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/tvNumPublicaciones"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="24dp"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/ivPerfilUsuario"
+        app:layout_constraintTop_toBottomOf="@+id/tvCorreoUsuario"
+        tools:hint="0" />
+
+    <TextView
+        android:id="@+id/tvCorreoUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:hint="correo usuario" />
+
+    <TextView
+        android:id="@+id/tvNumSeguidos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.435"
+        app:layout_constraintStart_toEndOf="@+id/tvNumSeguidores"
+        app:layout_constraintTop_toBottomOf="@+id/tvCorreoUsuario"
+        tools:hint="0" />
+
+    <ImageButton
+        android:id="@+id/ibAjustes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/icono_ajustes"
+        android:src="@drawable/ajustes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btSeguir"
+        android:layout_width="204dp"
+        android:layout_height="42dp"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@string/seguir_cuenta"
+        android:text="@string/seguir"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerViewMy"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toEndOf="@+id/ivPerfilUsuario"
+        app:layout_constraintTop_toBottomOf="@+id/tvNumSeguidoresTitulo" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewMy"
+        android:layout_width="364dp"
+        android:layout_height="483dp"
+        android:contentDescription="@string/publicaciones"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.721" />
+
+    <include
+        android:id="@+id/barra_navegacion"
+        layout="@layout/layout_barra"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

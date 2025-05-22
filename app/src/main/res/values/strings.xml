@@ -44,4 +44,9 @@
     <string name="seguidoresTitulo">seguidores</string>
     <string name="dejar_de_seguir">Dejar de seguir</string>
     <string name="descubre_mas_cuentas">Descubre mas cuentas</string>
+    <string name="introduce_tu_nueva_contrase_a">Cambiar contraseña</string>
+    <string name="introduce_tu_nuevo_usuario">Introduce tu nuevo usuario:</string>
+    <string name="usuario_nuevo">usuario nuevo</string>
+    <string name="enviar_email">Enviar Email</string>
+    <string name="cambiar_usuario">Cambiar usuario</string>
 </resources>

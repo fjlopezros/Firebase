@@ -11,14 +11,14 @@ import androidx.lifecycle.ViewModelProvider
 import com.fjlr.firebase.databinding.ActivityDetalleBinding
 import com.fjlr.firebase.model.PublicacionesModelo
 import com.fjlr.firebase.utils.ActualizarIcono
-import com.fjlr.firebase.viewModel.AjustesVistaModelo
+import com.fjlr.firebase.viewModel.UtilidadesPerfilVistaModelo
 import com.fjlr.firebase.viewModel.FavoritosVistaModelo
 import com.squareup.picasso.Picasso
 
 class DetalleActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetalleBinding
-    private lateinit var viewModelAjustes: AjustesVistaModelo
+    private lateinit var viewModelAjustes: UtilidadesPerfilVistaModelo
     private lateinit var viewModelFav: FavoritosVistaModelo
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -29,7 +29,7 @@ class DetalleActivity : AppCompatActivity() {
         binding = ActivityDetalleBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModelAjustes = ViewModelProvider(this)[AjustesVistaModelo::class.java]
+        viewModelAjustes = ViewModelProvider(this)[UtilidadesPerfilVistaModelo::class.java]
         viewModelFav = ViewModelProvider(this)[FavoritosVistaModelo::class.java]
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->

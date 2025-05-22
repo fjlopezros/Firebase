@@ -1,13 +1,15 @@
 package com.fjlr.firebase.repository
 
 import com.fjlr.firebase.utils.ConstantesUtilidades
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 /**
  * Repositorio para operaciones relacionadas con datos del usuario en Firestore.
  */
 class UsuarioRepositorio(
-    private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
+    private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance(),
+    private val aut: FirebaseAuth = FirebaseAuth.getInstance()
 ) {
     /**
      * Guarda el nombre del usuario en Firestore con su email como ID de documento.
@@ -27,5 +29,22 @@ class UsuarioRepositorio(
             .set(usuario)
             .addOnSuccessListener { callback(true, null) }
             .addOnFailureListener { callback(false, it.message) }
+    }
+
+    fun cambiarNombreUsuario(email: String, usuario: String, callback: (Boolean) -> Unit) {
+        val usuario = mapOf(ConstantesUtilidades.USUARIO to usuario)
+        firestore.collection(ConstantesUtilidades.COLECCION_USUARIOS)
+            .document(email)
+            .set(usuario)
+            .addOnSuccessListener { callback(true) }
+            .addOnFailureListener { callback(false) }
+    }
+
+    fun cambiarContrasena(email: String, callback: (Boolean) -> Unit) {
+        aut.sendPasswordResetEmail(email)
+            .addOnCompleteListener {
+                callback(true)
+            }
+            .addOnFailureListener { callback(false) }
     }
 }

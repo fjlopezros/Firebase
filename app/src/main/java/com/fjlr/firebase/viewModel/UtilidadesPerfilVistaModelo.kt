@@ -9,7 +9,7 @@ import com.fjlr.firebase.repository.publicaciones.PerfilRepositorio
 /**
  * ViewModel para gestionar la vista de ajustes del usuario.
  */
-class AjustesVistaModelo : ViewModel() {
+class UtilidadesPerfilVistaModelo : ViewModel() {
 
     private val autenticacionRepositorio = AutenticacionRepositorio()
     private val perfilRepositorio = PerfilRepositorio()

@@ -2,7 +2,7 @@ package com.fjlr.firebase.utils
 
 import android.app.Activity
 import android.content.Intent
-import com.fjlr.firebase.view.AjustesActivity
+import com.fjlr.firebase.view.PerfilActivity
 import com.fjlr.firebase.view.AppActivity
 import com.fjlr.firebase.view.BuscarActivity
 import com.fjlr.firebase.view.FavoritosActivity
@@ -48,13 +48,13 @@ fun configurarBarraNavegacion(activity: Activity, bindingBarra: LayoutBarraBindi
      * Comparo el usuario y si es el mismo, no hace nada.
      */
     bindingBarra.ibAjustes.setOnClickListener {
-        if (activity is AjustesActivity &&
+        if (activity is PerfilActivity &&
             (activity.intent.getStringExtra(ConstantesUtilidades.GET_STRING) == null ||
                     activity.intent.getStringExtra(ConstantesUtilidades.GET_STRING) ==
                     FirebaseAuth.getInstance().currentUser?.email)
         ) {
             return@setOnClickListener
         }
-        activity.startActivity(Intent(activity, AjustesActivity::class.java))
+        activity.startActivity(Intent(activity, PerfilActivity::class.java))
     }
 }

@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:textSize="22sp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@+id/tvTituloPublicacionAjustes"
             app:layout_constraintEnd_toStartOf="@+id/ibBotonFavoritoAjustes"
             app:layout_constraintHorizontal_bias="0.301"

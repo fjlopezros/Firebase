@@ -4,7 +4,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fjlr.firebase.databinding.PublicacionesItemBinding
 import com.fjlr.firebase.model.PublicacionesModelo
 import com.fjlr.firebase.utils.Adaptador
-import com.fjlr.firebase.viewModel.AjustesVistaModelo
+import com.fjlr.firebase.viewModel.UtilidadesPerfilVistaModelo
 import com.squareup.picasso.Picasso
 
 /**
@@ -14,14 +14,14 @@ import com.squareup.picasso.Picasso
 class PublicacionesViewHolder(private val binding: PublicacionesItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
     val icono = binding.ibBotonFavorito
-    val ajustesVistaModelo = AjustesVistaModelo()
+    val utilidadesPerfilVistaModelo = UtilidadesPerfilVistaModelo()
 
     /**
      * Metodo para vincular los datos del modelo a la vista.
      * @param publicacion El modelo de datos de la publicación.
      */
     fun bind(publicacion: PublicacionesModelo) {
-        ajustesVistaModelo.obtenerNombreDeEmail(publicacion.autor) { nombre ->
+        utilidadesPerfilVistaModelo.obtenerNombreDeEmail(publicacion.autor) { nombre ->
             binding.tvUsuario.text = nombre ?: "Nombre no disponible"
         }
         binding.tvTituloPublicacion.text = publicacion.titulo

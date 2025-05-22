@@ -84,6 +84,9 @@ class SeguidoresRepositorio {
      * @param callback Función de devolución de llamada con el total de seguidores.
      */
     fun contarSeguidores(email: String, callback: (Int) -> Unit) {
+        if(email.isBlank()){
+            return
+        }
         db.collection(ConstantesUtilidades.COLECCION_USUARIOS)
             .document(email)
             .collection(ConstantesUtilidades.COLECCION_SEGUIDORES)
@@ -103,6 +106,9 @@ class SeguidoresRepositorio {
      * @param callback Función de devolución de llamada con el total de usuarios seguidos.
      */
     fun contarSeguidos(email: String, callback: (Int) -> Unit) {
+        if(email.isBlank()){
+            return
+        }
         db.collection(ConstantesUtilidades.COLECCION_USUARIOS)
             .document(email)
             .collection(ConstantesUtilidades.COLECCION_SEGUIDOS)

@@ -28,12 +28,23 @@ class RegistroVistaModelo : ViewModel() {
     ) {
         autenticacionRepositorio.crearCuenta(email, contrasena) { exito, error ->
             if (exito) {
-                usuarioRepositorio.guardarNombreUsuario(email, nombreUsuario) { guardado, errorGuardar ->
+                usuarioRepositorio.guardarNombreUsuario(
+                    email,
+                    nombreUsuario
+                ) { guardado, errorGuardar ->
                     callback(guardado, errorGuardar)
                 }
             } else {
                 callback(false, error)
             }
         }
+    }
+
+    fun cambiarNombreUsuario(email: String, usuario: String, callback: (Boolean) -> Unit) {
+        usuarioRepositorio.cambiarNombreUsuario(email, usuario, callback)
+    }
+
+    fun cambiarContrasena(email: String,callback: (Boolean) -> Unit) {
+        usuarioRepositorio.cambiarContrasena(email, callback)
     }
 }

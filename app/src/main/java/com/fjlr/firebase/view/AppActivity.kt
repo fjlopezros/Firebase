@@ -2,6 +2,7 @@ package com.fjlr.firebase.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -13,6 +14,8 @@ import com.fjlr.firebase.databinding.ActivityAppBinding
 import com.fjlr.firebase.utils.configurarBarraNavegacion
 import com.fjlr.firebase.viewModel.FavoritosVistaModelo
 import com.fjlr.firebase.viewModel.SeguidosVistaModelo
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class AppActivity : AppCompatActivity() {
 
