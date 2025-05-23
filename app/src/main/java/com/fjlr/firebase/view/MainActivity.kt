@@ -11,6 +11,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.fjlr.firebase.databinding.ActivityMainBinding
 import com.fjlr.firebase.viewModel.SesionVistaModelo
 
+/**
+ * Actividad principal de la aplicación.
+ */
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -20,8 +23,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        //Configuración del binding
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //Inicialización del viewModel
+        viewModel = ViewModelProvider(this)[SesionVistaModelo::class.java]
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -29,19 +36,31 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        viewModel = ViewModelProvider(this)[SesionVistaModelo::class.java]
-
+        /**
+         * Comprobación de la sesión activa.
+         * Si está activa, se redirige a la pantalla principal de la App.
+         */
         if (viewModel.sesionActiva()) {
             startActivity(Intent(this, AppActivity::class.java))
             finish()
         }
 
+        /**
+         * Botón para ir a la actividad de registro.
+         */
         binding.btRegistrarse.setOnClickListener {
-            startActivity(Intent(this,RegistroActivity::class.java))
+            startActivity(Intent(this, RegistroActivity::class.java))
         }
 
+        /**
+         * Botón para salir de la aplicación.
+         */
         binding.ibFlechaParaSalir.setOnClickListener { finishAffinity() }
 
+        /**
+         * Botón para iniciar sesión.
+         * Si el inicio de sesión es exitoso, se redirige a la pantalla principal de la App.
+         */
         binding.btIniciarSesion.setOnClickListener {
             viewModel.iniciarSesion(
                 binding.etUsuarioSesion.text.toString(),

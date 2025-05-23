@@ -2,6 +2,9 @@ package com.fjlr.firebase.utils
 
 import com.fjlr.firebase.model.PublicacionesModelo
 
+/**
+ * Valida si los campos de la publicación están llenos.
+ */
 object ValidarCampos {
     fun validarCampos(publicacion: PublicacionesModelo) {
         if (publicacion.titulo.isEmpty() ||

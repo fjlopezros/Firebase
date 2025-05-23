@@ -40,10 +40,21 @@ class RegistroVistaModelo : ViewModel() {
         }
     }
 
+    /**
+     * Cambia el nombre de usuario de un usuario.
+     * @param email Email del usuario.
+     * @param usuario Nuevo nombre de usuario.
+     * @param callback Retorna true si fue exitoso, false con mensaje de error si falla.
+     */
     fun cambiarNombreUsuario(email: String, usuario: String, callback: (Boolean) -> Unit) {
         usuarioRepositorio.cambiarNombreUsuario(email, usuario, callback)
     }
 
+    /**
+     * Cambia la contraseña de un usuario.
+     * @param email Email del usuario.
+     * @param callback Retorna true si fue exitoso, false con mensaje de error si falla.
+     */
     fun cambiarContrasena(email: String,callback: (Boolean) -> Unit) {
         usuarioRepositorio.cambiarContrasena(email, callback)
     }

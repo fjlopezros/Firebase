@@ -10,6 +10,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.fjlr.firebase.databinding.ActivityRegistroBinding
 import com.fjlr.firebase.viewModel.RegistroVistaModelo
 
+/**
+ * Actividad de registro de usuarios.
+ */
 class RegistroActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegistroBinding
@@ -19,6 +22,7 @@ class RegistroActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        //Configuración del binding
         binding = ActivityRegistroBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -28,10 +32,17 @@ class RegistroActivity : AppCompatActivity() {
             insets
         }
 
+        //Instancia del viewModel
         viewModel = ViewModelProvider(this)[RegistroVistaModelo::class.java]
 
+        /**
+         * Botón para salir de la actividad.
+         */
         binding.ibFlechaParaSalir.setOnClickListener { finish() }
 
+        /**
+         * Recoge los datos introducidos por el usuario y los registra.
+         */
         binding.btRegistro.setOnClickListener {
             viewModel.registrarse(
                 binding.etEmailRegistro.text.toString(),

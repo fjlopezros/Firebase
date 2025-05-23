@@ -10,11 +10,15 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fjlr.firebase.adapter.app.PublicacionAdaptador
 import com.fjlr.firebase.databinding.ActivityBuscarBinding
+import com.fjlr.firebase.utils.ConstantesUtilidades
 import com.fjlr.firebase.utils.configurarBarraNavegacion
 import com.fjlr.firebase.viewModel.BuscarVistaModelo
 import com.fjlr.firebase.viewModel.FavoritosVistaModelo
 import com.fjlr.firebase.viewModel.PublicacionesVistaModelo
 
+/**
+ * Actividad de búsqueda de recetas.
+ */
 class BuscarActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityBuscarBinding
@@ -27,15 +31,17 @@ class BuscarActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        //Configuración del binding
         binding = ActivityBuscarBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //Configuración de la barra de navegación.
         configurarBarraNavegacion(this, binding.barraNavegacion)
 
         //Instancia del ViewModel
         viewModel = ViewModelProvider(this)[PublicacionesVistaModelo::class.java]
-        viewModelBuscar  = ViewModelProvider(this)[BuscarVistaModelo::class.java]
-        viewModelFav  = ViewModelProvider(this)[FavoritosVistaModelo::class.java]
+        viewModelFav = ViewModelProvider(this)[FavoritosVistaModelo::class.java]
+        viewModelBuscar = ViewModelProvider(this)[BuscarVistaModelo::class.java]
 
         //Configuración del RecyclerView
         inicializarRecyclerView()
@@ -46,27 +52,46 @@ class BuscarActivity : AppCompatActivity() {
             insets
         }
 
-        //Cargar publicaciones
+        /**
+         * Carga todas las publicaciones.
+         */
         viewModel.cargarPublicaciones()
 
-        //Observar cambios en la lista de publicaciones
+        /**
+         * Observa las publicaciones y actualiza el adaptador.
+         */
         viewModel.publicaciones.observe(this) { lista ->
             publicacionAdapter.submitList(lista)
         }
 
-        binding.svBuscador.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+        /**
+         * Configura el listener de búsqueda.
+         *
+         */
+        binding.svBuscador.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            /**
+             * Cuando se envía la consulta busca las recetas y actualiza el adaptador.
+             */
             override fun onQueryTextSubmit(query: String?): Boolean {
+                viewModelBuscar.buscarRecetas(query ?: ConstantesUtilidades.NULL)
+                viewModelBuscar.publicaciones.observe(this@BuscarActivity) { lista ->
+                    publicacionAdapter.submitList(lista)
+                }
                 return true
             }
 
+            /**
+             * No hace nada al cambiar el texto.
+             */
             override fun onQueryTextChange(newText: String?): Boolean {
                 return false
             }
-
         })
-
     }
 
+    /**
+     * Inicializa el RecyclerView y el adaptador.
+     */
     private fun inicializarRecyclerView() {
         publicacionAdapter = PublicacionAdaptador(viewModelFav)
         binding.recyclerViewBuscar.layoutManager = LinearLayoutManager(this)

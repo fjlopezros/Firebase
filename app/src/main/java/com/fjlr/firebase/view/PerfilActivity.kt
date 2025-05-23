@@ -15,23 +15,22 @@ import com.fjlr.firebase.utils.configurarBarraNavegacion
 import com.fjlr.firebase.viewModel.UtilidadesPerfilVistaModelo
 import com.fjlr.firebase.viewModel.FavoritosVistaModelo
 import com.fjlr.firebase.viewModel.PerfilVistaModelo
-import com.fjlr.firebase.viewModel.PublicacionesVistaModelo
 import com.fjlr.firebase.viewModel.SeguidoresVistaModelo
 import com.google.firebase.auth.FirebaseAuth
 
+/**
+ * Actividad para el perfil del usuario.
+ */
 class PerfilActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPerfilBinding
     private lateinit var viewModel: UtilidadesPerfilVistaModelo
     private lateinit var viewModelFav: FavoritosVistaModelo
     private lateinit var viewModelSeguidores: SeguidoresVistaModelo
-    private lateinit var viewModelMy: PublicacionesVistaModelo
+    private lateinit var viewModelPerfil: PerfilVistaModelo
     private lateinit var publicacionesAdapter: PublicacionAdaptadorAjustes
     private val email = FirebaseAuth.getInstance().currentUser?.email
     private lateinit var emailDelPerfil: String
-
-
-    private lateinit var viewModelPerfil: PerfilVistaModelo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,18 +43,13 @@ class PerfilActivity : AppCompatActivity() {
         //Configuración de la barra de navegación
         configurarBarraNavegacion(this, binding.barraNavegacion)
 
-        //Configuración del botón de cerrar sesión
-        binding.ibAjustes.setOnClickListener {
-            startActivity(Intent(this, AjustesActivity::class.java))
-        }
+        //Recogo el email del perfil que se pasa por intent
+        emailDelPerfil = intent.getStringExtra("emailDelPerfil") ?: email ?: ""
 
         //Instancia del ViewModel
         viewModel = ViewModelProvider(this)[UtilidadesPerfilVistaModelo::class.java]
-        viewModelMy = ViewModelProvider(this)[PublicacionesVistaModelo::class.java]
         viewModelSeguidores = ViewModelProvider(this)[SeguidoresVistaModelo::class.java]
         viewModelFav = ViewModelProvider(this)[FavoritosVistaModelo::class.java]
-
-
         viewModelPerfil = ViewModelProvider(this)[PerfilVistaModelo::class.java]
 
         //Configuración del RecyclerView
@@ -67,35 +61,55 @@ class PerfilActivity : AppCompatActivity() {
             insets
         }
 
-        //Recogo el email del perfil que se pasa por intent
-        emailDelPerfil = intent.getStringExtra("emailDelPerfil") ?: email ?: ""
+        /**
+         * Botón para ir a la actividad Ajustes.
+         */
+        binding.ibAjustes.setOnClickListener {
+            startActivity(Intent(this, AjustesActivity::class.java))
+        }
 
-        fotoDePerfilAleatoria()
+        /**
+         * Botón para salir de la actividad.
+         */
+        viewModel.cargarFotoDePerfilAleatoria(binding.ivPerfilUsuario)
 
-        //Obetengo el nomrbre de usuario
+        /**
+         * Carga el nombre del perfil.
+         */
         viewModel.obtenerNombreDeEmail(emailDelPerfil) { nombre ->
             binding.tvCorreoUsuario.text = nombre ?: "Nombre no disponible"
         }
 
-        //Cargar las publicaciones de mi perfil
+        /**
+         * Carga tus publicaciones.
+         */
         viewModelPerfil.cargarTusPublicaciones(emailDelPerfil.toString())
 
-        //Observar cambios en la lista de publicaciones
+        /**
+         * Observador de cambios en la lista de publicaciones.
+         */
         viewModelPerfil.publicaciones.observe(this) { lista ->
             publicacionesAdapter.submitList(lista)
         }
 
-        //Seguir o dejar de seguir al usuario
+        /**
+         * Botón para seguir al usuario.
+         */
         binding.btSeguir.setOnClickListener {
             viewModelSeguidores.seguirUsuario(email.toString(), emailDelPerfil)
             binding.btSeguir.text = getString(R.string.dejar_de_seguir)
         }
 
+        //Configuración de los contadores
         inicializarMenu()
 
+        //Configuración del botón de seguir
         actualizarEstadoBotonSeguir()
     }
 
+    /**
+     * Actualiza el estado del botón de seguir.
+     */
     fun actualizarEstadoBotonSeguir() {
         viewModelSeguidores.verificarSiSigue(email.toString(), emailDelPerfil) { loSigue ->
             binding.btSeguir.text =
@@ -113,6 +127,9 @@ class PerfilActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Inicializa los contadores.
+     */
     private fun inicializarMenu() {
         viewModel.contarPublicaciones(emailDelPerfil) { publicaciones ->
             binding.tvNumPublicaciones.text = publicaciones.toString()
@@ -129,13 +146,12 @@ class PerfilActivity : AppCompatActivity() {
         viewModelSeguidores.ocultarSeguir(binding.btSeguir, emailDelPerfil.toString())
     }
 
+    /**
+     * Inicializa el RecyclerView.
+     */
     private fun inicializarRecyclerView() {
         publicacionesAdapter = PublicacionAdaptadorAjustes(viewModelFav)
         binding.recyclerViewMy.layoutManager = GridLayoutManager(this, 3)
         binding.recyclerViewMy.adapter = publicacionesAdapter
-    }
-
-    private fun fotoDePerfilAleatoria() {
-        viewModel.cargarFotoDePerfilAleatoria(binding.ivPerfilUsuario)
     }
 }

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -13,6 +14,9 @@ import com.fjlr.firebase.viewModel.RegistroVistaModelo
 import com.fjlr.firebase.viewModel.UtilidadesPerfilVistaModelo
 import com.google.firebase.auth.FirebaseAuth
 
+/**
+ * Actividad para la pantalla de ajustes del usuario.
+ */
 class AjustesActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAjustesBinding
@@ -24,9 +28,11 @@ class AjustesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        //Configuracion del binding
         binding = ActivityAjustesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //Instancia del ViewModel
         viewModel = ViewModelProvider(this)[RegistroVistaModelo::class.java]
         viewModelUtilidades = ViewModelProvider(this)[UtilidadesPerfilVistaModelo::class.java]
 
@@ -36,10 +42,16 @@ class AjustesActivity : AppCompatActivity() {
             insets
         }
 
+        /**
+         * Botón para salir de la pantalla.
+         */
         binding.ibFlechaParaSalir.setOnClickListener {
             finish()
         }
 
+        /**
+         * Botón para cambiar el nombre de usuario.
+         */
         binding.btCambiarUsuario.setOnClickListener {
             val nuevoUsuario = binding.etCambiarUsuario.text.toString()
             if (nuevoUsuario.isNotBlank()) {
@@ -55,6 +67,10 @@ class AjustesActivity : AppCompatActivity() {
             }
         }
 
+        /**
+         * Botón que te envía un email para cambiar la contraseña.
+         * Cierra sesion y te lleva a la pantalla de inicio de sesión.
+         */
         binding.btContrasena.setOnClickListener {
             viewModel.cambiarContrasena(email, callback = { enviado ->
                 if (enviado) {
@@ -74,8 +90,22 @@ class AjustesActivity : AppCompatActivity() {
             })
         }
 
+        /**
+         * Botón para cerrar sesión.
+         * Muestra un diálogo de confirmación antes de cerrar sesión.
+         */
         binding.ibSalir.setOnClickListener {
-            viewModelUtilidades.cerrarSesion()
+            AlertDialog.Builder(this)
+                .setTitle("Cerrar sesión")
+                .setMessage("¿Estás seguro de que quieres cerrar sesión?")
+                .setPositiveButton("Sí") { _, _ ->
+                    viewModelUtilidades.cerrarSesion()
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                }
+                .setNegativeButton("No", null)
+                .show()
         }
     }
 }

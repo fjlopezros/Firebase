@@ -31,6 +31,12 @@ class UsuarioRepositorio(
             .addOnFailureListener { callback(false, it.message) }
     }
 
+    /**
+     * Actualiza el nombre del usuario en Firestore.
+     * @param email Correo del usuario.
+     * @param usuario Nuevo nombre de usuario.
+     * @param callback Retorna true si se actualizó, false con mensaje de error si falla.
+     */
     fun cambiarNombreUsuario(email: String, usuario: String, callback: (Boolean) -> Unit) {
         val usuario = mapOf(ConstantesUtilidades.USUARIO to usuario)
         firestore.collection(ConstantesUtilidades.COLECCION_USUARIOS)
@@ -40,6 +46,11 @@ class UsuarioRepositorio(
             .addOnFailureListener { callback(false) }
     }
 
+    /**
+     * Cambia la contraseña del usuario.
+     * @param email Correo del usuario.
+     * @param callback Retorna true si se cambió, false si falla.
+     */
     fun cambiarContrasena(email: String, callback: (Boolean) -> Unit) {
         aut.sendPasswordResetEmail(email)
             .addOnCompleteListener {

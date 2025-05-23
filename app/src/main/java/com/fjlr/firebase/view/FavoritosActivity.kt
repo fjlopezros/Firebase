@@ -13,6 +13,9 @@ import com.fjlr.firebase.databinding.ActivityFavoritosBinding
 import com.fjlr.firebase.utils.configurarBarraNavegacion
 import com.fjlr.firebase.viewModel.FavoritosVistaModelo
 
+/**
+ * Actividad para mostrar las publicaciones favoritas del usuario.
+ */
 class FavoritosActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFavoritosBinding
@@ -43,16 +46,23 @@ class FavoritosActivity : AppCompatActivity() {
             insets
         }
 
-        //Cargar publicaciones
+        /**
+         * Carga las publicaciones favoritas del usuario.
+          */
         viewModel.cargarFavoritos()
 
-        //Observar cambios en la lista de publicaciones
+        /**
+         * Observador de cambios en la lista de publicaciones.
+          */
         viewModel.publicaciones.observe(this) { lista ->
             publicacionAdaptadorFav.submitList(lista)
             binding.tvVacio.visibility = if (lista.isEmpty()) View.VISIBLE else View.GONE
         }
     }
 
+    /**
+     * Inicializa el RecyclerView.
+     */
     private fun inicializarRecyclerView() {
         publicacionAdaptadorFav = PublicacionAdaptadorFav(viewModel)
         binding.recyclerViewFav.layoutManager = GridLayoutManager(this,2)

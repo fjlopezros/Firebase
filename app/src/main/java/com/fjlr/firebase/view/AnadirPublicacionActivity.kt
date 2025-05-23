@@ -12,6 +12,9 @@ import com.fjlr.firebase.model.PublicacionesModelo
 import com.fjlr.firebase.viewModel.PublicacionesVistaModelo
 import kotlinx.coroutines.launch
 
+/**
+ * Actividad para añadir una nueva publicación.
+ */
 class AnadirPublicacionActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAnadirPublicacionBinding
@@ -25,16 +28,24 @@ class AnadirPublicacionActivity : AppCompatActivity() {
         binding = ActivityAnadirPublicacionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //Instancia del viewModel
+        viewModel = ViewModelProvider(this)[PublicacionesVistaModelo::class.java]
+
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        viewModel = ViewModelProvider(this)[PublicacionesVistaModelo::class.java]
-
+        /**
+         * Botón para salir de la actividad.
+         */
         binding.ibFlechaParaSalir.setOnClickListener { finish() }
 
+        /**
+         * Botón para guardar la publicación.
+         * Recoge los datos introducidos por el usuario y los sube a la base de datos.
+         */
         binding.btGuardarPublicacion.setOnClickListener {
             lifecycleScope.launch {
                 viewModel.subirPublicacion(

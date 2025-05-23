@@ -15,20 +15,26 @@ import com.fjlr.firebase.viewModel.UtilidadesPerfilVistaModelo
 import com.fjlr.firebase.viewModel.FavoritosVistaModelo
 import com.squareup.picasso.Picasso
 
+/**
+ * Actividad para mostrar los detalles de una publicación.
+ */
 class DetalleActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetalleBinding
     private lateinit var viewModelAjustes: UtilidadesPerfilVistaModelo
     private lateinit var viewModelFav: FavoritosVistaModelo
 
+    //Requiere la versión Tiramisu (33 Android)
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        //Configuración del binding
         binding = ActivityDetalleBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //Instancia del viewModel
         viewModelAjustes = ViewModelProvider(this)[UtilidadesPerfilVistaModelo::class.java]
         viewModelFav = ViewModelProvider(this)[FavoritosVistaModelo::class.java]
 
@@ -38,13 +44,21 @@ class DetalleActivity : AppCompatActivity() {
             insets
         }
 
+        /**
+         * Botón para salir de la actividad.
+         */
         binding.ibFlechaParaSalir.setOnClickListener {
             finish()
         }
 
+        //Funcionalidad de la actividad
         pasarADetalle()
     }
 
+    /**
+     * Recoge la publicación pulsada.
+     * Actualiza la información de la publicación en la vista.
+     */
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     fun pasarADetalle() {
         val publicacion =
