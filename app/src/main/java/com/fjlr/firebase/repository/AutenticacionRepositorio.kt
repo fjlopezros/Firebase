@@ -2,6 +2,7 @@ package com.fjlr.firebase.repository
 
 import com.fjlr.firebase.utils.ConstantesUtilidades
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.tasks.await
 
 /**
  * Repositorio encargado de gestionar la autenticación de usuarios con FirebaseAuth.
@@ -15,41 +16,39 @@ class AutenticacionRepositorio(
      *
      * @param email Correo del usuario.
      * @param contrasena Contraseña.
-     * @param callback Retorna true si se creó exitosamente, false con mensaje de error si falla.
      */
-    fun crearCuenta(
+    suspend fun crearCuenta(
         email: String,
-        contrasena: String,
-        callback: (Boolean, String?) -> Unit
-    ) {
+        contrasena: String
+    ): Result<Unit> {
         if (email.isBlank() || contrasena.isBlank()) {
-            callback(false, ConstantesUtilidades.ERROR_INICIAR_SESION)
-            return
+            return Result.failure(Exception(ConstantesUtilidades.ERROR_INICIAR_SESION))
         }
 
-        autenticacion.createUserWithEmailAndPassword(email, contrasena)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    callback(true, null)
-                } else {
-                    callback(false, task.exception?.message)
-                }
-            }
+        return try {
+            autenticacion.createUserWithEmailAndPassword(email, contrasena).await()
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
 
     /**
      * Inicia sesión con email y contraseña.
+     * @param email Correo del usuario.
+     * @param contrasena Contraseña.
      */
-    fun iniciarSesion(email: String, contrasena: String, callback: (Boolean, String?) -> Unit) {
+    suspend fun iniciarSesion(email: String, contrasena: String): Result<Unit> {
         if (email.isBlank() || contrasena.isBlank()) {
-            callback(false, ConstantesUtilidades.ERROR_INICIAR_SESION)
-            return
+            return Result.failure(Exception(ConstantesUtilidades.ERROR_INICIAR_SESION))
         }
 
-        autenticacion.signInWithEmailAndPassword(email, contrasena)
-            .addOnCompleteListener { task ->
-                callback(task.isSuccessful, task.exception?.message)
-            }
+        return try {
+            autenticacion.signInWithEmailAndPassword(email, contrasena).await()
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
 
     /**

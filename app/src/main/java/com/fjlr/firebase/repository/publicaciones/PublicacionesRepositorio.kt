@@ -33,6 +33,7 @@ class PublicacionesRepositorio {
                 callback(publicaciones)
             }
     }
+
     /**
      * Sube una publicación nueva al Firestore.
      */
@@ -57,7 +58,9 @@ class PublicacionesRepositorio {
                 .await()
 
         } catch (e: IllegalArgumentException) {
-            Log.d("Error", "Error al subir la publicación ${e.message}")
+            Log.e("Error", "Campos inválidos: ${e.message}")
+        } catch (e: Exception) {
+            Log.e("Error", "Error al subir la publicación: ${e.message}")
         }
     }
 }

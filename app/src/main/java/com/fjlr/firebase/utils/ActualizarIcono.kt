@@ -1,9 +1,12 @@
 package com.fjlr.firebase.utils
 
 import android.widget.ImageButton
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import com.fjlr.firebase.R
 import com.fjlr.firebase.model.PublicacionesModelo
 import com.fjlr.firebase.viewModel.FavoritosVistaModelo
+import kotlinx.coroutines.launch
 
 /**
  * Objeto de utilidad para actualizar el icono de favorito.
@@ -28,23 +31,26 @@ object ActualizarIcono {
      * @param holderIcono El holder del icono.
      * @param viewModel El ViewModel de publicaciones.
      */
-    fun configurarIconoFavorito(
+    suspend fun configurarIconoFavorito(
         publicacion: PublicacionesModelo,
         holderIcono: ImageButton,
-        viewModel: FavoritosVistaModelo
+        viewModel: FavoritosVistaModelo,
+        lifecycleOwner: LifecycleOwner
     ) {
-        viewModel.esFavorito(publicacion) { favorito ->
-            publicacion.esFavorito = favorito
-            actualizarIcono(favorito, holderIcono)
-        }
+        val favorito = viewModel.esFavorito(publicacion)
+        publicacion.esFavorito = favorito
+        actualizarIcono(favorito, holderIcono)
 
         holderIcono.setOnClickListener {
             publicacion.esFavorito = !publicacion.esFavorito
             actualizarIcono(publicacion.esFavorito, holderIcono)
-            if (publicacion.esFavorito) {
-                viewModel.agregarAFavoritos(publicacion)
-            } else {
-                viewModel.eliminarDeFavoritos(publicacion)
+
+            lifecycleOwner.lifecycleScope.launch {
+                if (publicacion.esFavorito) {
+                    viewModel.agregarAFavoritos(publicacion)
+                } else {
+                    viewModel.eliminarDeFavoritos(publicacion)
+                }
             }
         }
     }

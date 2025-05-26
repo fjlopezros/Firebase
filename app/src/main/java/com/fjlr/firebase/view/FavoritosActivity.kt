@@ -7,11 +7,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.fjlr.firebase.adapter.favoritos.PublicacionAdaptadorFav
 import com.fjlr.firebase.databinding.ActivityFavoritosBinding
 import com.fjlr.firebase.utils.configurarBarraNavegacion
 import com.fjlr.firebase.viewModel.FavoritosVistaModelo
+import kotlinx.coroutines.launch
 
 /**
  * Actividad para mostrar las publicaciones favoritas del usuario.
@@ -48,12 +50,12 @@ class FavoritosActivity : AppCompatActivity() {
 
         /**
          * Carga las publicaciones favoritas del usuario.
-          */
+         */
         viewModel.cargarFavoritos()
 
         /**
          * Observador de cambios en la lista de publicaciones.
-          */
+         */
         viewModel.publicaciones.observe(this) { lista ->
             publicacionAdaptadorFav.submitList(lista)
             binding.tvVacio.visibility = if (lista.isEmpty()) View.VISIBLE else View.GONE
@@ -64,8 +66,10 @@ class FavoritosActivity : AppCompatActivity() {
      * Inicializa el RecyclerView.
      */
     private fun inicializarRecyclerView() {
-        publicacionAdaptadorFav = PublicacionAdaptadorFav(viewModel)
-        binding.recyclerViewFav.layoutManager = GridLayoutManager(this,2)
-        binding.recyclerViewFav.adapter = publicacionAdaptadorFav
+        lifecycleScope.launch {
+            publicacionAdaptadorFav = PublicacionAdaptadorFav(viewModel, this@FavoritosActivity)
+            binding.recyclerViewFav.layoutManager = GridLayoutManager(this@FavoritosActivity, 2)
+            binding.recyclerViewFav.adapter = publicacionAdaptadorFav
+        }
     }
 }

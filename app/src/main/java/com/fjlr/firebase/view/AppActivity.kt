@@ -7,12 +7,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fjlr.firebase.adapter.app.PublicacionAdaptador
 import com.fjlr.firebase.databinding.ActivityAppBinding
 import com.fjlr.firebase.utils.configurarBarraNavegacion
 import com.fjlr.firebase.viewModel.FavoritosVistaModelo
 import com.fjlr.firebase.viewModel.SeguidosVistaModelo
+import kotlinx.coroutines.launch
 
 class AppActivity : AppCompatActivity() {
 
@@ -70,8 +72,10 @@ class AppActivity : AppCompatActivity() {
      * Inicializa el RecyclerView.
      */
     private fun inicializarRecyclerView() {
-        publicacionAdapter = PublicacionAdaptador(viewModelFav)
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        binding.recyclerView.adapter = publicacionAdapter
+        lifecycleScope.launch {
+            publicacionAdapter = PublicacionAdaptador(viewModelFav, this@AppActivity)
+            binding.recyclerView.layoutManager = LinearLayoutManager(this@AppActivity)
+            binding.recyclerView.adapter = publicacionAdapter
+        }
     }
 }

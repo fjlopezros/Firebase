@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fjlr.firebase.adapter.app.PublicacionAdaptador
 import com.fjlr.firebase.databinding.ActivityBuscarBinding
@@ -15,6 +16,7 @@ import com.fjlr.firebase.utils.configurarBarraNavegacion
 import com.fjlr.firebase.viewModel.BuscarVistaModelo
 import com.fjlr.firebase.viewModel.FavoritosVistaModelo
 import com.fjlr.firebase.viewModel.PublicacionesVistaModelo
+import kotlinx.coroutines.launch
 
 /**
  * Actividad de búsqueda de recetas.
@@ -93,8 +95,10 @@ class BuscarActivity : AppCompatActivity() {
      * Inicializa el RecyclerView y el adaptador.
      */
     private fun inicializarRecyclerView() {
-        publicacionAdapter = PublicacionAdaptador(viewModelFav)
-        binding.recyclerViewBuscar.layoutManager = LinearLayoutManager(this)
-        binding.recyclerViewBuscar.adapter = publicacionAdapter
+        lifecycleScope.launch {
+            publicacionAdapter = PublicacionAdaptador(viewModelFav, this@BuscarActivity)
+            binding.recyclerViewBuscar.layoutManager = LinearLayoutManager(this@BuscarActivity)
+            binding.recyclerViewBuscar.adapter = publicacionAdapter
+        }
     }
 }

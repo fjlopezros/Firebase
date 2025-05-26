@@ -16,7 +16,7 @@ class SeguidoresVistaModelo : ViewModel() {
      * @param emailSeguidor Email del seguidor.
      * @param emailSeguido Email del seguido.
      */
-    fun seguirUsuario(emailSeguidor: String, emailSeguido: String) {
+    suspend fun seguirUsuario(emailSeguidor: String, emailSeguido: String) {
         repositorio.seguirUsuario(emailSeguidor, emailSeguido)
     }
 
@@ -25,7 +25,7 @@ class SeguidoresVistaModelo : ViewModel() {
      * @param emailSeguidor Email del seguidor.
      * @param usuarioADeselegir Email del seguido.
      */
-    fun dejarDeSeguir(emailSeguidor:String, usuarioADeselegir: String) {
+    suspend fun dejarDeSeguir(emailSeguidor:String, usuarioADeselegir: String) {
         repositorio.dejarDeSeguir(emailSeguidor, usuarioADeselegir)
     }
 

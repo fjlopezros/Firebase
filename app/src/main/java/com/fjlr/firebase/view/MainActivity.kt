@@ -8,8 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.fjlr.firebase.databinding.ActivityMainBinding
 import com.fjlr.firebase.viewModel.SesionVistaModelo
+import kotlinx.coroutines.launch
 
 /**
  * Actividad principal de la aplicación.
@@ -62,15 +64,15 @@ class MainActivity : AppCompatActivity() {
          * Si el inicio de sesión es exitoso, se redirige a la pantalla principal de la App.
          */
         binding.btIniciarSesion.setOnClickListener {
-            viewModel.iniciarSesion(
-                binding.etUsuarioSesion.text.toString(),
-                binding.etContrasenaSesion.text.toString()
-            ) { success, error ->
-                if (success) {
-                    startActivity(Intent(this, AppActivity::class.java))
+        lifecycleScope.launch {
+                viewModel.iniciarSesion(
+                    binding.etUsuarioSesion.text.toString(),
+                    binding.etContrasenaSesion.text.toString()
+                ).onSuccess {
+                    startActivity(Intent(this@MainActivity, AppActivity::class.java))
                     finish()
-                } else {
-                    Toast.makeText(this, "Error al Iniciar Sesion", Toast.LENGTH_SHORT).show()
+                }.onFailure {
+                    Toast.makeText(this@MainActivity, "Error al Iniciar Sesion", Toast.LENGTH_SHORT).show()
                 }
             }
         }

@@ -7,8 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.fjlr.firebase.databinding.ActivityRegistroBinding
 import com.fjlr.firebase.viewModel.RegistroVistaModelo
+import kotlinx.coroutines.launch
 
 /**
  * Actividad de registro de usuarios.
@@ -44,14 +46,16 @@ class RegistroActivity : AppCompatActivity() {
          * Recoge los datos introducidos por el usuario y los registra.
          */
         binding.btRegistro.setOnClickListener {
-            viewModel.registrarse(
-                binding.etEmailRegistro.text.toString(),
-                binding.etContrasenaRegistro.text.toString(),
-                binding.etUsuarioRegistro.text.toString()
-            ) { success, error ->
-                if (success) {
-                    Toast.makeText(this, "Registro exitoso", Toast.LENGTH_SHORT).show()
+            lifecycleScope.launch {
+                viewModel.registrarse(
+                    binding.etEmailRegistro.text.toString(),
+                    binding.etContrasenaRegistro.text.toString(),
+                    binding.etUsuarioRegistro.text.toString()
+                ).onSuccess {
+                    Toast.makeText(this@RegistroActivity, "Registro exitoso", Toast.LENGTH_SHORT).show()
                     finish()
+                }.onFailure {
+                    Toast.makeText(this@RegistroActivity, "Algo Fallo en el Registro", Toast.LENGTH_SHORT).show()
                 }
             }
         }

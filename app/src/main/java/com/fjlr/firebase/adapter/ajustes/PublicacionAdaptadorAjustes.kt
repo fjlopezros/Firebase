@@ -2,19 +2,23 @@ package com.fjlr.firebase.adapter.ajustes
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ListAdapter
 import com.fjlr.firebase.adapter.PublicacionesDiffCallback
 import com.fjlr.firebase.databinding.PublicacionesItemAjustesBinding
 import com.fjlr.firebase.model.PublicacionesModelo
 import com.fjlr.firebase.utils.ActualizarIcono
 import com.fjlr.firebase.viewModel.FavoritosVistaModelo
+import kotlinx.coroutines.launch
 
 /**
  * Clase de adaptador para el RecyclerView de publicaciones en la pantalla de ajustes.
  * @param viewModel El ViewModel asociado al adaptador.
  */
 class PublicacionAdaptadorAjustes(
-    private val viewModel: FavoritosVistaModelo
+    private val viewModel: FavoritosVistaModelo,
+    private val lifecycleOwner: LifecycleOwner
 ) : ListAdapter<PublicacionesModelo, PublicacionesViewHolderAjustes>(
     PublicacionesDiffCallback()
 ) {
@@ -46,6 +50,14 @@ class PublicacionAdaptadorAjustes(
     ) {
         val publicacion = getItem(position)
         holder.bind(publicacion)
-        ActualizarIcono.configurarIconoFavorito(publicacion, holder.icono, viewModel)
+
+        lifecycleOwner.lifecycleScope.launch {
+            ActualizarIcono.configurarIconoFavorito(
+                publicacion,
+                holder.icono,
+                viewModel,
+                lifecycleOwner
+            )
+        }
     }
 }

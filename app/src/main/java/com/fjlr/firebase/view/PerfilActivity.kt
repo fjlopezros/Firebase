@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.fjlr.firebase.R
 import com.fjlr.firebase.adapter.ajustes.PublicacionAdaptadorAjustes
@@ -17,6 +18,7 @@ import com.fjlr.firebase.viewModel.FavoritosVistaModelo
 import com.fjlr.firebase.viewModel.PerfilVistaModelo
 import com.fjlr.firebase.viewModel.SeguidoresVistaModelo
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.launch
 
 /**
  * Actividad para el perfil del usuario.
@@ -96,8 +98,10 @@ class PerfilActivity : AppCompatActivity() {
          * Botón para seguir al usuario.
          */
         binding.btSeguir.setOnClickListener {
-            viewModelSeguidores.seguirUsuario(email.toString(), emailDelPerfil)
-            binding.btSeguir.text = getString(R.string.dejar_de_seguir)
+            lifecycleScope.launch {
+                viewModelSeguidores.seguirUsuario(email.toString(), emailDelPerfil)
+                binding.btSeguir.text = getString(R.string.dejar_de_seguir)
+            }
         }
 
         //Configuración de los contadores
@@ -116,12 +120,13 @@ class PerfilActivity : AppCompatActivity() {
                 if (loSigue) getString(R.string.dejar_de_seguir) else getString(R.string.seguir)
 
             binding.btSeguir.setOnClickListener {
-                if (loSigue) {
-                    viewModelSeguidores.dejarDeSeguir(email.toString(), emailDelPerfil)
-                } else {
-                    viewModelSeguidores.seguirUsuario(email.toString(), emailDelPerfil)
+                lifecycleScope.launch {
+                    if (loSigue) {
+                        viewModelSeguidores.dejarDeSeguir(email.toString(), emailDelPerfil)
+                    } else {
+                        viewModelSeguidores.seguirUsuario(email.toString(), emailDelPerfil)
+                    }
                 }
-
                 actualizarEstadoBotonSeguir()
             }
         }
@@ -150,8 +155,10 @@ class PerfilActivity : AppCompatActivity() {
      * Inicializa el RecyclerView.
      */
     private fun inicializarRecyclerView() {
-        publicacionesAdapter = PublicacionAdaptadorAjustes(viewModelFav)
-        binding.recyclerViewMy.layoutManager = GridLayoutManager(this, 3)
-        binding.recyclerViewMy.adapter = publicacionesAdapter
+        lifecycleScope.launch {
+            publicacionesAdapter = PublicacionAdaptadorAjustes(viewModelFav, this@PerfilActivity)
+            binding.recyclerViewMy.layoutManager = GridLayoutManager(this@PerfilActivity, 3)
+            binding.recyclerViewMy.adapter = publicacionesAdapter
+        }
     }
 }

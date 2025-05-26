@@ -15,12 +15,9 @@ class SesionVistaModelo : ViewModel() {
      *
      * @param email Correo del usuario.
      * @param contrasena Contraseña del usuario.
-     * @param callback Retorna true si inicia sesión, false con mensaje de error si falla.
      */
-    fun iniciarSesion(email: String, contrasena: String, callback: (Boolean, String?) -> Unit) {
-        autenticacionRepositorio.iniciarSesion(email, contrasena) { exito, error ->
-            callback(exito, error)
-        }
+    suspend fun iniciarSesion(email: String, contrasena: String): Result<Unit> {
+        return autenticacionRepositorio.iniciarSesion(email, contrasena)
     }
 
     /**

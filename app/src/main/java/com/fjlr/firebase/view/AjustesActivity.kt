@@ -2,17 +2,18 @@ package com.fjlr.firebase.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.fjlr.firebase.databinding.ActivityAjustesBinding
 import com.fjlr.firebase.viewModel.RegistroVistaModelo
 import com.fjlr.firebase.viewModel.UtilidadesPerfilVistaModelo
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.launch
 
 /**
  * Actividad para la pantalla de ajustes del usuario.
@@ -53,17 +54,13 @@ class AjustesActivity : AppCompatActivity() {
          * Botón para cambiar el nombre de usuario.
          */
         binding.btCambiarUsuario.setOnClickListener {
-            val nuevoUsuario = binding.etCambiarUsuario.text.toString()
-            if (nuevoUsuario.isNotBlank()) {
-                viewModel.cambiarNombreUsuario(
-                    email, binding.etCambiarUsuario.text.toString(),
-                    callback = { guardado ->
-                        if (guardado) {
-                            Toast.makeText(this, "Usuario cambiado", Toast.LENGTH_SHORT).show()
-                        } else {
-                            Toast.makeText(this, "Algo fallo", Toast.LENGTH_SHORT).show()
-                        }
-                    })
+            lifecycleScope.launch {
+                val nuevoUsuario = binding.etCambiarUsuario.text.toString()
+                if (nuevoUsuario.isNotBlank()) {
+                    viewModel.cambiarNombreUsuario(
+                        email, nuevoUsuario
+                    )
+                }
             }
         }
 
@@ -72,22 +69,9 @@ class AjustesActivity : AppCompatActivity() {
          * Cierra sesion y te lleva a la pantalla de inicio de sesión.
          */
         binding.btContrasena.setOnClickListener {
-            viewModel.cambiarContrasena(email, callback = { enviado ->
-                if (enviado) {
-                    Toast.makeText(
-                        this,
-                        "Se ha enviado un correo para cambiar la contraseña",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    viewModelUtilidades.cerrarSesion()
-                    val intent = Intent(this, MainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
-                } else {
-                    Toast.makeText(this, "No se ha podido enviar el correo", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            })
+            lifecycleScope.launch {
+                viewModel.cambiarContrasena(email)
+            }
         }
 
         /**

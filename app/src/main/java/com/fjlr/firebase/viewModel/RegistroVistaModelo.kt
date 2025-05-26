@@ -18,25 +18,17 @@ class RegistroVistaModelo : ViewModel() {
      * @param email Correo electrónico del usuario.
      * @param contrasena Contraseña para la cuenta.
      * @param nombreUsuario Nombre de usuario visible.
-     * @param callback Retorna true si fue exitoso, false con mensaje de error si falla.
      */
-    fun registrarse(
+    suspend fun registrarse(
         email: String,
         contrasena: String,
         nombreUsuario: String,
-        callback: (Boolean, String?) -> Unit
-    ) {
-        autenticacionRepositorio.crearCuenta(email, contrasena) { exito, error ->
-            if (exito) {
-                usuarioRepositorio.guardarNombreUsuario(
-                    email,
-                    nombreUsuario
-                ) { guardado, errorGuardar ->
-                    callback(guardado, errorGuardar)
-                }
-            } else {
-                callback(false, error)
-            }
+    ): Result<Unit> {
+        return autenticacionRepositorio.crearCuenta(email, contrasena).onSuccess {
+            usuarioRepositorio.guardarNombreUsuario(
+                email,
+                nombreUsuario
+            )
         }
     }
 
@@ -44,18 +36,16 @@ class RegistroVistaModelo : ViewModel() {
      * Cambia el nombre de usuario de un usuario.
      * @param email Email del usuario.
      * @param usuario Nuevo nombre de usuario.
-     * @param callback Retorna true si fue exitoso, false con mensaje de error si falla.
      */
-    fun cambiarNombreUsuario(email: String, usuario: String, callback: (Boolean) -> Unit) {
-        usuarioRepositorio.cambiarNombreUsuario(email, usuario, callback)
+    suspend fun cambiarNombreUsuario(email: String, usuario: String) {
+        usuarioRepositorio.cambiarNombreUsuario(email, usuario)
     }
 
     /**
      * Cambia la contraseña de un usuario.
      * @param email Email del usuario.
-     * @param callback Retorna true si fue exitoso, false con mensaje de error si falla.
      */
-    fun cambiarContrasena(email: String,callback: (Boolean) -> Unit) {
-        usuarioRepositorio.cambiarContrasena(email, callback)
+    suspend fun cambiarContrasena(email: String) {
+        usuarioRepositorio.cambiarContrasena(email)
     }
 }

@@ -8,12 +8,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.fjlr.firebase.databinding.ActivityDetalleBinding
 import com.fjlr.firebase.model.PublicacionesModelo
 import com.fjlr.firebase.utils.ActualizarIcono
 import com.fjlr.firebase.viewModel.UtilidadesPerfilVistaModelo
 import com.fjlr.firebase.viewModel.FavoritosVistaModelo
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.launch
 
 /**
  * Actividad para mostrar los detalles de una publicación.
@@ -74,11 +76,14 @@ class DetalleActivity : AppCompatActivity() {
         Picasso.get().load("https://robohash.org/fran").into(binding.ivFotoDetalla)
 
         publicacion?.let {
-            ActualizarIcono.configurarIconoFavorito(
-                publicacion,
-                binding.ibBotonFavoritoDetalla,
-                viewModelFav
-            )
+            lifecycleScope.launch {
+                ActualizarIcono.configurarIconoFavorito(
+                    publicacion,
+                    binding.ibBotonFavoritoDetalla,
+                    viewModelFav,
+                    lifecycleOwner = this@DetalleActivity
+                )
+            }
         }
     }
 }

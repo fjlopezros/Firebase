@@ -27,21 +27,21 @@ class FavoritosVistaModelo : ViewModel() {
     /**
      * Verifica si una publicación es favorita.
      */
-    fun esFavorito(publicacion: PublicacionesModelo, callback: (Boolean) -> Unit) {
-        repositorio.esFavorito(publicacion, callback)
+    suspend fun esFavorito(publicacion: PublicacionesModelo): Boolean {
+        return repositorio.esFavorito(publicacion)
     }
 
     /**
      * Agrega una publicación a favoritos.
      */
-    fun agregarAFavoritos(publicacion: PublicacionesModelo) {
+    suspend fun agregarAFavoritos(publicacion: PublicacionesModelo) {
         repositorio.guardarFavorito(publicacion)
     }
 
     /**
      * Elimina una publicación de favoritos.
      */
-    fun eliminarDeFavoritos(publicacion: PublicacionesModelo) {
+    suspend fun eliminarDeFavoritos(publicacion: PublicacionesModelo) {
         repositorio.eliminarFavorito(publicacion)
     }
 }

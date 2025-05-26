@@ -5,6 +5,7 @@ import android.widget.Button
 import com.fjlr.firebase.utils.ConstantesUtilidades
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.tasks.await
 
 /**
  * Repositorio para operaciones relacionadas con el perfil del usuario.
@@ -18,18 +19,20 @@ class SeguidoresRepositorio {
      * @param emailSeguidor Email del seguidor.
      * @param emailSeguido Email del seguido.
      */
-    fun seguirUsuario(emailSeguidor: String, emailSeguido: String) {
+    suspend fun seguirUsuario(emailSeguidor: String, emailSeguido: String) {
         db.collection(ConstantesUtilidades.COLECCION_USUARIOS)
             .document(emailSeguido)
             .collection(ConstantesUtilidades.COLECCION_SEGUIDORES)
             .document(emailSeguidor)
             .set(mapOf(ConstantesUtilidades.EMAIL to emailSeguidor))
+            .await()
 
         db.collection(ConstantesUtilidades.COLECCION_USUARIOS)
             .document(emailSeguidor)
             .collection(ConstantesUtilidades.COLECCION_SEGUIDOS)
             .document(emailSeguido)
             .set(mapOf(ConstantesUtilidades.EMAIL to emailSeguido))
+            .await()
     }
 
     /**
@@ -63,18 +66,20 @@ class SeguidoresRepositorio {
      * @param emailSeguidor Email del seguidor.
      * @param emailSeguido Email del seguido.
      */
-    fun dejarDeSeguir(emailSeguidor: String, emailSeguido: String) {
+    suspend fun dejarDeSeguir(emailSeguidor: String, emailSeguido: String) {
         db.collection(ConstantesUtilidades.COLECCION_USUARIOS)
             .document(emailSeguido)
             .collection(ConstantesUtilidades.COLECCION_SEGUIDORES)
             .document(emailSeguidor)
             .delete()
+            .await()
 
         db.collection(ConstantesUtilidades.COLECCION_USUARIOS)
             .document(emailSeguidor)
             .collection(ConstantesUtilidades.COLECCION_SEGUIDOS)
             .document(emailSeguido)
             .delete()
+            .await()
     }
 
 

@@ -5,6 +5,7 @@ import com.fjlr.firebase.utils.ConstantesUtilidades
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.tasks.await
 
 /**
  * Repositorio para operaciones relacionadas con favoritos.
@@ -19,7 +20,7 @@ class FavoritosRepositorio {
      * Guarda una publicación como favorita en Firestore.
      * @param publicacion Publicación a guardar.
      */
-    fun guardarFavorito(publicacion: PublicacionesModelo) {
+    suspend fun guardarFavorito(publicacion: PublicacionesModelo) {
         val docId = "${publicacion.titulo}_${publicacion.autor}"
 
         val data = mapOf(
@@ -37,13 +38,14 @@ class FavoritosRepositorio {
             .collection(ConstantesUtilidades.COLECCION_FAVORITOS)
             .document(docId)
             .set(data)
+            .await()
     }
 
     /**
      * Elimina una publicación de la lista de favoritos en Firestore.
      * @param publicacion Publicación a eliminar.
      */
-    fun eliminarFavorito(publicacion: PublicacionesModelo) {
+    suspend fun eliminarFavorito(publicacion: PublicacionesModelo) {
         val docId = "${publicacion.titulo}_${publicacion.autor}"
 
         db.collection(ConstantesUtilidades.COLECCION_USUARIOS)
@@ -51,26 +53,28 @@ class FavoritosRepositorio {
             .collection(ConstantesUtilidades.COLECCION_FAVORITOS)
             .document(docId)
             .delete()
+            .await()
     }
 
     /**
      * Verifica si una publicación está en la lista de favoritos.
      * @param publicacion Publicación a verificar.
      */
-    fun esFavorito(publicacion: PublicacionesModelo, callback: (Boolean) -> Unit) {
+    suspend fun esFavorito(publicacion: PublicacionesModelo): Boolean {
         val docId = "${publicacion.titulo}_${publicacion.autor}"
 
-        db.collection(ConstantesUtilidades.COLECCION_USUARIOS)
-            .document(emailUsuario)
-            .collection(ConstantesUtilidades.COLECCION_FAVORITOS)
-            .document(docId)
-            .get()
-            .addOnSuccessListener { document ->
-                callback(document.exists())
-            }
-            .addOnFailureListener {
-                callback(false)
-            }
+        return try {
+            val documento = db.collection(ConstantesUtilidades.COLECCION_USUARIOS)
+                .document(emailUsuario)
+                .collection(ConstantesUtilidades.COLECCION_FAVORITOS)
+                .document(docId)
+                .get()
+                .await()
+
+            documento.exists()
+        }catch(_:Exception){
+            false
+        }
     }
 
     /**
