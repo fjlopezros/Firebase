@@ -49,4 +49,6 @@
     <string name="usuario_nuevo">usuario nuevo</string>
     <string name="enviar_email">Enviar Email</string>
     <string name="cambiar_usuario">Cambiar usuario</string>
+    <string name="cambiar_foto_de_perfil">Cambiar foto de perfil</string>
+    <string name="seleccionar_foto">Seleccionar foto</string>
 </resources>

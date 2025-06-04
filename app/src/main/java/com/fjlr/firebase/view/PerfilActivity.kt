@@ -18,6 +18,7 @@ import com.fjlr.firebase.viewModel.FavoritosVistaModelo
 import com.fjlr.firebase.viewModel.PerfilVistaModelo
 import com.fjlr.firebase.viewModel.SeguidoresVistaModelo
 import com.google.firebase.auth.FirebaseAuth
+import com.squareup.picasso.Picasso
 import kotlinx.coroutines.launch
 
 /**
@@ -71,11 +72,6 @@ class PerfilActivity : AppCompatActivity() {
         }
 
         /**
-         * Botón para salir de la actividad.
-         */
-        viewModel.cargarFotoDePerfilAleatoria(binding.ivPerfilUsuario)
-
-        /**
          * Carga el nombre del perfil.
          */
         viewModel.obtenerNombreDeEmail(emailDelPerfil) { nombre ->
@@ -109,6 +105,23 @@ class PerfilActivity : AppCompatActivity() {
 
         //Configuración del botón de seguir
         actualizarEstadoBotonSeguir()
+
+
+        /**
+         * Observador para cargar la foto de perfil del usuario.
+         */
+        lifecycleScope.launch {
+            viewModelPerfil.obtenerUrlFotoPerfil(email.toString())
+
+            viewModelPerfil.fotoDePerfil.observe(this@PerfilActivity) { url ->
+                url?.let {
+                    Picasso.get()
+                        .load(url)
+                        .into(binding.ivPerfilUsuario)
+                }
+            }
+        }
+
     }
 
     /**

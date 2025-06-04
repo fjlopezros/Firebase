@@ -39,6 +39,7 @@ firebase-auth-google = { module = "com.google.android.gms:play-services-auth", v
 firebase-firestore = { module = "com.google.firebase:firebase-firestore-ktx", version.ref = "firestore" }
 google-services = { module = "com.google.gms:google-services", version.ref = "services" }
 firebase-storage = { module = "com.google.firebase:firebase-storage-ktx", version.ref = "storage" }
+google-firebase-storage = { group = "com.google.firebase", name = "firebase-storage", version.ref = "storage" }
 
 lottie = { module = "com.airbnb.android:lottie", version.ref = "icon" }
 

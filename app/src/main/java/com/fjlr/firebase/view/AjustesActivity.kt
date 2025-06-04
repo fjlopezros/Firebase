@@ -1,19 +1,25 @@
 package com.fjlr.firebase.view
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AlertDialog
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.fjlr.firebase.databinding.ActivityAjustesBinding
+import com.fjlr.firebase.viewModel.PerfilVistaModelo
 import com.fjlr.firebase.viewModel.RegistroVistaModelo
 import com.fjlr.firebase.viewModel.UtilidadesPerfilVistaModelo
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
+import kotlin.toString
 
 /**
  * Actividad para la pantalla de ajustes del usuario.
@@ -23,6 +29,7 @@ class AjustesActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAjustesBinding
     private lateinit var viewModel: RegistroVistaModelo
     private lateinit var viewModelUtilidades: UtilidadesPerfilVistaModelo
+    private lateinit var viewModelPerfil: PerfilVistaModelo
     private val email = FirebaseAuth.getInstance().currentUser?.email.toString()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +43,7 @@ class AjustesActivity : AppCompatActivity() {
         //Instancia del ViewModel
         viewModel = ViewModelProvider(this)[RegistroVistaModelo::class.java]
         viewModelUtilidades = ViewModelProvider(this)[UtilidadesPerfilVistaModelo::class.java]
+        viewModelPerfil = ViewModelProvider(this)[PerfilVistaModelo::class.java]
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -60,6 +68,11 @@ class AjustesActivity : AppCompatActivity() {
                     viewModel.cambiarNombreUsuario(
                         email, nuevoUsuario
                     )
+                    Toast.makeText(
+                        this@AjustesActivity,
+                        "Nombre de usuario cambiado",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -90,6 +103,38 @@ class AjustesActivity : AppCompatActivity() {
                 }
                 .setNegativeButton("No", null)
                 .show()
+        }
+
+
+        val launcher = crearImagenLauncher()
+        /**
+         * Botón para cambiar la foto de perfil.
+         */
+        binding.btFotoperfil.setOnClickListener {
+            try {
+                launcher.launch(
+                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                )
+            } catch (e: Exception) {
+                Toast.makeText(this, "Error al abrir selector: ${e.message}", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    /**
+     * Crea un launcher para seleccionar una imagen de la galería.
+     * Al seleccionar una imagen, se llama al metodo cambiarFotoDePerfil del ViewModel.
+     */
+    private fun crearImagenLauncher(): ActivityResultLauncher<PickVisualMediaRequest> {
+        return registerForActivityResult(
+            ActivityResultContracts.PickVisualMedia()
+        ) { uri ->
+            uri?.let {
+                lifecycleScope.launch {
+                    viewModelUtilidades.cambiarFotoDePerfil(it, email)
+                }
+            }
         }
     }
 }

@@ -93,5 +93,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btCambiarUsuario" />
 
+    <Button
+        android:id="@+id/btFotoperfil"
+        android:layout_width="172dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/seleccionar_foto"
+        android:textAlignment="center"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.056"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCambiarFotoPerfilTitulo" />
+
+    <TextView
+        android:id="@+id/tvCambiarFotoPerfilTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:text="@string/cambiar_foto_de_perfil"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.073"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btContrasena" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

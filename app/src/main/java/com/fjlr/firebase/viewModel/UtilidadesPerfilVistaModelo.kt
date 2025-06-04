@@ -1,6 +1,6 @@
 package com.fjlr.firebase.viewModel
 
-import android.widget.ImageView
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import com.fjlr.firebase.repository.AutenticacionRepositorio
 import com.fjlr.firebase.repository.ImagenRepositorio
@@ -43,9 +43,12 @@ class UtilidadesPerfilVistaModelo : ViewModel() {
     }
 
     /**
-     * Carga una imagen aleatoria en el ImageView pasado.
+     * Cambia la foto en Storage y Firestore.
+     *
+     * @param imagen Uri de la imagen a subir.
+     * @param email Email del usuario.
      */
-    fun cargarFotoDePerfilAleatoria(fotoDePerfil: ImageView) {
-        imagenRepositorio.fotoDePerfilAleatoria(fotoDePerfil)
+    suspend fun cambiarFotoDePerfil(imagen: Uri, email: String) {
+        imagenRepositorio.cambiarFotoDePerfil(imagen, email)
     }
 }

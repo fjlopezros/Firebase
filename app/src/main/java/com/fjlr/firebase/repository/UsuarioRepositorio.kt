@@ -3,6 +3,7 @@ package com.fjlr.firebase.repository
 import com.fjlr.firebase.utils.ConstantesUtilidades
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import kotlinx.coroutines.tasks.await
 
 /**
@@ -10,7 +11,7 @@ import kotlinx.coroutines.tasks.await
  */
 class UsuarioRepositorio(
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance(),
-    private val aut: FirebaseAuth = FirebaseAuth.getInstance()
+    private val aut: FirebaseAuth = FirebaseAuth.getInstance(),
 ) {
     /**
      * Guarda el nombre del usuario en Firestore con su email como ID de documento.
@@ -25,7 +26,7 @@ class UsuarioRepositorio(
         val usuario = mapOf(ConstantesUtilidades.USUARIO to nombreUsuario)
         firestore.collection(ConstantesUtilidades.COLECCION_USUARIOS)
             .document(email)
-            .set(usuario)
+            .set(usuario, SetOptions.merge())
             .await()
     }
 
@@ -51,4 +52,17 @@ class UsuarioRepositorio(
         aut.sendPasswordResetEmail(email)
             .await()
     }
+
+    /**
+     * Obtiene la url de la foto de perfil del usuario.
+     * @param email Correo del usuario.
+     */
+    suspend fun obtenerUrlFotoPerfil(email: String): String? {
+        val doc = firestore.collection(ConstantesUtilidades.COLECCION_USUARIOS)
+            .document(email)
+            .get()
+            .await()
+        return doc.getString(ConstantesUtilidades.IMAGEN)
+    }
+
 }
