@@ -8,7 +8,7 @@
     tools:context=".view.PerfilActivity">
 
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/ivPerfilUsuario"
         android:layout_width="70dp"
         android:layout_height="70dp"
@@ -17,7 +17,8 @@
         android:scaleType="centerCrop"
         android:src="@drawable/iconousuario"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvCorreoUsuario" />
+        app:layout_constraintTop_toBottomOf="@+id/tvCorreoUsuario"
+        app:shapeAppearanceOverlay="@style/CircularImageView" />
 
     <TextView
         android:id="@+id/tvNumSeguidores"

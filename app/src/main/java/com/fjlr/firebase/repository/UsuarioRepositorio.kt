@@ -57,12 +57,11 @@ class UsuarioRepositorio(
      * Obtiene la url de la foto de perfil del usuario.
      * @param email Correo del usuario.
      */
-    suspend fun obtenerUrlFotoPerfil(email: String): String? {
-        val doc = firestore.collection(ConstantesUtilidades.COLECCION_USUARIOS)
+    fun obtenerUrlFotoPerfil(email: String, callback: (String) -> Unit) {
+        firestore.collection(ConstantesUtilidades.COLECCION_USUARIOS)
             .document(email)
-            .get()
-            .await()
-        return doc.getString(ConstantesUtilidades.IMAGEN)
+            .addSnapshotListener { snapshot, error ->
+                snapshot?.getString(ConstantesUtilidades.IMAGEN)?.let { callback(it) }
+            }
     }
-
 }

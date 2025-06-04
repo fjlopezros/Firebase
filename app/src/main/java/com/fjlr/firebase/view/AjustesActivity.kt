@@ -14,6 +14,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.fjlr.firebase.databinding.ActivityAjustesBinding
+import com.fjlr.firebase.utils.Carga
 import com.fjlr.firebase.viewModel.PerfilVistaModelo
 import com.fjlr.firebase.viewModel.RegistroVistaModelo
 import com.fjlr.firebase.viewModel.UtilidadesPerfilVistaModelo
@@ -105,19 +106,23 @@ class AjustesActivity : AppCompatActivity() {
                 .show()
         }
 
-
+        // launcher para seleccionar una imagen de la galería
         val launcher = crearImagenLauncher()
         /**
          * Botón para cambiar la foto de perfil.
+         * Abre un selector de imágenes para elegir una nueva foto de perfil.
          */
         binding.btFotoperfil.setOnClickListener {
             try {
                 launcher.launch(
                     PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
                 )
-            } catch (e: Exception) {
-                Toast.makeText(this, "Error al abrir selector: ${e.message}", Toast.LENGTH_LONG)
-                    .show()
+            } catch (_: Exception) {
+                Toast.makeText(
+                    this@AjustesActivity,
+                    "Error al abrir selector",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
     }
@@ -125,6 +130,9 @@ class AjustesActivity : AppCompatActivity() {
     /**
      * Crea un launcher para seleccionar una imagen de la galería.
      * Al seleccionar una imagen, se llama al metodo cambiarFotoDePerfil del ViewModel.
+     * Muestra una carga mientras se sube la imagen y muestra un mensaje de éxito o error.
+     *
+     * @return ActivityResultLauncher para manejar la selección de imágenes.
      */
     private fun crearImagenLauncher(): ActivityResultLauncher<PickVisualMediaRequest> {
         return registerForActivityResult(
@@ -132,9 +140,28 @@ class AjustesActivity : AppCompatActivity() {
         ) { uri ->
             uri?.let {
                 lifecycleScope.launch {
-                    viewModelUtilidades.cambiarFotoDePerfil(it, email)
+                    Carga.cargando(binding.pbCargando, binding.ibFlechaParaSalir, true)
+
+                    try {
+                        viewModelUtilidades.cambiarFotoDePerfil(it, email)
+
+                        Toast.makeText(
+                            this@AjustesActivity,
+                            "Foto de perfil actualizada",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } catch (_: Exception) {
+                        Toast.makeText(
+                            this@AjustesActivity,
+                            "Error al subir la imagen",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    } finally {
+                        Carga.cargando(binding.pbCargando, binding.ibFlechaParaSalir, false)
+                    }
                 }
             }
         }
     }
+
 }

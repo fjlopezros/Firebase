@@ -17,8 +17,8 @@ class PerfilVistaModelo : ViewModel() {
     private var _publicaciones = MutableLiveData<List<PublicacionesModelo>>()
     val publicaciones: LiveData<List<PublicacionesModelo>> get() = _publicaciones
 
-    private val _fotoDePerfil = MutableLiveData<String?>()
-    val fotoDePerfil: LiveData<String?> = _fotoDePerfil
+    private val _fotoDePerfil = MutableLiveData<String>()
+    val fotoDePerfil: LiveData<String> = _fotoDePerfil
 
     /**
      * Carga tus publicaciones.
@@ -34,9 +34,9 @@ class PerfilVistaModelo : ViewModel() {
      * Obtiene la url de la foto de perfil del usuario.
      * @param email Email del usuario.
      */
-    suspend fun obtenerUrlFotoPerfil(email: String) {
-        val url = usuarioRepositorio.obtenerUrlFotoPerfil(email)
-        _fotoDePerfil.value = url
+    fun obtenerUrlFotoPerfil(email: String) {
+            usuarioRepositorio.obtenerUrlFotoPerfil(email) { url ->
+                _fotoDePerfil.postValue(url)
+            }
     }
-
 }

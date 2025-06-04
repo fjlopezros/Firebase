@@ -28,6 +28,7 @@ class ImagenRepositorio(
         espacio.putFile(imagen).await()
         val url = espacio.downloadUrl.await().toString()
         subirFotoDePerfil(url, email)
+
         return url
     }
 

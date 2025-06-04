@@ -107,20 +107,20 @@ class PerfilActivity : AppCompatActivity() {
         actualizarEstadoBotonSeguir()
 
 
-        /**
-         * Observador para cargar la foto de perfil del usuario.
-         */
-        lifecycleScope.launch {
-            viewModelPerfil.obtenerUrlFotoPerfil(email.toString())
+        //Carga la foto de perfil del usuario.
+        viewModelPerfil.obtenerUrlFotoPerfil(emailDelPerfil)
 
-            viewModelPerfil.fotoDePerfil.observe(this@PerfilActivity) { url ->
-                url?.let {
-                    Picasso.get()
-                        .load(url)
-                        .into(binding.ivPerfilUsuario)
-                }
+        /**
+         * Observador para actualizar la foto de perfil del usuario.
+         */
+        viewModelPerfil.fotoDePerfil.observe(this@PerfilActivity) { url ->
+            url?.let {
+                Picasso.get()
+                    .load(url)
+                    .into(binding.ivPerfilUsuario)
             }
         }
+
 
     }
 
