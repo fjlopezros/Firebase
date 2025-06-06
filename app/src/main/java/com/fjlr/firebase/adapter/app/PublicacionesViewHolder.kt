@@ -22,16 +22,32 @@ class PublicacionesViewHolder(private val binding: PublicacionesItemBinding) :
      */
     fun bind(publicacion: PublicacionesModelo) {
         utilidadesPerfilVistaModelo.obtenerNombreDeEmail(publicacion.autor) { nombre ->
-            binding.tvUsuario.text = nombre ?: "Nombre no disponible"
+            binding.tvUsuario.text = nombre ?: "Null"
         }
         binding.tvTituloPublicacion.text = publicacion.titulo
         binding.tvDescripcionPublicacion.text = publicacion.descripcion
         binding.tvIngredientesPublicacion.text = publicacion.ingredientes
         binding.tvPreparacionPublicacion.text = publicacion.preparacion
-        Picasso.get().load("https://robohash.org/fran").into(binding.ivFoto)
+
+        cargarImagenPublicacion(publicacion.fotoPublicacion)
 
         itemView.setOnClickListener {
             Adaptador.abrirAjustesDesdeItem(itemView, publicacion.autor)
+        }
+    }
+
+    /**
+     * Carga la imagen de la publicación en el ImageView.
+     *
+     * @param urlImagen La URL de la imagen a cargar.
+     */
+    private fun cargarImagenPublicacion(urlImagen: String) {
+        if (urlImagen.isNotEmpty() && urlImagen.startsWith("http")) {
+            Picasso.get()
+                .load(urlImagen)
+                .fit()
+                .centerCrop()
+                .into(binding.ivFoto)
         }
     }
 }

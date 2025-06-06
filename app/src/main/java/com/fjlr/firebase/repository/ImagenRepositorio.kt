@@ -8,6 +8,10 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.tasks.await
 
+
+/**
+ * Todo: AL SUBIR PUBLICACIONES PONER: TITULO+EMAIL
+ */
 /**
  * Repositorio para gestionar carga de imágenes, como foto de perfil.
  */
@@ -22,14 +26,18 @@ class ImagenRepositorio(
      * @param email Email del usuario para identificar la imagen.
      * @return URL de la imagen cargada.
      */
-    suspend fun cambiarFotoDePerfil(imagen: Uri, email: String): String {
-        var espacio = storage.child("imagenes/perfil/$email.jpg")
+    suspend fun agregarFoto(imagen: Uri, email: String, url: String): String {
+        var espacio = storage.child("${ConstantesUtilidades.IMAGENES}/$url/$email${ConstantesUtilidades.JPG}")
 
         espacio.putFile(imagen).await()
-        val url = espacio.downloadUrl.await().toString()
-        subirFotoDePerfil(url, email)
 
-        return url
+        val urlFoto = espacio.downloadUrl.await().toString()
+
+        if(url == ConstantesUtilidades.IMAGEN_PERFIL) {
+            subirFotoDePerfil(urlFoto, email)
+        }
+
+        return urlFoto
     }
 
     /**
@@ -40,7 +48,7 @@ class ImagenRepositorio(
      */
     private suspend fun subirFotoDePerfil(urlImagen: String, email: String) {
         val img = mapOf(
-            ConstantesUtilidades.IMAGEN to urlImagen
+            ConstantesUtilidades.IMAGEN_PERFIL to urlImagen
         )
 
         firestore.collection(ConstantesUtilidades.COLECCION_USUARIOS)
@@ -48,6 +56,4 @@ class ImagenRepositorio(
             .set(img, SetOptions.merge())
             .await()
     }
-
-
 }

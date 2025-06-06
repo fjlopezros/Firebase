@@ -14,5 +14,5 @@ data class PublicacionesModelo(
     val preparacion: String = "",
     val autor: String = "",
     var esFavorito: Boolean = false,
-    var imagen: String =""
+    var fotoPublicacion: String =""
 ) : Parcelable

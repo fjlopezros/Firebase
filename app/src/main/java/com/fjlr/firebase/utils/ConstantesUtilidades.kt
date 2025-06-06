@@ -22,5 +22,8 @@ object ConstantesUtilidades {
     const val ERROR_INICIAR_SESION = "Email o contraseña vacíos"
     const val NULL = "Null"
     const val VACIO = 0
-    const val IMAGEN = "fotoDePerfil"
+    const val IMAGENES = "imagenes"
+    const val IMAGEN_PERFIL = "foto_perfil"
+    const val IMAGEN_PUBLICACION = "fotoPublicacion"
+    const val JPG = ".jpg"
 }

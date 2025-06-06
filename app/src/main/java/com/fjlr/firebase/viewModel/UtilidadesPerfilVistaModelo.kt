@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.fjlr.firebase.repository.AutenticacionRepositorio
 import com.fjlr.firebase.repository.ImagenRepositorio
 import com.fjlr.firebase.repository.publicaciones.PerfilRepositorio
+import com.fjlr.firebase.utils.ConstantesUtilidades
 
 /**
  * ViewModel para gestionar la vista de ajustes del usuario.
@@ -43,12 +44,12 @@ class UtilidadesPerfilVistaModelo : ViewModel() {
     }
 
     /**
-     * Cambia la foto en Storage y Firestore.
+     * Agrega la foto (PERFIL) en Storage y Firestore.
      *
      * @param imagen Uri de la imagen a subir.
      * @param email Email del usuario.
      */
-    suspend fun cambiarFotoDePerfil(imagen: Uri, email: String) {
-        imagenRepositorio.cambiarFotoDePerfil(imagen, email)
+    suspend fun agregarFotoPerfil(imagen: Uri, email: String) {
+        imagenRepositorio.agregarFoto(imagen, email, ConstantesUtilidades.IMAGEN_PERFIL)
     }
 }

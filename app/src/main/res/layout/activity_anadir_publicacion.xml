@@ -7,6 +7,31 @@
     android:layout_height="match_parent"
     tools:context=".view.AnadirPublicacionActivity">
 
+
+    <ImageView
+        android:id="@+id/ivImagenSeleccionada"
+        android:layout_width="176dp"
+        android:layout_height="147dp"
+        android:layout_marginStart="117dp"
+        android:layout_marginEnd="118dp"
+        android:layout_marginBottom="11dp"
+        app:layout_constraintBottom_toTopOf="@+id/btGuardarPublicacion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btSubirImagen" />
+
+    <ProgressBar
+        android:id="@+id/pbCargandoPubli"
+        android:layout_width="36dp"
+        android:layout_height="51dp"
+        android:visibility="gone"
+        android:layout_marginStart="181dp"
+        android:layout_marginEnd="182dp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivImagenSeleccionada"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ivImagenSeleccionada" />
+
     <ImageButton
         android:id="@+id/ibFlechaParaSalir"
         android:layout_width="48dp"
@@ -52,9 +77,10 @@
         android:textAlignment="textEnd"
         app:layout_constraintBottom_toTopOf="@+id/btGuardarPublicacion"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etIngredientes"
-        app:layout_constraintVertical_bias="0.217" />
+        app:layout_constraintVertical_bias="0.096" />
 
     <EditText
         android:id="@+id/etDescripcionAnadir"
@@ -88,5 +114,21 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btSubirImagen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="139dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="140dp"
+        android:layout_marginBottom="127dp"
+        android:text="Subir imagen"
+        app:layout_constraintBottom_toTopOf="@+id/btGuardarPublicacion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etPreparacion"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

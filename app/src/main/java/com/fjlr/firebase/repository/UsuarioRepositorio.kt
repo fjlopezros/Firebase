@@ -61,7 +61,7 @@ class UsuarioRepositorio(
         firestore.collection(ConstantesUtilidades.COLECCION_USUARIOS)
             .document(email)
             .addSnapshotListener { snapshot, error ->
-                snapshot?.getString(ConstantesUtilidades.IMAGEN)?.let { callback(it) }
+                snapshot?.getString(ConstantesUtilidades.IMAGEN_PERFIL)?.let { callback(it) }
             }
     }
 }

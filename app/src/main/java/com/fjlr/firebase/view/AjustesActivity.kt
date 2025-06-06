@@ -143,7 +143,7 @@ class AjustesActivity : AppCompatActivity() {
                     Carga.cargando(binding.pbCargando, binding.ibFlechaParaSalir, true)
 
                     try {
-                        viewModelUtilidades.cambiarFotoDePerfil(it, email)
+                        viewModelUtilidades.agregarFotoPerfil(it, email)
 
                         Toast.makeText(
                             this@AjustesActivity,
@@ -160,7 +160,11 @@ class AjustesActivity : AppCompatActivity() {
                         Carga.cargando(binding.pbCargando, binding.ibFlechaParaSalir, false)
                     }
                 }
-            }
+            } ?: Toast.makeText(
+                this@AjustesActivity,
+                "No se ha seleccionado ninguna imagen",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
