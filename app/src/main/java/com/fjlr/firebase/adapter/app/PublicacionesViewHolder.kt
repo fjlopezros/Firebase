@@ -4,8 +4,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fjlr.firebase.databinding.PublicacionesItemBinding
 import com.fjlr.firebase.model.PublicacionesModelo
 import com.fjlr.firebase.utils.Adaptador
+import com.fjlr.firebase.utils.ImagenPubli
 import com.fjlr.firebase.viewModel.UtilidadesPerfilVistaModelo
-import com.squareup.picasso.Picasso
 
 /**
  * Clase de ViewHolder para el RecyclerView de publicaciones en la pantalla de ajustes.
@@ -29,25 +29,10 @@ class PublicacionesViewHolder(private val binding: PublicacionesItemBinding) :
         binding.tvIngredientesPublicacion.text = publicacion.ingredientes
         binding.tvPreparacionPublicacion.text = publicacion.preparacion
 
-        cargarImagenPublicacion(publicacion.fotoPublicacion)
+        ImagenPubli.cargarImagenPublicacion(publicacion.fotoPublicacion, binding.ivFoto)
 
         itemView.setOnClickListener {
             Adaptador.abrirAjustesDesdeItem(itemView, publicacion.autor)
-        }
-    }
-
-    /**
-     * Carga la imagen de la publicación en el ImageView.
-     *
-     * @param urlImagen La URL de la imagen a cargar.
-     */
-    private fun cargarImagenPublicacion(urlImagen: String) {
-        if (urlImagen.isNotEmpty() && urlImagen.startsWith("http")) {
-            Picasso.get()
-                .load(urlImagen)
-                .fit()
-                .centerCrop()
-                .into(binding.ivFoto)
         }
     }
 }

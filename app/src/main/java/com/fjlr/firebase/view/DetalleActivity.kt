@@ -12,9 +12,9 @@ import androidx.lifecycle.lifecycleScope
 import com.fjlr.firebase.databinding.ActivityDetalleBinding
 import com.fjlr.firebase.model.PublicacionesModelo
 import com.fjlr.firebase.utils.ActualizarIcono
+import com.fjlr.firebase.utils.ImagenPubli
 import com.fjlr.firebase.viewModel.UtilidadesPerfilVistaModelo
 import com.fjlr.firebase.viewModel.FavoritosVistaModelo
-import com.squareup.picasso.Picasso
 import kotlinx.coroutines.launch
 
 /**
@@ -66,16 +66,22 @@ class DetalleActivity : AppCompatActivity() {
         val publicacion =
             intent.getParcelableExtra("publicacionDelPerfil", PublicacionesModelo::class.java)
 
-        viewModelAjustes.obtenerNombreDeEmail(publicacion?.autor.toString()) { nombre ->
+        if (publicacion == null) {
+            finish()
+            return
+        }
+
+        viewModelAjustes.obtenerNombreDeEmail(publicacion.autor.toString()) { nombre ->
             binding.tvUsuarioDetalla.text = nombre ?: "Null"
         }
-        binding.tvTituloPublicacionDetalla.text = publicacion?.titulo
-        binding.tvDescripcionPublicacionDetalla.text = publicacion?.descripcion
-        binding.tvIngredientesPublicacionDetalla.text = publicacion?.ingredientes
-        binding.tvPreparacionPublicacionDetalla.text = publicacion?.preparacion
-        Picasso.get().load("https://robohash.org/fran").into(binding.ivFotoDetalla)
+        binding.tvTituloPublicacionDetalla.text = publicacion.titulo
+        binding.tvDescripcionPublicacionDetalla.text = publicacion.descripcion
+        binding.tvIngredientesPublicacionDetalla.text = publicacion.ingredientes
+        binding.tvPreparacionPublicacionDetalla.text = publicacion.preparacion
 
-        publicacion?.let {
+        ImagenPubli.cargarImagenPublicacion(publicacion.fotoPublicacion, binding.ivFotoDetalla)
+
+        publicacion.let {
             lifecycleScope.launch {
                 ActualizarIcono.configurarIconoFavorito(
                     publicacion,

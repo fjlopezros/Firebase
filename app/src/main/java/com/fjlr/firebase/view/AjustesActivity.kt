@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.fjlr.firebase.R
 import com.fjlr.firebase.databinding.ActivityAjustesBinding
 import com.fjlr.firebase.utils.Carga
@@ -19,6 +20,7 @@ import com.fjlr.firebase.viewModel.PerfilVistaModelo
 import com.fjlr.firebase.viewModel.RegistroVistaModelo
 import com.fjlr.firebase.viewModel.UtilidadesPerfilVistaModelo
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.launch
 import kotlin.toString
 
 /**
@@ -152,24 +154,26 @@ class AjustesActivity : AppCompatActivity() {
             ActivityResultContracts.PickVisualMedia()
         ) { uri ->
             uri?.let {
-                Carga.cargando(binding.pbCargando, binding.ibFlechaParaSalir, true)
+                lifecycleScope.launch {
+                    Carga.cargando(binding.pbCargando, binding.ibFlechaParaSalir, true)
 
-                try {
-                    viewModelUtilidades.agregarFotoPerfil(it, email)
+                    try {
+                        viewModelUtilidades.agregarFotoPerfil(it, email)
 
-                    Toast.makeText(
-                        this@AjustesActivity,
-                        R.string.foto_actualizada,
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } catch (_: Exception) {
-                    Toast.makeText(
-                        this@AjustesActivity,
-                        R.string.foto_error,
-                        Toast.LENGTH_LONG
-                    ).show()
-                } finally {
-                    Carga.cargando(binding.pbCargando, binding.ibFlechaParaSalir, false)
+                        Toast.makeText(
+                            this@AjustesActivity,
+                            R.string.foto_actualizada,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } catch (_: Exception) {
+                        Toast.makeText(
+                            this@AjustesActivity,
+                            R.string.foto_error,
+                            Toast.LENGTH_LONG
+                        ).show()
+                    } finally {
+                        Carga.cargando(binding.pbCargando, binding.ibFlechaParaSalir, false)
+                    }
                 }
             } ?: Toast.makeText(
                 this@AjustesActivity,
