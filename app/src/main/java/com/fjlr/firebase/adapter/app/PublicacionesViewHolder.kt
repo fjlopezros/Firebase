@@ -4,6 +4,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fjlr.firebase.databinding.PublicacionesItemBinding
 import com.fjlr.firebase.model.PublicacionesModelo
 import com.fjlr.firebase.utils.Adaptador
+import com.fjlr.firebase.utils.ConstantesUtilidades
 import com.fjlr.firebase.utils.ImagenPubli
 import com.fjlr.firebase.viewModel.UtilidadesPerfilVistaModelo
 
@@ -22,7 +23,7 @@ class PublicacionesViewHolder(private val binding: PublicacionesItemBinding) :
      */
     fun bind(publicacion: PublicacionesModelo) {
         utilidadesPerfilVistaModelo.obtenerNombreDeEmail(publicacion.autor) { nombre ->
-            binding.tvUsuario.text = nombre ?: "Null"
+            binding.tvUsuario.text = nombre ?: ConstantesUtilidades.NO_ENCONTRADO
         }
         binding.tvTituloPublicacion.text = publicacion.titulo
         binding.tvDescripcionPublicacion.text = publicacion.descripcion

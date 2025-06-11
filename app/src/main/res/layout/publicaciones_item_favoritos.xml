@@ -10,9 +10,19 @@
     app:cardCornerRadius="15dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="408dp"
+        android:layout_height="145dp">
 
+        <ImageView
+            android:id="@+id/ivImagenPublicacionFavorito"
+            android:layout_width="117dp"
+            android:layout_height="105dp"
+            android:layout_marginStart="16dp"
+            android:contentDescription="@string/fotopublicacion"
+            tools:src="@drawable/remylogo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/ibBotonFavoritoFav"
@@ -32,25 +42,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:layout_marginEnd="120dp"
             android:textSize="22sp"
             app:layout_constraintBottom_toTopOf="@+id/tvTituloPublicacionFav"
             app:layout_constraintEnd_toStartOf="@+id/ibBotonFavoritoFav"
-            app:layout_constraintHorizontal_bias="0.301"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.117"
+            app:layout_constraintStart_toEndOf="@+id/ivImagenPublicacionFavorito"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintVertical_bias="0.322"
             tools:hint="USUARIO" />
 
         <TextView
             android:id="@+id/tvTituloPublicacionFav"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="68dp"
+            android:layout_marginEnd="152dp"
+            android:layout_marginBottom="36dp"
             android:textSize="15sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.505"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.093"
+            app:layout_constraintStart_toEndOf="@+id/ivImagenPublicacionFavorito"
             tools:hint="titulo publicacion" />
 
 

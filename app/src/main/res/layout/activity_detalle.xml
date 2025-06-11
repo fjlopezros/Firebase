@@ -5,7 +5,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="700dp"
+    android:background="@color/beige"
     tools:context=".view.DetalleActivity">
 
     <ImageButton
@@ -20,7 +21,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <ImageButton
         android:id="@+id/ibBotonFavoritoDetalla"
         android:layout_width="40dp"
@@ -32,114 +32,140 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/ivFotoDetalla"
-        android:layout_width="376dp"
-        android:layout_height="263dp"
-        android:layout_marginTop="20dp"
-        android:contentDescription="@string/fotopublicacion"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.371"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvUsuarioDetalla" />
-
-    <TextView
-        android:id="@+id/tvPreparacionPublicacionTituloDetalla"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="48dp"
-        android:text="@string/preparacion"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvIngredientesPublicacionDetalla"
-        app:layout_constraintVertical_bias="0.811" />
-
-    <TextView
-        android:id="@+id/tvDescripcionPublicacionDetalla"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.046"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDescripcionPublicacionTituloDetalla"
-        tools:hint="descripcion publicacion" />
-
-    <TextView
-        android:id="@+id/tvIngredientesPublicacionDetalla"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.052"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvIngredientesPublicacionTituloDetalla"
-        tools:hint="ingredientes publicacion" />
-
-    <TextView
-        android:id="@+id/tvDescripcionPublicacionTituloDetalla"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="@string/descripcionTitulo"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.039"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTituloPublicacionDetalla" />
-
-    <TextView
-        android:id="@+id/tvTituloPublicacionDetalla"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.04"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivFotoDetalla"
-        tools:hint="titulo publicacion" />
-
-    <TextView
-        android:id="@+id/tvPreparacionPublicacionDetalla"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="188dp"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.114"
-        app:layout_constraintStart_toEndOf="@+id/tvPreparacionPublicacionTituloDetalla"
-        app:layout_constraintTop_toBottomOf="@+id/tvIngredientesPublicacionDetalla"
-        app:layout_constraintVertical_bias="0.623"
-        tools:hint="minutos" />
-
-    <TextView
-        android:id="@+id/tvIngredientesPublicacionTituloDetalla"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/ingredientesTItulo"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.036"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDescripcionPublicacionDetalla" />
-
     <TextView
         android:id="@+id/tvUsuarioDetalla"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="76dp"
+        android:layout_marginTop="44dp"
         android:textSize="22sp"
-        app:layout_constraintEnd_toStartOf="@+id/ibBotonFavoritoDetalla"
-        app:layout_constraintHorizontal_bias="0.059"
-        app:layout_constraintStart_toStartOf="parent"
+        tools:hint="USUARIO"
+        app:layout_constraintStart_toEndOf="@id/ibFlechaParaSalir"
+        app:layout_constraintEnd_toStartOf="@id/ibBotonFavoritoDetalla"
         app:layout_constraintTop_toTopOf="parent"
-        tools:hint="USUARIO" />
+        app:layout_constraintHorizontal_bias="0.5" />
+
+    <ImageView
+        android:id="@+id/ivFotoDetalla"
+        android:layout_width="0dp"
+        android:layout_height="263dp"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/fotopublicacion"
+        app:layout_constraintTop_toBottomOf="@id/tvUsuarioDetalla"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/contenedorInferior"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/ventana"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivFotoDetalla"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:id="@+id/tvTituloPublicacionDetalla"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/t_tulo_de_la_publicaci_n"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/tvDescripcionPublicacionTituloDetalla"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/descripcionTitulo"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            app:layout_constraintTop_toBottomOf="@id/tvTituloPublicacionDetalla"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/tvDescripcionPublicacionDetalla"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            tools:hint="Descripción detallada de la receta aquí"
+            app:layout_constraintTop_toBottomOf="@id/tvDescripcionPublicacionTituloDetalla"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp" />
+
+        <TextView
+            android:id="@+id/tvIngredientesPublicacionTituloDetalla"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ingredientesTItulo"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            app:layout_constraintTop_toBottomOf="@id/tvDescripcionPublicacionDetalla"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/tvIngredientesPublicacionDetalla"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            tools:hint="Lista de ingredientes aquí"
+            app:layout_constraintTop_toBottomOf="@id/tvIngredientesPublicacionTituloDetalla"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp" />
+
+        <TextView
+            android:id="@+id/tvPreparacionPublicacionTituloDetalla"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/preparacion"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            app:layout_constraintTop_toBottomOf="@id/tvIngredientesPublicacionDetalla"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/tvPreparacionPublicacionDetalla"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            tools:hint="Pasos de preparación detallados"
+            app:layout_constraintTop_toBottomOf="@id/tvIngredientesPublicacionDetalla"
+            app:layout_constraintStart_toEndOf="@id/tvPreparacionPublicacionTituloDetalla"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"/>
+
+        <ImageButton
+            android:id="@+id/ibBotonBorrarDetalla"
+            android:layout_width="40dp"
+            android:layout_height="38dp"
+            android:layout_marginBottom="4dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/papelera"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

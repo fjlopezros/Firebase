@@ -26,4 +26,5 @@ object ConstantesUtilidades {
     const val IMAGEN_PERFIL = "foto_perfil"
     const val IMAGEN_PUBLICACION = "fotoPublicacion"
     const val JPG = ".jpg"
+    const val NO_ENCONTRADO ="No encontrado"
 }

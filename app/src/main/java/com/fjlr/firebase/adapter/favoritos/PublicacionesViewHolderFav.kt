@@ -4,6 +4,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fjlr.firebase.databinding.PublicacionesItemFavoritosBinding
 import com.fjlr.firebase.model.PublicacionesModelo
 import com.fjlr.firebase.utils.Adaptador
+import com.fjlr.firebase.utils.ConstantesUtilidades
+import com.fjlr.firebase.utils.ImagenPubli
 import com.fjlr.firebase.viewModel.UtilidadesPerfilVistaModelo
 
 /**
@@ -21,9 +23,11 @@ class PublicacionesViewHolderFav(private val binding: PublicacionesItemFavoritos
      */
     fun bind(publicacion: PublicacionesModelo) {
         utilidadesPerfilVistaModelo.obtenerNombreDeEmail(publicacion.autor) { nombre ->
-            binding.tvUsuarioFav.text = nombre ?: "Null"
+            binding.tvUsuarioFav.text = nombre ?: ConstantesUtilidades.NO_ENCONTRADO
         }
         binding.tvTituloPublicacionFav.text = publicacion.titulo
+
+        ImagenPubli.cargarImagenPublicacion(publicacion.fotoPublicacion, binding.ivImagenPublicacionFavorito)
 
         itemView.setOnClickListener {
             Adaptador.abrirAjustesDesdeItem(itemView, publicacion.autor)

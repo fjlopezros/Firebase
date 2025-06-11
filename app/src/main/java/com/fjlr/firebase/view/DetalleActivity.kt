@@ -15,19 +15,21 @@ import com.fjlr.firebase.utils.ActualizarIcono
 import com.fjlr.firebase.utils.ImagenPubli
 import com.fjlr.firebase.viewModel.UtilidadesPerfilVistaModelo
 import com.fjlr.firebase.viewModel.FavoritosVistaModelo
+import com.fjlr.firebase.viewModel.PublicacionesVistaModelo
 import kotlinx.coroutines.launch
 
 /**
  * Actividad para mostrar los detalles de una publicación.
  */
+//Requiere la versión Tiramisu (33 Android)
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 class DetalleActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetalleBinding
     private lateinit var viewModelAjustes: UtilidadesPerfilVistaModelo
     private lateinit var viewModelFav: FavoritosVistaModelo
+    private lateinit var viewModel: PublicacionesVistaModelo
 
-    //Requiere la versión Tiramisu (33 Android)
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -39,6 +41,8 @@ class DetalleActivity : AppCompatActivity() {
         //Instancia del viewModel
         viewModelAjustes = ViewModelProvider(this)[UtilidadesPerfilVistaModelo::class.java]
         viewModelFav = ViewModelProvider(this)[FavoritosVistaModelo::class.java]
+        viewModel = ViewModelProvider(this)[PublicacionesVistaModelo::class.java]
+
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -53,8 +57,24 @@ class DetalleActivity : AppCompatActivity() {
             finish()
         }
 
+
+        val publicacion =
+            intent.getParcelableExtra("publicacionDelPerfil", PublicacionesModelo::class.java) ?: run {
+                finish()
+                return
+            }
+
+
         //Funcionalidad de la actividad
-        pasarADetalle()
+        pasarADetalle(publicacion)
+
+
+        binding.ibBotonBorrarDetalla.setOnClickListener {
+            lifecycleScope.launch {
+                viewModel.eliminarPublicacion(publicacion)
+                finish()
+            }
+        }
     }
 
     /**
@@ -62,14 +82,7 @@ class DetalleActivity : AppCompatActivity() {
      * Actualiza la información de la publicación en la vista.
      */
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    fun pasarADetalle() {
-        val publicacion =
-            intent.getParcelableExtra("publicacionDelPerfil", PublicacionesModelo::class.java)
-
-        if (publicacion == null) {
-            finish()
-            return
-        }
+    fun pasarADetalle(publicacion: PublicacionesModelo) {
 
         viewModelAjustes.obtenerNombreDeEmail(publicacion.autor.toString()) { nombre ->
             binding.tvUsuarioDetalla.text = nombre ?: "Null"

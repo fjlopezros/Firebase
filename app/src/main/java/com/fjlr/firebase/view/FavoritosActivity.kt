@@ -8,7 +8,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.fjlr.firebase.adapter.favoritos.PublicacionAdaptadorFav
 import com.fjlr.firebase.databinding.ActivityFavoritosBinding
 import com.fjlr.firebase.utils.configurarBarraNavegacion
@@ -69,7 +69,7 @@ class FavoritosActivity : AppCompatActivity() {
     private fun inicializarRecyclerView() {
         lifecycleScope.launch {
             publicacionAdaptadorFav = PublicacionAdaptadorFav(viewModel, this@FavoritosActivity)
-            binding.recyclerViewFav.layoutManager = GridLayoutManager(this@FavoritosActivity, 2)
+            binding.recyclerViewFav.layoutManager = LinearLayoutManager(this@FavoritosActivity)
             binding.recyclerViewFav.adapter = publicacionAdaptadorFav
         }
     }

@@ -64,5 +64,6 @@
     <string name="nombre_cambiado">Usuario cambiado</string>
     <string name="rellenar_campos">Rellena todos los campos</string>
     <string name="error_guardar_publicacion">Error al guardar la publicación</string>
+    <string name="t_tulo_de_la_publicaci_n">Título de la publicación</string>
 
 </resources>

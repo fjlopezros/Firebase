@@ -54,4 +54,10 @@ class PublicacionesVistaModelo : ViewModel() {
             ConstantesUtilidades.IMAGEN_PUBLICACION
         )
     }
+
+    fun eliminarPublicacion(publicacion: PublicacionesModelo){
+        viewModelScope.launch {
+            repositorio.eliminarPublicacion(publicacion)
+        }
+    }
 }

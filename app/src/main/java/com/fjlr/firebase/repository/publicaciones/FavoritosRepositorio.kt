@@ -30,7 +30,8 @@ class FavoritosRepositorio {
             ConstantesUtilidades.PREPARACION to publicacion.preparacion,
             ConstantesUtilidades.FAVORITO to true,
             ConstantesUtilidades.AUTOR to publicacion.autor,
-            ConstantesUtilidades.TIEMPO_ORDENAR_PUBLI to FieldValue.serverTimestamp()
+            ConstantesUtilidades.TIEMPO_ORDENAR_PUBLI to FieldValue.serverTimestamp(),
+            ConstantesUtilidades.IMAGEN_PUBLICACION to publicacion.fotoPublicacion
         )
 
         db.collection(ConstantesUtilidades.COLECCION_USUARIOS)

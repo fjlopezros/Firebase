@@ -56,6 +56,16 @@ class PublicacionesRepositorio {
             .await()
     }
 
+    suspend fun eliminarPublicacion(publicacion: PublicacionesModelo){
+        val docId = "${publicacion.titulo}_${emailUsuario}"
+
+        db.collection(ConstantesUtilidades.COLECCION_FIREBASE)
+            .document(docId)
+            .delete()
+            .await()
+    }
+
+
     /**
      * Valida los campos de la publicación.
      */
