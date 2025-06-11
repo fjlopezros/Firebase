@@ -8,16 +8,20 @@
     tools:context=".view.FavoritosActivity">
 
     <TextView
-        android:id="@+id/tvVacio"
+        android:id="@+id/tvVacioFav"
         android:layout_width="320dp"
         android:layout_height="69dp"
-        app:layout_constraintBottom_toBottomOf="@+id/recyclerViewFav"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvFavoritosTitulo"
-        tools:text="No hay nada guardado"
+        android:text="@string/no_tienes_recetas_favoritas"
         android:textSize="20sp"
-        android:textAlignment="center"/>
+        android:gravity="center"
+        android:padding="16dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:elevation="4dp"
+        app:layout_constraintTop_toTopOf="@+id/recyclerViewFav"
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerViewFav"
+        app:layout_constraintStart_toStartOf="@+id/recyclerViewFav"
+        app:layout_constraintEnd_toEndOf="@+id/recyclerViewFav"/>
 
     <TextView
         android:id="@+id/tvFavoritosTitulo"
@@ -37,10 +41,10 @@
         android:contentDescription="@string/publicaciones"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.606"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.606" />
+        app:layout_constraintVertical_bias="0.61" />
 
     <include
         android:id="@+id/barra_navegacion"

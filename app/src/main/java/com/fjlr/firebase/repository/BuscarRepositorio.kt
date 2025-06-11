@@ -12,6 +12,7 @@ class BuscarRepositorio {
 
     /**
      * Realiza una búsqueda de recetas por título.
+     *
      * @param tituloReceta Título de la receta a buscar.
      * @param callback Lista de publicaciones o vacía si hay error.
      */
@@ -28,4 +29,6 @@ class BuscarRepositorio {
                 callback(publicaciones)
             }
     }
+
+
 }

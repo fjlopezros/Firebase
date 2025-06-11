@@ -1,8 +1,10 @@
 package com.fjlr.firebase.viewModel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.fjlr.firebase.repository.AutenticacionRepositorio
 import com.fjlr.firebase.repository.UsuarioRepositorio
+import kotlinx.coroutines.launch
 
 /**
  * ViewModel encargado del proceso de registro de nuevos usuarios.
@@ -37,15 +39,19 @@ class RegistroVistaModelo : ViewModel() {
      * @param email Email del usuario.
      * @param usuario Nuevo nombre de usuario.
      */
-    suspend fun cambiarNombreUsuario(email: String, usuario: String) {
-        usuarioRepositorio.cambiarNombreUsuario(email, usuario)
+    fun cambiarNombreUsuario(email: String, usuario: String) {
+        viewModelScope.launch {
+            usuarioRepositorio.cambiarNombreUsuario(email, usuario)
+        }
     }
 
     /**
      * Cambia la contraseña de un usuario.
      * @param email Email del usuario.
      */
-    suspend fun cambiarContrasena(email: String) {
-        usuarioRepositorio.cambiarContrasena(email)
+    fun cambiarContrasena(email: String) {
+        viewModelScope.launch {
+            usuarioRepositorio.cambiarContrasena(email)
+        }
     }
 }

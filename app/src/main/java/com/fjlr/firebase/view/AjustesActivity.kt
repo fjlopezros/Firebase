@@ -12,14 +12,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
+import com.fjlr.firebase.R
 import com.fjlr.firebase.databinding.ActivityAjustesBinding
 import com.fjlr.firebase.utils.Carga
 import com.fjlr.firebase.viewModel.PerfilVistaModelo
 import com.fjlr.firebase.viewModel.RegistroVistaModelo
 import com.fjlr.firebase.viewModel.UtilidadesPerfilVistaModelo
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.coroutines.launch
 import kotlin.toString
 
 /**
@@ -63,18 +62,18 @@ class AjustesActivity : AppCompatActivity() {
          * Botón para cambiar el nombre de usuario.
          */
         binding.btCambiarUsuario.setOnClickListener {
-            lifecycleScope.launch {
-                val nuevoUsuario = binding.etCambiarUsuario.text.toString()
-                if (nuevoUsuario.isNotBlank()) {
-                    viewModel.cambiarNombreUsuario(
-                        email, nuevoUsuario
-                    )
-                    Toast.makeText(
-                        this@AjustesActivity,
-                        "Nombre de usuario cambiado",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+            val nuevoUsuario = binding.etCambiarUsuario.text.toString()
+
+            if (nuevoUsuario.isNotBlank()) {
+                viewModel.cambiarNombreUsuario(
+                    email, nuevoUsuario
+                )
+
+                Toast.makeText(
+                    this@AjustesActivity,
+                    R.string.nombre_cambiado,
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
 
@@ -83,9 +82,15 @@ class AjustesActivity : AppCompatActivity() {
          * Cierra sesion y te lleva a la pantalla de inicio de sesión.
          */
         binding.btContrasena.setOnClickListener {
-            lifecycleScope.launch {
-                viewModel.cambiarContrasena(email)
-            }
+            viewModel.cambiarContrasena(email)
+
+            cerrarSesion()
+
+            Toast.makeText(
+                this@AjustesActivity,
+                R.string.email_enviado,
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
         /**
@@ -94,15 +99,12 @@ class AjustesActivity : AppCompatActivity() {
          */
         binding.ibSalir.setOnClickListener {
             AlertDialog.Builder(this)
-                .setTitle("Cerrar sesión")
-                .setMessage("¿Estás seguro de que quieres cerrar sesión?")
-                .setPositiveButton("Sí") { _, _ ->
-                    viewModelUtilidades.cerrarSesion()
-                    val intent = Intent(this, MainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
+                .setTitle(R.string.cerrar_sesion)
+                .setMessage(R.string.pregunta_salir)
+                .setPositiveButton(R.string.si) { _, _ ->
+                    cerrarSesion()
                 }
-                .setNegativeButton("No", null)
+                .setNegativeButton(R.string.no, null)
                 .show()
         }
 
@@ -120,11 +122,22 @@ class AjustesActivity : AppCompatActivity() {
             } catch (_: Exception) {
                 Toast.makeText(
                     this@AjustesActivity,
-                    "Error al abrir selector",
+                    R.string.error_seleccionar_imagen,
                     Toast.LENGTH_LONG
                 ).show()
             }
         }
+    }
+
+    /**
+     * Cierra la sesión del usuario actual y redirige a la pantalla de inicio de sesión.
+     */
+    private fun cerrarSesion() {
+        viewModelUtilidades.cerrarSesion()
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+
     }
 
     /**
@@ -139,30 +152,28 @@ class AjustesActivity : AppCompatActivity() {
             ActivityResultContracts.PickVisualMedia()
         ) { uri ->
             uri?.let {
-                lifecycleScope.launch {
-                    Carga.cargando(binding.pbCargando, binding.ibFlechaParaSalir, true)
+                Carga.cargando(binding.pbCargando, binding.ibFlechaParaSalir, true)
 
-                    try {
-                        viewModelUtilidades.agregarFotoPerfil(it, email)
+                try {
+                    viewModelUtilidades.agregarFotoPerfil(it, email)
 
-                        Toast.makeText(
-                            this@AjustesActivity,
-                            "Foto de perfil actualizada",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    } catch (_: Exception) {
-                        Toast.makeText(
-                            this@AjustesActivity,
-                            "Error al subir la imagen",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    } finally {
-                        Carga.cargando(binding.pbCargando, binding.ibFlechaParaSalir, false)
-                    }
+                    Toast.makeText(
+                        this@AjustesActivity,
+                        R.string.foto_actualizada,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } catch (_: Exception) {
+                    Toast.makeText(
+                        this@AjustesActivity,
+                        R.string.foto_error,
+                        Toast.LENGTH_LONG
+                    ).show()
+                } finally {
+                    Carga.cargando(binding.pbCargando, binding.ibFlechaParaSalir, false)
                 }
             } ?: Toast.makeText(
                 this@AjustesActivity,
-                "No se ha seleccionado ninguna imagen",
+                R.string.imagen_no_seleccionada,
                 Toast.LENGTH_SHORT
             ).show()
         }

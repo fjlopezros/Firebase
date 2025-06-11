@@ -10,9 +10,6 @@ import kotlinx.coroutines.tasks.await
 
 
 /**
- * Todo: AL SUBIR PUBLICACIONES PONER: TITULO+EMAIL
- */
-/**
  * Repositorio para gestionar carga de imágenes, como foto de perfil.
  */
 class ImagenRepositorio(
@@ -26,14 +23,16 @@ class ImagenRepositorio(
      * @param email Email del usuario para identificar la imagen.
      * @return URL de la imagen cargada.
      */
-    suspend fun agregarFoto(imagen: Uri, email: String, url: String): String {
-        var espacio = storage.child("${ConstantesUtilidades.IMAGENES}/$url/$email${ConstantesUtilidades.JPG}")
+    suspend fun agregarFoto(imagen: Uri, email: String, titulo: String?, url: String): String {
+        val nombreArchivo = "${titulo}_${email}"
+        var espacio =
+            storage.child("${ConstantesUtilidades.IMAGENES}/$url/$nombreArchivo${ConstantesUtilidades.JPG}")
 
         espacio.putFile(imagen).await()
 
         val urlFoto = espacio.downloadUrl.await().toString()
 
-        if(url == ConstantesUtilidades.IMAGEN_PERFIL) {
+        if (url == ConstantesUtilidades.IMAGEN_PERFIL) {
             subirFotoDePerfil(urlFoto, email)
         }
 

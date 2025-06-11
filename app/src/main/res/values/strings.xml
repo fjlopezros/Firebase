@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
     <string name="default_web_client_id">384861564418-u5k9t3h4iemvlnajcpl652jo75g1b6u2.apps.googleusercontent.com</string>
     <string name="app_name">Firebase</string>
     <string name="bienvenido_de_nuevo">Bienvenido de nuevo!</string>
@@ -37,6 +37,7 @@
     <string name="ingredientesEj">Ej: huevo, leche, azúcar</string>
     <string name="introduce_tu_email">introduce tu email</string>
     <string name="salir_de_la_cuenta">salir de la cuenta</string>
+    <string name="pregunta_salir">¿Estás seguro de que quieres cerrar sesión?</string>
     <string name="seguir_cuenta">seguir cuenta</string>
     <string name="seguir">Seguir</string>
     <string name="publicacionesTitulo">publicaciones</string>
@@ -51,4 +52,17 @@
     <string name="cambiar_usuario">Cambiar usuario</string>
     <string name="cambiar_foto_de_perfil">Cambiar foto de perfil</string>
     <string name="seleccionar_foto">Seleccionar foto</string>
+    <string name="no_tienes_recetas_favoritas">No tienes recetas favoritas</string>
+    <string name="no_hay_publicaciones">No hay publicaciones</string>
+    <string name="si">Si</string>
+    <string name="no">No</string>
+    <string name="email_enviado">Email enviado para cambiar la contraseña</string>
+    <string name="error_seleccionar_imagen">Error al abrir el selector</string>
+    <string name="foto_actualizada">Foto de perfil actualizada</string>
+    <string name="foto_error">Error al subir la imagen</string>
+    <string name="imagen_no_seleccionada">No se ha seleccionado ninguna imagen</string>
+    <string name="nombre_cambiado">Usuario cambiado</string>
+    <string name="rellenar_campos">Rellena todos los campos</string>
+    <string name="error_guardar_publicacion">Error al guardar la publicación</string>
+
 </resources>

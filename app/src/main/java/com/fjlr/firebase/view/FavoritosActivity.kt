@@ -58,7 +58,8 @@ class FavoritosActivity : AppCompatActivity() {
          */
         viewModel.publicaciones.observe(this) { lista ->
             publicacionAdaptadorFav.submitList(lista)
-            binding.tvVacio.visibility = if (lista.isEmpty()) View.VISIBLE else View.GONE
+
+            binding.tvVacioFav.visibility = if (lista.isEmpty()) View.VISIBLE else View.GONE
         }
     }
 

@@ -4,10 +4,12 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.fjlr.firebase.model.PublicacionesModelo
 import com.fjlr.firebase.repository.ImagenRepositorio
 import com.fjlr.firebase.repository.publicaciones.PublicacionesRepositorio
 import com.fjlr.firebase.utils.ConstantesUtilidades
+import kotlinx.coroutines.launch
 
 /**
  * Vista modelo para la pantalla de publicaciones.
@@ -32,8 +34,10 @@ class PublicacionesVistaModelo : ViewModel() {
      * Subir una nueva publicación.
      * @param publicacion Publicación a subir.
      */
-    suspend fun subirPublicacion(publicacion: PublicacionesModelo) {
+    fun subirPublicacion(publicacion: PublicacionesModelo) {
+        viewModelScope.launch {
             repositorio.subirPublicacion(publicacion)
+        }
     }
 
     /**
@@ -42,7 +46,12 @@ class PublicacionesVistaModelo : ViewModel() {
      * @param imagen Uri de la imagen a subir.
      * @param email Email del usuario.
      */
-    suspend fun agregarFotoPublicacion(imagen: Uri, email: String): String {
-        return imagenRepositorio.agregarFoto(imagen, email, ConstantesUtilidades.IMAGEN_PUBLICACION)
+    suspend fun agregarFotoPublicacion(imagen: Uri, email: String, titulo: String): String {
+        return imagenRepositorio.agregarFoto(
+            imagen,
+            email,
+            titulo,
+            ConstantesUtilidades.IMAGEN_PUBLICACION
+        )
     }
 }

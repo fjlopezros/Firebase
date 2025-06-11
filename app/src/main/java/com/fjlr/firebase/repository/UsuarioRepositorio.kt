@@ -40,7 +40,7 @@ class UsuarioRepositorio(
 
         firestore.collection(ConstantesUtilidades.COLECCION_USUARIOS)
             .document(email)
-            .set(usuario)
+            .set(usuario, SetOptions.merge())
             .await()
     }
 

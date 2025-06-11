@@ -2,10 +2,12 @@ package com.fjlr.firebase.viewModel
 
 import android.net.Uri
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.fjlr.firebase.repository.AutenticacionRepositorio
 import com.fjlr.firebase.repository.ImagenRepositorio
 import com.fjlr.firebase.repository.publicaciones.PerfilRepositorio
 import com.fjlr.firebase.utils.ConstantesUtilidades
+import kotlinx.coroutines.launch
 
 /**
  * ViewModel para gestionar la vista de ajustes del usuario.
@@ -49,7 +51,9 @@ class UtilidadesPerfilVistaModelo : ViewModel() {
      * @param imagen Uri de la imagen a subir.
      * @param email Email del usuario.
      */
-    suspend fun agregarFotoPerfil(imagen: Uri, email: String) {
-        imagenRepositorio.agregarFoto(imagen, email, ConstantesUtilidades.IMAGEN_PERFIL)
+    fun agregarFotoPerfil(imagen: Uri, email: String) {
+        viewModelScope.launch {
+            imagenRepositorio.agregarFoto(imagen, email, null, ConstantesUtilidades.IMAGEN_PERFIL)
+        }
     }
 }
