@@ -4,6 +4,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fjlr.firebase.databinding.PublicacionesItemAjustesBinding
 import com.fjlr.firebase.model.PublicacionesModelo
 import com.fjlr.firebase.utils.Adaptador
+import com.fjlr.firebase.utils.ImagenPubli
 
 /**
  * Clase de ViewHolder para el RecyclerView de publicaciones en la pantalla de ajustes.
@@ -11,7 +12,6 @@ import com.fjlr.firebase.utils.Adaptador
  */
 class PublicacionesViewHolderAjustes(private val binding: PublicacionesItemAjustesBinding) :
     RecyclerView.ViewHolder(binding.root) {
-    val icono = binding.ibBotonFavoritoAjustes
 
     /**
      * Metodo para vincular los datos del modelo a la vista.
@@ -19,6 +19,8 @@ class PublicacionesViewHolderAjustes(private val binding: PublicacionesItemAjust
      */
     fun bind(publicacion: PublicacionesModelo) {
         binding.tvTituloPublicacionAjustes.text = publicacion.titulo
+
+        ImagenPubli.cargarImagenPublicacion(publicacion.fotoPublicacion, binding.ivImagenPublicacionAjustes)
 
         itemView.setOnClickListener {
             Adaptador.abrirDetalleDesdeItemAjustes(itemView, publicacion)

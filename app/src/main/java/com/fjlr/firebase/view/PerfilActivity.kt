@@ -14,7 +14,6 @@ import com.fjlr.firebase.adapter.ajustes.PublicacionAdaptadorAjustes
 import com.fjlr.firebase.databinding.ActivityPerfilBinding
 import com.fjlr.firebase.utils.configurarBarraNavegacion
 import com.fjlr.firebase.viewModel.UtilidadesPerfilVistaModelo
-import com.fjlr.firebase.viewModel.FavoritosVistaModelo
 import com.fjlr.firebase.viewModel.PerfilVistaModelo
 import com.fjlr.firebase.viewModel.SeguidoresVistaModelo
 import com.google.firebase.auth.FirebaseAuth
@@ -28,7 +27,6 @@ class PerfilActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPerfilBinding
     private lateinit var viewModel: UtilidadesPerfilVistaModelo
-    private lateinit var viewModelFav: FavoritosVistaModelo
     private lateinit var viewModelSeguidores: SeguidoresVistaModelo
     private lateinit var viewModelPerfil: PerfilVistaModelo
     private lateinit var publicacionesAdapter: PublicacionAdaptadorAjustes
@@ -52,7 +50,6 @@ class PerfilActivity : AppCompatActivity() {
         //Instancia del ViewModel
         viewModel = ViewModelProvider(this)[UtilidadesPerfilVistaModelo::class.java]
         viewModelSeguidores = ViewModelProvider(this)[SeguidoresVistaModelo::class.java]
-        viewModelFav = ViewModelProvider(this)[FavoritosVistaModelo::class.java]
         viewModelPerfil = ViewModelProvider(this)[PerfilVistaModelo::class.java]
 
         //Configuración del RecyclerView
@@ -168,7 +165,7 @@ class PerfilActivity : AppCompatActivity() {
      */
     private fun inicializarRecyclerView() {
         lifecycleScope.launch {
-            publicacionesAdapter = PublicacionAdaptadorAjustes(viewModelFav, this@PerfilActivity)
+            publicacionesAdapter = PublicacionAdaptadorAjustes()
             binding.recyclerViewMy.layoutManager = GridLayoutManager(this@PerfilActivity, 3)
             binding.recyclerViewMy.adapter = publicacionesAdapter
         }
