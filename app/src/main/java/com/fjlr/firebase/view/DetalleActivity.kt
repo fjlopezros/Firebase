@@ -58,6 +58,9 @@ class DetalleActivity : AppCompatActivity() {
         }
 
 
+        /**
+         * Guardo en una variable la publicacion que he clickado
+         */
         val publicacion =
             intent.getParcelableExtra("publicacionDelPerfil", PublicacionesModelo::class.java) ?: run {
                 finish()
@@ -69,6 +72,10 @@ class DetalleActivity : AppCompatActivity() {
         pasarADetalle(publicacion)
 
 
+        /**
+         * Elimina una publicacion cuando pulsas el icono
+         * Vuelves al Perfil
+         */
         binding.ibBotonBorrarDetalla.setOnClickListener {
             lifecycleScope.launch {
                 viewModel.eliminarPublicacion(publicacion)

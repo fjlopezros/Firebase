@@ -56,6 +56,9 @@ class PublicacionesRepositorio {
             .await()
     }
 
+    /**
+     * Elimina una publicacion de Firestore.
+     */
     suspend fun eliminarPublicacion(publicacion: PublicacionesModelo){
         val docId = "${publicacion.titulo}_${emailUsuario}"
 
